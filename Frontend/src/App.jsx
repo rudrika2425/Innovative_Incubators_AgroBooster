@@ -4,6 +4,8 @@ import Dashboard from "./home/Dashboard";
 import Rent from "./rental/rent";
 import RentProduct from './rental/receiveRent'
 import Description from "./rental/description";
+import Login from "./crop/Login";
+import Signup from "./crop/Signup";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route path="/rent" element={<Rent />} />
         <Route path="/receive" element={<RentProduct />} />
         <Route path="/description" element={<Description />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </Router>
   );
