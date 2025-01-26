@@ -1,1 +1,12 @@
 @import "tailwindcss";
+body {
+  font-family: 'Roboto Slab', serif;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+p, span, div {
+  font-family: 'Roboto Slab', serif;
+}
