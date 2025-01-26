@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion"; // Install Framer Motion with npm install framer-motion
 import { useNavigate } from "react-router-dom";
+import NavbarRent from "./NavbarRent";
 
 const RentProduct = () => {
   const products = [
@@ -165,6 +166,8 @@ const RentProduct = () => {
     : products;
 
   return (
+    <>
+    <NavbarRent/>
     <div style={{
         backgroundImage: `url('/Images/des.png')`,
         backgroundSize: 'cover',
@@ -240,6 +243,7 @@ const RentProduct = () => {
         </motion.div>
       </div>
     </div>
+    </>
   );
 };
 

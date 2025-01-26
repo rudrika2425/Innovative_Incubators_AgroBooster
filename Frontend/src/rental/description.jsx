@@ -1,12 +1,14 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-
+import NavbarRent from "./NavbarRent";
 const DescriptionPage = () => {
   const { state } = useLocation();
   const { product } = state;
 
   return (
+   <>
+    <NavbarRent/>
     <div style={{
         backgroundImage: `url('/Images/des.png')`,
         backgroundSize: 'cover',
@@ -88,6 +90,7 @@ const DescriptionPage = () => {
         </motion.div>
       </div>
     </div>
+    </>
   );
 };
 

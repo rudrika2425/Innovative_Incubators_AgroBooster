@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NavbarRent from "./NavbarRent";
 
 function Rent() {
   const [formData, setFormData] = useState({
@@ -46,6 +47,8 @@ function Rent() {
   };
 
   return (
+    <>
+    <NavbarRent/>
     <div  style={{
     backgroundImage: `url('/Images/bgRent.png')`,
     backgroundSize: 'cover',
@@ -298,7 +301,10 @@ function Rent() {
         </form>
       </div>
     </div>
+    </>
   );
+  
 }
+ 
 
 export default Rent;
