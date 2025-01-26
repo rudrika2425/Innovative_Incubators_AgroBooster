@@ -10,12 +10,11 @@ const Hero = ({ id }) => {
         className="absolute inset-0 bg-black bg-opacity-90 object-cover"
         style={{
           backgroundImage: `url('/Images/hero-img.png')`,
-          backgroundSize: "cover", // Ensures the image covers the screen
-          backgroundPosition: "center", // Ensures the image is centered
+          backgroundSize: "cover",
+          backgroundPosition: "center", 
         }}
       ></div>
 <div className="absolute top-0 left-0 w-full h-full bg-black opacity-10"></div>
-      {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
         <h1 className="text-6xl font-extrabold text-black mb-6 drop-shadow-lg -mt- mb-10">
           AGRICULTURAL COMMUNITY SERVICE
