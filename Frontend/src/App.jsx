@@ -6,6 +6,10 @@ import RentProduct from './rental/receiveRent'
 import Description from "./rental/description";
 import Login from "./crop/Login";
 import Signup from "./crop/Signup";
+import FarmerDashboard from "./dashboard/DashboardFarmer";
+import BasicInfoForm from "./dashboard/BasicInfoForm";
+import SoilTestForm from "./dashboard/SoilTestForm";
+import CameraInput from "./dashboard/test";
 
 function App() {
   return (
@@ -14,9 +18,14 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/rent" element={<Rent />} />
         <Route path="/receive" element={<RentProduct />} />
-        <Route path="/description" element={<Description />} />
+        <Route path="/description" element={<Description />} /> 
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<Signup />}/>
+        <Route path="/test" element={<CameraInput />}/>
+        <Route path="/farmer-Information" element={<FarmerDashboard />}>
+          <Route path="step1" element={<BasicInfoForm />} />
+          <Route path="step2" element={<SoilTestForm />} />
+        </Route>
       </Routes>
     </Router>
   );

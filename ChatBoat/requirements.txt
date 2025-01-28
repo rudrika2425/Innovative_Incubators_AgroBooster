@@ -1,0 +1,8 @@
+flask
+flask-cors
+tensorflow
+numpy
+pillow
+kagglehub
+googletrans==4.0.0-rc1
+werkzeug
