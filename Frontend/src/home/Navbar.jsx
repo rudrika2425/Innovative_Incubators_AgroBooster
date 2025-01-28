@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-scroll";
+import LanguageSelector from "../LanguageChange/LanguageSelector"; // Import LanguageSelector
 
 function Navbar() {
+  const [translatedText, setTranslatedText] = useState("");
+
+  const handleTranslation = (translation) => {
+    setTranslatedText(translation); // Update the translation state
+  };
+
   return (
     <nav className="bg-transparent sticky bg-opacity-90 fixed top-0 left-0 w-full z-50 shadow-none">
-      <div className="container  text-black mx-auto px-10 flex justify-between items-center py-4">
+      <div className="container text-black mx-auto px-10 flex justify-between items-center py-4">
         <Link
           to="hero"
           spy={true}
@@ -61,6 +68,12 @@ function Navbar() {
             </Link>
           </li>
         </ul>
+
+        {/* Language Selector */}
+        <LanguageSelector
+          textToTranslate="Welcome to AgroBooster"
+          onTranslation={handleTranslation}
+        />
       </div>
     </nav>
   );
