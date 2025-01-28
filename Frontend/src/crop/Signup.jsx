@@ -9,21 +9,28 @@ const Signup = () => {
           <div className="mb-4">
             <input
               type="text"
-              placeholder="Your Name *"
+              placeholder="Your Name "
               className="w-full p-2 bg-white rounded-lg focus:ring-2"
             />
           </div>
           <div className="mb-4">
             <input
               type="text"
-              placeholder="Phone Number *"
+              placeholder="Phone Number "
               className="w-full p-2 bg-white rounded-lg focus:ring-2"
             />
           </div>
           <div className="mb-4">
             <input
               type="password"
-              placeholder="Password *"
+              placeholder="Password "
+              className="w-full p-2 bg-white rounded-lg focus:ring-2"
+            />
+          </div>
+          <div className="mb-4">
+            <input
+              type="password"
+              placeholder="Confirm Password "
               className="w-full p-2 bg-white rounded-lg focus:ring-2"
             />
           </div>

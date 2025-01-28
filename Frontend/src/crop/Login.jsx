@@ -35,16 +35,14 @@ const Login = () => {
             </button>
           </div>
 
-  
-          
-
           <button className="w-full bg-green-500 text-white py-2 rounded-xl font-bold hover:bg-green-600">
             Login
           </button>
+         
 
           <p className="text-sm mt-4">
             Don't have an account?{" "}
-            <a href="/login" className="text-green-500">
+            <a href="/signup" className="text-green-500">
               Signup
             </a>
           </p>
