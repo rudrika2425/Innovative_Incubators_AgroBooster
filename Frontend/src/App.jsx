@@ -9,7 +9,7 @@ import Signup from "./crop/Signup";
 import FarmerDashboard from "./dashboard/DashboardFarmer";
 import BasicInfoForm from "./dashboard/BasicInfoForm";
 import SoilTestForm from "./dashboard/SoilTestForm";
-import CameraInput from "./dashboard/test";
+import SoilTestReportUploader from "./dashboard/test";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         <Route path="/description" element={<Description />} /> 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />}/>
-        <Route path="/test" element={<CameraInput />}/>
+        <Route path="/test" element={<SoilTestReportUploader />}/>
         <Route path="/farmer-Information" element={<FarmerDashboard />}>
           <Route path="step1" element={<BasicInfoForm />} />
           <Route path="step2" element={<SoilTestForm />} />
