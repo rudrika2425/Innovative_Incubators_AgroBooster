@@ -49,11 +49,15 @@ def analyze_soil_report():
         # Use the extracted text with Gemini model
         model = genai.GenerativeModel("gemini-1.5-flash")
         prompt = (
-            f"Analyze the following soil report and provide the test value of pH, Nitrogen, "
-            f"Phosphorus, and Potassium as a clean and concise string and also give the units. Format it as: "
-            f"'pH: value, Nitrogen: value, Phosphorus: value, Potassium: value': {extracted_text}."
-            f"If value is not present for some parameters give N/A in place of them."
+            f"Extract the values and their respective units from the following soil report for these parameters: "
+            f"pH, Nitrogen, Phosphorus, Potassium, Zinc, Sulfur, and Organic Carbon (or Organic Matter/Carbon). "
+            f"Format the response as: "
+            f"'pH: value unit, Nitrogen: value unit, Phosphorus: value unit, Potassium: value unit, Zinc: value unit, "
+            f"Sulfur: value unit, Organic Carbon: value unit'. "
+            f"If a parameter value is not present, use 'N/A' in place of the value and unit."
+            f"Do not include any additional explanation or information. Input text: {extracted_text}."
         )
+
 
         # Generate the response based on the extracted text
         response = model.generate_content(prompt)
