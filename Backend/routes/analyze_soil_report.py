@@ -1,9 +1,9 @@
 import os
 import logging
+import time
 from flask import Blueprint, request, jsonify
 from werkzeug.utils import secure_filename
 import google.generativeai as genai
-import pytesseract
 from PIL import Image
 
 # Configure logging
@@ -12,17 +12,44 @@ logging.basicConfig(level=logging.DEBUG)
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Use environment variable for API key
+# Load API Key
 GENAI_API_KEY = os.getenv('GENAI_API_KEY')
+if not GENAI_API_KEY:
+    logging.error("GENAI_API_KEY is not set. Please configure your environment variable.")
+    raise RuntimeError("Missing API key for Gemini AI")
+
 genai.configure(api_key=GENAI_API_KEY)
 
-ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'pdf', 'txt', 'webp'}
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'webp'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Create a Blueprint
 analyze_soil_report_bp = Blueprint("analyze_soil_report", __name__)
+
+def retry_api_call(model, prompt, image, max_retries=5, base_delay=2):
+    """Retries API call with exponential backoff when getting a 429 error."""
+    for attempt in range(max_retries):
+        try:
+            response = model.generate_content([prompt, image])
+            if hasattr(response, 'text'):
+                return response.text.strip()
+        except Exception as e:
+            error_message = str(e)
+            logging.error(f"API request failed: {error_message}")
+
+            if "429" in error_message or "quota" in error_message.lower():
+                if attempt < max_retries - 1:
+                    delay = base_delay * (2 ** attempt)  # Exponential backoff
+                    logging.warning(f"Quota limit hit (429). Retrying in {delay} seconds...")
+                    time.sleep(delay)
+                else:
+                    return "Error: API quota exceeded. Try again later."
+            else:
+                break  # If it's a different error, don't retry
+
+    return None
 
 @analyze_soil_report_bp.route("/api/analyze-soil-report", methods=["POST"])
 def analyze_soil_report():
@@ -34,7 +61,7 @@ def analyze_soil_report():
         return jsonify({"error": "No file selected"}), 400
 
     if not allowed_file(file.filename):
-        return jsonify({"error": "File type not allowed. Only images and text files are supported."}), 400
+        return jsonify({"error": "File type not allowed. Only images are supported."}), 400
 
     # Securely save the file
     filename = secure_filename(file.filename)
@@ -42,44 +69,38 @@ def analyze_soil_report():
     file.save(file_path)
 
     try:
-        # Use OCR to extract text from the image
-        image = Image.open(file_path)
-        extracted_text = pytesseract.image_to_string(image)
+        # Open the image
+        with Image.open(file_path) as image:
+            model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+            prompt = (
+                "Extract the values and their respective units from the following soil report for these parameters: "
+                "pH, Nitrogen, Phosphorus, Potassium, Zinc, Sulfur, and Organic Carbon (or Organic Matter/Carbon). "
+                "Format the response as: "
+                "'pH: value unit, Nitrogen: value unit, Phosphorus: value unit, Potassium: value unit, Zinc: value unit, "
+                "Sulfur: value unit, Organic Carbon: value unit'. "
+                "If a parameter value is not present, use 'N/A' in place of the value and unit."
+                "Do not include any additional explanation or information."
+            )
 
-        # Use the extracted text with Gemini model
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        prompt = (
-            f"Extract the values and their respective units from the following soil report for these parameters: "
-            f"pH, Nitrogen, Phosphorus, Potassium, Zinc, Sulfur, and Organic Carbon (or Organic Matter/Carbon). "
-            f"Format the response as: "
-            f"'pH: value unit, Nitrogen: value unit, Phosphorus: value unit, Potassium: value unit, Zinc: value unit, "
-            f"Sulfur: value unit, Organic Carbon: value unit'. "
-            f"If a parameter value is not present, use 'N/A' in place of the value and unit."
-            f"Do not include any additional explanation or information. Input text: {extracted_text}."
-        )
+            result = retry_api_call(model, prompt, image)
 
-
-        # Generate the response based on the extracted text
-        response = model.generate_content(prompt)
-
-        # Check if the response from the API is valid
-        if hasattr(response, 'text'):
-            result = response.text.strip()
-            logging.info(f"Analysis Result: {result}")
-            return jsonify({"analysis": result})
-        else:
-            logging.error("No valid response text received from the AI model.")
-            return jsonify({"error": "Failed to generate analysis from the AI model."}), 500
+            if result and not result.startswith("Error"):
+                logging.info(f"Analysis Result: {result}")
+                return jsonify({"analysis": result})
+            else:
+                logging.error("Failed to generate analysis from the AI model.")
+                return jsonify({"error": "AI analysis failed due to quota limits. Try again later."}), 429
 
     except Exception as e:
-        logging.error(f"Error during API request or processing: {e}")
+        logging.error(f"Error during processing: {e}")
         return jsonify({"error": "Failed to analyze the report. Please try again."}), 500
 
     finally:
-        # Clean up the uploaded file securely
         try:
             if os.path.exists(file_path):
                 os.remove(file_path)
-                logging.info(f"Temporary file {file_path} removed.")
+                logging.info(f"Temporary file {file_path} removed successfully.")
+            else:
+                logging.warning(f"File {file_path} not found for cleanup.")
         except Exception as cleanup_error:
             logging.error(f"Error during file cleanup: {cleanup_error}")

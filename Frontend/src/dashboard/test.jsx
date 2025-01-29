@@ -32,6 +32,8 @@ const SoilTestReportUploader = () => {
       // Handle response data properly
       if (response.data?.analysis) {
         setResult(response.data.analysis); // Set the simple string response
+        console.log(response)
+        console.log(result);
       } else {
         setErrorMessage('No analysis result received.');
       }
