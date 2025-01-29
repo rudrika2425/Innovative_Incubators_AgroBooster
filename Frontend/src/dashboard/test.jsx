@@ -23,7 +23,7 @@ const SoilTestReportUploader = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/analyze-soil-report', formData, {
+      const response = await axios.post('http://127.0.0.1:5000/analyze_soil/api/analyze-soil-report', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -32,6 +32,8 @@ const SoilTestReportUploader = () => {
       // Handle response data properly
       if (response.data?.analysis) {
         setResult(response.data.analysis); // Set the simple string response
+        console.log(response)
+        console.log(result);
       } else {
         setErrorMessage('No analysis result received.');
       }
