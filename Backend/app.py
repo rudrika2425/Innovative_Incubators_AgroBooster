@@ -3,7 +3,7 @@ from flask import Flask
 from pymongo import MongoClient
 from flask_cors import CORS
 from routes.user_routes import user_routes 
-from routes.analyze_soil_report import analyze_soil_report_bp
+from routes.analyze_soil_report_routes import analyze_soil_report_bp
 from routes.get_location import location_bp
 from routes.weather_routes import weather_bp
 from routes.weather_forcast import weather_forecast_bp
