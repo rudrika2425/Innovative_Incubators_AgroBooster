@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-scroll";
 import LanguageSelector from "../LanguageChange/LanguageSelector"; // Import LanguageSelector
+import { useTranslation } from "react-i18next"; // Import useTranslation hook
 
 function Navbar() {
-  const [translatedText, setTranslatedText] = useState("");
-
-  const handleTranslation = (translation) => {
-    setTranslatedText(translation); // Update the translation state
-  };
+  const { t } = useTranslation();
 
   return (
     <nav className="bg-transparent sticky bg-opacity-90 fixed top-0 left-0 w-full z-50 shadow-none">
@@ -19,7 +16,7 @@ function Navbar() {
           duration={500}
           className="cursor-pointer font-bold text-3xl"
         >
-          Agro<span className="text-green-700">Booster</span>
+         {t("Agro")}<span className="text-green-700">{t("Booster")}</span>
         </Link>
 
         <ul className="hidden lg:flex space-x-8 mr-10">
@@ -31,7 +28,7 @@ function Navbar() {
               duration={500}
               className="cursor-pointer font-semibold text-lg hover:text-green-700"
             >
-              Home
+              {t("home")}
             </Link>
           </li>
           <li>
@@ -42,7 +39,7 @@ function Navbar() {
               duration={500}
               className="cursor-pointer font-semibold text-lg hover:text-green-700"
             >
-              About Us
+              {t("about")}
             </Link>
           </li>
           <li>
@@ -53,7 +50,7 @@ function Navbar() {
               duration={500}
               className="cursor-pointer font-semibold text-lg hover:text-green-700"
             >
-              Services
+              {t("services")}
             </Link>
           </li>
           <li>
@@ -64,16 +61,13 @@ function Navbar() {
               duration={500}
               className="cursor-pointer font-semibold text-lg hover:text-green-700"
             >
-              Contact Us
+              {t("contact")}
             </Link>
           </li>
         </ul>
 
         {/* Language Selector */}
-        <LanguageSelector
-          textToTranslate="Welcome to AgroBooster"
-          onTranslation={handleTranslation}
-        />
+        <LanguageSelector />
       </div>
     </nav>
   );
