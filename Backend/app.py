@@ -5,6 +5,8 @@ from flask_cors import CORS
 from routes.user_routes import user_routes 
 from routes.analyze_soil_report import analyze_soil_report_bp
 from routes.get_location import location_bp
+from routes.weather_routes import weather_bp
+from routes.weather_forcast import weather_forecast_bp
 
 
 def create_app():
@@ -19,6 +21,8 @@ def create_app():
     app.register_blueprint(user_routes, url_prefix='/users')
     app.register_blueprint(analyze_soil_report_bp, url_prefix='/analyze_soil')  
     app.register_blueprint(location_bp,url_prefix='/location')
+    app.register_blueprint(weather_bp,url_prefix='/weather')
+    app.register_blueprint(weather_forecast_bp,url_prefix='/weather_forecast')
 
     return app
 
