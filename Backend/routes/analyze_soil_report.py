@@ -14,9 +14,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # Load API Key
 GENAI_API_KEY = os.getenv('GENAI_API_KEY')
-if not GENAI_API_KEY:
-    logging.error("GENAI_API_KEY is not set. Please configure your environment variable.")
-    raise RuntimeError("Missing API key for Gemini AI")
+
 
 genai.configure(api_key=GENAI_API_KEY)
 
@@ -41,7 +39,7 @@ def retry_api_call(model, prompt, image, max_retries=5, base_delay=2):
 
             if "429" in error_message or "quota" in error_message.lower():
                 if attempt < max_retries - 1:
-                    delay = base_delay * (2 ** attempt)  # Exponential backoff
+                    delay = min(base_delay * (attempt + 1), 5)  # Max 5 sec delay
                     logging.warning(f"Quota limit hit (429). Retrying in {delay} seconds...")
                     time.sleep(delay)
                 else:
