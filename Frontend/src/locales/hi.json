@@ -4,11 +4,30 @@
     "about": "हमारे बारे में",
     "services": "सेवाएँ",
     "contact": "संपर्क करें",
-    "buttonSubmit": "जमा करें",
+    "buttonSubmit": "प्रस्तुत करें",
     "buttonCancel": "रद्द करें",
-    "buttonLogin": "लॉग इन करें",
-     "Booster": "बूस्टर",
-    "Agro":"एग्रो"
-    
+    "buttonLogin": "लॉगिन",
+    "Booster": "बूस्टर",
+    "Agro": "एग्रो",
+    "chatbot": {
+    "title": "चैटबॉट",
+    "subtitle": "मैं आपकी कैसे मदद कर सकता हूँ?",
+    "noMessages": "अभी तक कोई संदेश नहीं",
+    "enterMessage": "कृपया एक संदेश दर्ज करें",
+    "uploadingFile": "फ़ाइल अपलोड हो रही है...",
+    "selectFile": "कृपया अपलोड करने के लिए एक फ़ाइल चुनें",
+    "uploadFailed": "फ़ाइल अपलोड विफल",
+    "send": "भेजें",
+    "placeholder": "अपना संदेश टाइप करें",
+    "upload": "अपलोड करें",
+    "languageLabel": "भाषा चुनें",
+    "language": {
+      "en": "अंग्रेज़ी",
+      "hi": "हिंदी"
+    },
+    "disease": "रोग",
+    "confidence": "विश्वास",
+    "solution": "समाधान"
+  }
   }
   
