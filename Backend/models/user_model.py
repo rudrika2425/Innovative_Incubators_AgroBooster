@@ -1,11 +1,11 @@
-from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
-
-mongo = PyMongo()
+from flask import current_app
 
 class User:
     @staticmethod
     def create_user(fullname, phone_number, password):
+        mongo = current_app.extensions['pymongo']  # Get PyMongo instance
+
         if mongo.db.users.find_one({"phone_number": phone_number}):
             return {"error": "Phone number already registered"}
 
@@ -20,6 +20,7 @@ class User:
 
     @staticmethod
     def find_by_phone(phone_number):
+        mongo = current_app.extensions['pymongo']
         return mongo.db.users.find_one({"phone_number": phone_number})
 
     @staticmethod

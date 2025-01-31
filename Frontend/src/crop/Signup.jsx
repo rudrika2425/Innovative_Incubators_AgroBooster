@@ -11,6 +11,7 @@ const Signup = () => {
   const [isOtpVerified, setIsOtpVerified] = useState(false);
   const [expectedOtp, setExpectedOtp] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSendOtp = async () => {
     if (!phoneNumber) {
@@ -18,7 +19,7 @@ const Signup = () => {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:5000/twilio/send_sms", {
+      const response = await axios.post("http://localhost:4000/twilio/send_sms", {
         phone_number: phoneNumber,
       });
       if (response.data.message === "OTP sent successfully") {
@@ -56,15 +57,24 @@ const Signup = () => {
     }
 
     setIsSubmitting(true);
+    setError("");
+
     try {
-      const response = await axios.post("http://localhost:5000/user/signup", {
+      const response = await axios.post("http://localhost:4000/user/signup", {
         fullname,
         phone_number: phoneNumber,
         password,
+        otp,
+        expected_otp: expectedOtp
       });
-      alert(response.data.message);
+
+      if (response.data.message) {
+        alert("Signup successful!");
+        window.location.href = '/login';
+      }
     } catch (error) {
-      alert("Signup failed");
+      setError(error.response?.data?.error || "Signup failed");
+      alert(error.response?.data?.error || "Signup failed");
     } finally {
       setIsSubmitting(false);
     }
@@ -74,27 +84,95 @@ const Signup = () => {
     <div className="flex h-screen bg-green-100">
       <div className="w-1/2 flex flex-col justify-center items-center">
         <h2 className="text-6xl font-bold mb-10">Sign Up</h2>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
         <form className="w-3/4" onSubmit={handleSignup}>
-          <input type="text" placeholder="Your Name" value={fullname} onChange={(e) => setFullname(e.target.value)} className="w-full p-2 mb-4 bg-white rounded-lg" />
-          <input type="text" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="w-full p-2 mb-4 bg-white rounded-lg" />
-          <button type="button" onClick={handleSendOtp} className="w-full bg-green-500 text-white py-2 rounded-xl mb-4" disabled={isOtpSent}>{isOtpSent ? "OTP Sent" : "Send OTP"}</button>
+          <input 
+            type="text" 
+            placeholder="Your Name" 
+            value={fullname} 
+            onChange={(e) => setFullname(e.target.value)} 
+            className="w-full p-2 mb-4 bg-white rounded-lg"
+            required 
+          />
+          <input 
+            type="text" 
+            placeholder="Phone Number" 
+            value={phoneNumber} 
+            onChange={(e) => setPhoneNumber(e.target.value)} 
+            className="w-full p-2 mb-4 bg-white rounded-lg"
+            required 
+          />
+          <button 
+            type="button" 
+            onClick={handleSendOtp} 
+            className="w-full bg-green-500 text-white py-2 rounded-xl mb-4 hover:bg-green-600 disabled:bg-green-300" 
+            disabled={isOtpSent}
+          >
+            {isOtpSent ? "OTP Sent" : "Send OTP"}
+          </button>
+          
           {isOtpSent && !isOtpVerified && (
             <>
-              <input type="text" placeholder="Enter OTP" value={otp} onChange={(e) => setOtp(e.target.value)} className="w-full p-2 mb-4 bg-white rounded-lg" />
-              <button type="button" onClick={handleVerifyOtp} className="w-full bg-green-500 text-white py-2 rounded-xl">Verify OTP</button>
+              <input 
+                type="text" 
+                placeholder="Enter OTP" 
+                value={otp} 
+                onChange={(e) => setOtp(e.target.value)} 
+                className="w-full p-2 mb-4 bg-white rounded-lg"
+                required 
+              />
+              <button 
+                type="button" 
+                onClick={handleVerifyOtp} 
+                className="w-full bg-green-500 text-white py-2 rounded-xl hover:bg-green-600"
+              >
+                Verify OTP
+              </button>
             </>
           )}
+          
           {isOtpVerified && (
             <>
-              <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full p-2 mb-4 bg-white rounded-lg" />
-              <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="w-full p-2 mb-4 bg-white rounded-lg" />
-              <button className="w-full bg-green-500 text-white py-2 rounded-xl" disabled={isSubmitting}>{isSubmitting ? "Signing Up..." : "Sign Up"}</button>
+              <input 
+                type="password" 
+                placeholder="Password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                className="w-full p-2 mb-4 bg-white rounded-lg"
+                required 
+              />
+              <input 
+                type="password" 
+                placeholder="Confirm Password" 
+                value={confirmPassword} 
+                onChange={(e) => setConfirmPassword(e.target.value)} 
+                className="w-full p-2 mb-4 bg-white rounded-lg"
+                required 
+              />
+              <button 
+                type="submit" 
+                className="w-full bg-green-500 text-white py-2 rounded-xl hover:bg-green-600 disabled:bg-green-300" 
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Signing Up..." : "Sign Up"}
+              </button>
             </>
           )}
-          <p className="text-sm mt-4">Already have an account? <a href="/login" className="text-green-500">Login</a></p>
+          
+          <p className="text-sm mt-4">
+            Already have an account? 
+            <a href="/login" className="text-green-500 hover:text-green-600 ml-1">
+              Login
+            </a>
+          </p>
         </form>
       </div>
-      <div className="w-96 h-96 mt-40 bg-cover bg-center flex justify-center items-center" style={{ backgroundImage: "url('/Images/farmer.webp')" }}></div>
+      <div 
+        className="w-96 h-96 mt-40 bg-cover bg-center flex justify-center items-center" 
+        style={{ backgroundImage: "url('/Images/farmer.webp')" }}
+        role="img" 
+        aria-label="Farmer illustration"
+      />
     </div>
   );
 };
