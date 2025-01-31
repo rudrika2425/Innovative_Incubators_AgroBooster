@@ -13,7 +13,8 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Flask app setup
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173"])  # Adjust the origin as needed
+CORS(app)  # Allow all origins (for development)
+  # Adjust the origin as needed
 
 # Configuration
 UPLOAD_FOLDER = "uploads"
@@ -39,10 +40,12 @@ def generate_prompt(user_query, language):
     if language == 'hi':  # Hindi
         # Main prompt for general analysis
         main_prompt = (
-            f"कृपया इस पौधे की छवि का विश्लेषण करें और इसके स्वास्थ्य, संभावित बीमारियों और उपचार के उपायों के बारे में सरल और स्पष्ट जानकारी दें। "
-            f"किसान का सवाल: {user_query}\n"
-            "उत्तर को संक्षेप में अलग-अलग पंक्तियों में दें।"
+            "कृपया इस पौधे की छवि का विश्लेषण करें और इसके स्वास्थ्य, संभावित बीमारियों और उपचार के उपायों के बारे में सरल और स्पष्ट जानकारी दें।\n\n"
+            "किसान का सवाल:\n"
+            f"{user_query}\n\n"
+            "उत्तर संक्षेप में दें और प्रत्येक जानकारी को एक नई पंक्ति में लिखें, बिना किसी विशेष चिह्न के।\n"
         )
+
 
         # Additional prompts for different situations (e.g., specific issues like pests, nutrition)
         if "कीट" in user_query or "कीटों" in user_query:  # If query is about pests
@@ -65,7 +68,7 @@ def generate_prompt(user_query, language):
         main_prompt = (
             f"Please analyze this plant image and provide simple and clear insights on its health, potential diseases, and suggested solutions. "
             f"Farmer's question: {user_query}\n"
-            "Please provide the answers in short and separate lines."
+            "Please provide the answers in short and separate lines without any special characters."
         )
 
         # Additional prompts for different situations (e.g., pests, fertilizers)
