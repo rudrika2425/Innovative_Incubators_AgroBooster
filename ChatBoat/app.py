@@ -13,7 +13,8 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Flask app setup
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173"])  # Adjust the origin as needed
+CORS(app)  # Allow all origins (for development)
+  # Adjust the origin as needed
 
 # Configuration
 UPLOAD_FOLDER = "uploads"
@@ -38,7 +39,7 @@ def generate_prompt(user_query, language):
 
     if language == 'hi':  # Hindi
         base_prompt = (
-           "पौधे की छवि का विश्लेषण करें और निम्न प्रारूप में उत्तर दें बिना किसी अतिरिक्त जानकारी और विशेष वर्णों के:\n"
+            "पौधे की छवि का विश्लेषण करें और निम्न प्रारूप में उत्तर दें बिना किसी अतिरिक्त जानकारी और विशेष वर्णों के:\n"
             "1. वर्तमान स्वास्थ्य स्थिति: पौधे के स्वास्थ्य का विस्तृत विवरण\n"
             "2. संभावित बीमारियां या समस्याएं: किसी भी संभावित स्वास्थ्य जोखिम का वर्णन\n"
             "3. तत्काल उपचार सिफारिशें: तुरंत की जाने वाली कार्रवाई\n"
@@ -73,6 +74,7 @@ def generate_prompt(user_query, language):
             base_prompt += "\n Focus specifically on nutritional needs and fertilization."
 
         return base_prompt
+
 
 
 
