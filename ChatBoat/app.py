@@ -46,7 +46,7 @@ def generate_prompt(user_query, language):
             "4. दीर्घकालिक देखभाल सुझाव: भविष्य में पौधे की देखभाल के लिए मार्गदर्शन\n"
             "\n"
             f"किसान का सवाल: {user_query}\n"
-            "उत्तर स्पष्ट, संक्षिप्त और सटीक होने चाहिए।"
+            "उत्तर स्पष्ट, संक्षिप्त और सटीक होने चाहिए बिना किसी अतिरिक्त विशेष वर्णों के।"
         )
 
         if "कीट" in user_query or "कीटों" in user_query:
@@ -65,7 +65,7 @@ def generate_prompt(user_query, language):
             "4. Long-term care suggestions: Guidance for future plant care\n"
             "\n"
             f"Farmer's specific query: {user_query}\n"
-            "Responses must be clear, concise, and precise."
+            "Responses must be clear, concise, and precise,without any extra special characters."
         )
 
         if "pest" in user_query or "insect" in user_query:
