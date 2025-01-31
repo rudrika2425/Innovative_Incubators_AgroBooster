@@ -34,55 +34,46 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def generate_prompt(user_query, language):
-    """Generate a simple and detailed prompt for analyzing plant health, based on the user's query and selected language."""
+    """Generate a structured prompt for plant health analysis with numbered, concise responses."""
 
     if language == 'hi':  # Hindi
-        # Main prompt for general analysis
-        main_prompt = (
-            f"कृपया इस पौधे की छवि का विश्लेषण करें और इसके स्वास्थ्य, संभावित बीमारियों और उपचार के उपायों के बारे में सरल और स्पष्ट जानकारी दें। "
+        base_prompt = (
+           "पौधे की छवि का विश्लेषण करें और निम्न प्रारूप में उत्तर दें बिना किसी अतिरिक्त जानकारी और विशेष वर्णों के:\n"
+            "1. वर्तमान स्वास्थ्य स्थिति: पौधे के स्वास्थ्य का विस्तृत विवरण\n"
+            "2. संभावित बीमारियां या समस्याएं: किसी भी संभावित स्वास्थ्य जोखिम का वर्णन\n"
+            "3. तत्काल उपचार सिफारिशें: तुरंत की जाने वाली कार्रवाई\n"
+            "4. दीर्घकालिक देखभाल सुझाव: भविष्य में पौधे की देखभाल के लिए मार्गदर्शन\n"
+            "\n"
             f"किसान का सवाल: {user_query}\n"
-            "उत्तर को संक्षेप में अलग-अलग पंक्तियों में दें।"
+            "उत्तर स्पष्ट, संक्षिप्त और सटीक होने चाहिए।"
         )
 
-        # Additional prompts for different situations (e.g., specific issues like pests, nutrition)
-        if "कीट" in user_query or "कीटों" in user_query:  # If query is about pests
-            additional_prompt = (
-                "अगर पौधे पर कीटों का हमला हो तो उसके इलाज के लिए उपयुक्त उपायों के बारे में जानकारी दें।\n"
-                "उत्तर को संक्षेप में अलग-अलग पंक्तियों में दें।"
-            )
-        elif "उर्वरक" in user_query or "खाद" in user_query:  # If query is about fertilizers
-            additional_prompt = (
-                "पौधे की बढ़वार के लिए सही उर्वरक या खाद के प्रयोग के बारे में जानकारी दें।\n"
-                "उत्तर को संक्षेप में अलग-अलग पंक्तियों में दें।"
-            )
-        else:
-            additional_prompt = ""
+        if "कीट" in user_query or "कीटों" in user_query:
+            base_prompt += "\n कीट नियंत्रण पर विशेष ध्यान दें।"
+        elif "उर्वरक" in user_query or "खाद" in user_query:
+            base_prompt += "\n पोषण और उर्वरक की आवश्यकताओं पर ध्यान दें।"
 
-        return main_prompt + additional_prompt
+        return base_prompt
 
     else:  # Default to English
-        # Main prompt for general analysis
-        main_prompt = (
-            f"Please analyze this plant image and provide simple and clear insights on its health, potential diseases, and suggested solutions. "
-            f"Farmer's question: {user_query}\n"
-            "Please provide the answers in short and separate lines."
+        base_prompt = (
+            "Analyze the plant image and respond in the following format without any extra information and special character:\n"
+            "1. Current health status: Detailed description of the plant's health\n"
+            "2. Potential diseases or issues: Description of any potential health risks\n"
+            "3. Immediate treatment recommendations: Actions to take immediately\n"
+            "4. Long-term care suggestions: Guidance for future plant care\n"
+            "\n"
+            f"Farmer's specific query: {user_query}\n"
+            "Responses must be clear, concise, and precise."
         )
 
-        # Additional prompts for different situations (e.g., pests, fertilizers)
-        if "pest" in user_query or "insect" in user_query:  # If query is about pests
-            additional_prompt = (
-                "If there are pests affecting the plant, please provide the best treatment methods to address the issue.\n"
-                "Please provide the answers in short and separate lines."
-            )
-        elif "fertilizer" in user_query or "manure" in user_query:  # If query is about fertilizers
-            additional_prompt = (
-                "Please suggest the right fertilizer or manure for the plant's growth and health.\n"
-                "Please provide the answers in short and separate lines."
-            )
-        else:
-            additional_prompt = ""
+        if "pest" in user_query or "insect" in user_query:
+            base_prompt += "\n Focus specifically on pest control methods."
+        elif "fertilizer" in user_query or "manure" in user_query:
+            base_prompt += "\n Focus specifically on nutritional needs and fertilization."
 
-        return main_prompt + additional_prompt
+        return base_prompt
+
 
 
 @app.route('/upload', methods=['POST'])

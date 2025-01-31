@@ -89,24 +89,70 @@ const Chatbot = () => {
   };
 
   const speak = (text) => {
+    // Cancel any ongoing speech
     window.speechSynthesis.cancel();
-    const speech = new SpeechSynthesisUtterance(text);
-    const selectedLang = languages.find(lang => lang.code === currentLanguage);
-    speech.lang = selectedLang.voice;
-
+  
+    // Find appropriate voice
     const voices = window.speechSynthesis.getVoices();
-    const voice = voices.find(v => v.lang.startsWith(selectedLang.voice)) || voices[0];
-    if (voice) speech.voice = voice;
-
-    window.speechSynthesis.speak(speech);
+    const selectedLang = languages.find(lang => lang.code === currentLanguage);
+    
+    const voice = voices.find(v => {
+      if (currentLanguage === 'en') {
+        return v.lang.startsWith('en-US') || v.lang.startsWith('en-IN');
+      }
+      if (currentLanguage === 'hi') {
+        return v.lang.startsWith('hi-IN') || 
+               v.lang.includes('Hindi') || 
+               v.name.includes('Hindi');
+      }
+      return false;
+    }) || voices[0];
+  
+    // Split text into chunks for Hindi to ensure full speech
+    const speakChunks = (chunks) => {
+      if (chunks.length === 0) return;
+  
+      const speech = new SpeechSynthesisUtterance(chunks[0]);
+      speech.lang = selectedLang.voice;
+      
+      if (voice) {
+        speech.voice = voice;
+      }
+  
+      speech.rate = currentLanguage === 'hi' ? 0.8 : 0.9;
+      speech.pitch = currentLanguage === 'hi' ? 1.1 : 1.0;
+  
+      speech.onend = () => {
+        // Speak next chunk
+        speakChunks(chunks.slice(1));
+      };
+  
+      window.speechSynthesis.speak(speech);
+    };
+  
+    // Split text into chunks of reasonable length
+    const chunks = currentLanguage === 'hi' 
+      ? text.match(/.{1,100}(?:\s|$)/g) || [text]
+      : [text];
+  
+    speakChunks(chunks);
   };
-
+  
+  const processMultilineResponse = (response) => {
+    // Split response by line breaks, filter out empty lines
+    const lines = response.split('\n')
+      .filter(line => line.trim() !== '')
+      .map(line => line.trim());
+  
+    return lines;
+  };
+  
   const handleChatSubmit = async (voiceInput = null) => {
     const messageText = voiceInput || chatInput;
     if (!messageText) return;
-
+  
     setMessages(prev => [...prev, { type: "user", text: messageText }]);
-
+  
     try {
       const response = await fetch("http://127.0.0.1:5000/chat", {
         method: 'POST',
@@ -118,42 +164,64 @@ const Chatbot = () => {
           language: currentLanguage
         })
       });
-
+  
       const data = await response.json();
-      setMessages(prev => [...prev, { type: "bot", text: data.response }]);
-      speak(data.response);
+      
+      // Process response to create line-by-line messages
+      const processedResponse = processMultilineResponse(data.response);
+      
+      processedResponse.forEach(line => {
+        setMessages(prev => [...prev, { type: "bot", text: line }]);
+      });
+  
+      // Speak last line or full response
+      speak(processedResponse.join(' '));
     } catch (error) {
       console.error("Chatbot error:", error);
     }
-
+  
     setChatInput("");
   };
-
+  
   const handleFileUpload = async () => {
     if (!file) return;
-
+  
     const uploadText = currentLanguage === 'en' ? "Uploading file..." : "फ़ाइल अपलोड हो रही है...";
     setMessages(prev => [...prev, { type: "user", text: uploadText }]);
-
+  
     const formData = new FormData();
     formData.append("file", file);
     formData.append("query", chatInput);
     formData.append("language", currentLanguage);
-
+  
     try {
       const response = await fetch("http://127.0.0.1:5000/upload", {
         method: 'POST',
         body: formData
       });
-
+  
       const data = await response.json();
-      setMessages(prev => [...prev, {
-        type: "bot",
-        text: data.analysis || (currentLanguage === 'en' ? 
+      
+      if (data.analysis) {
+        // Process analysis into line-by-line messages
+        const processedAnalysis = processMultilineResponse(data.analysis);
+        
+        processedAnalysis.forEach(line => {
+          setMessages(prev => [...prev, {
+            type: "bot",
+            text: line
+          }]);
+        });
+  
+        // Speak last line or full response
+        speak(processedAnalysis.join(' '));
+      } else {
+        const errorMsg = currentLanguage === 'en' ? 
           "Analysis failed. Please try again." : 
-          "विश्लेषण विफल हुआ। कृपया पुनः प्रयास करें।")
-      }]);
-      speak(data.analysis);
+          "विश्लेषण विफल हुआ। कृपया पुनः प्रयास करें।";
+        setMessages(prev => [...prev, { type: "bot", text: errorMsg }]);
+        speak(errorMsg);
+      }
     } catch (error) {
       console.error("File upload error:", error);
       const errorMsg = currentLanguage === 'en' ? 
