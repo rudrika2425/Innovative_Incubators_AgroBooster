@@ -3,12 +3,15 @@ import axios from 'axios';
 
 const SoilTestReportUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [fileName, setFileName] = useState('');
   const [result, setResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    setFileName(file ? file.name : '');
   };
 
   const handleUpload = async () => {
@@ -32,8 +35,6 @@ const SoilTestReportUploader = () => {
       // Handle response data properly
       if (response.data?.analysis) {
         setResult(response.data.analysis); // Set the simple string response
-        console.log(response)
-        console.log(result);
       } else {
         setErrorMessage('No analysis result received.');
       }
@@ -46,23 +47,30 @@ const SoilTestReportUploader = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 space-y-4">
-      <div className="w-full max-w-md p-4 border rounded-lg shadow-md">
-        <h2 className="text-xl font-bold mb-4">Upload Soil Test Report</h2>
-        <input 
-          type="file" 
-          accept="image/*" 
-          onChange={handleFileChange} 
-          className="block w-full p-2 border rounded-md mb-4" 
+    <div>
+      <h2 className="text-4xl font-bold mb-4 text-green-600 mb-6 mt-10">Upload Soil Test Report</h2>
+
+      {/* Show file input box if no file is selected */}
+      {!selectedFile ? (
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="block w-96 p-2 border rounded-md mb-4"
         />
-        <button 
-          onClick={handleUpload} 
-          disabled={isLoading} 
-          className={`px-4 py-2 text-white rounded-md ${isLoading ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'}`}
-        >
-          {isLoading ? 'Analyzing...' : 'Upload and Analyze'}
-        </button>
-      </div>
+      ) : (
+        <div className="mb-4">
+          <span className="text-gray-400">Selected File: {fileName}</span>
+        </div>
+      )}
+
+      <button
+        onClick={handleUpload}
+        disabled={isLoading || !selectedFile}
+        className={`px-4 py-2 text-white rounded-md ${isLoading || !selectedFile ? 'bg-green-600' : 'bg-green-600 hover:bg-green-700'}`}
+      >
+        {isLoading ? 'Analyzing...' : 'Upload and Analyze'}
+      </button>
 
       {/* Display error message if any */}
       {errorMessage && (
@@ -74,8 +82,8 @@ const SoilTestReportUploader = () => {
 
       {/* Display analysis result if available */}
       {result && (
-        <div className="w-full max-w-md p-4 mt-4 border rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-2">Analysis Result</h3>
+        <div className="w-full max-w-md p-4 mt-4  rounded-lg shadow-md">
+          <h3 className="text-xl font-semibold mb-2">Analysis Result</h3>
           <div className="p-2 bg-gray-100 rounded-md">
             <p>{result}</p>
           </div>

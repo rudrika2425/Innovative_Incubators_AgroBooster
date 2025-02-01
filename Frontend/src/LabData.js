@@ -897,8 +897,404 @@ const LabData = [
               "phoneNumber": "",
               "email": ""
             }
-          
-          
+            ,
+              {
+                "labName": "Regional Soil Testing Lab Varanasi",
+                "address": "NH731B, Varanasi, Sadar, Varanasi, Uttar Pradesh, 221107, India",
+                "state": "UTTAR PRADESH",
+                "district": "VARANASI",
+                "phoneNumber": "+918765774352",
+                "email": "adstlab@gmail.com"
+              },
+              {
+                "labName": "Ksetriya Bhumi Parikshan Prayogshala, Moradabad",
+                "address": "Moradabad, Uttar Pradesh, 244001, India",
+                "state": "UTTAR PRADESH",
+                "district": "MORADABAD",
+                "phoneNumber": "+919457282935",
+                "email": "kuldeepstlmbd@gmail.com"
+              },
+              {
+                "labName": "Soil Testing Lab",
+                "address": "Bulandshahr, बुलन्दशहर, Uttar Pradesh, 203001, India",
+                "state": "UTTAR PRADESH",
+                "district": "BULANDSHAHR",
+                "phoneNumber": "+918920853646",
+                "email": "tchand.p@gmail.com"
+              },
+              {
+                "labName": "Soil Testing Lab Sambhal",
+                "address": "CHANDAUSI Sambhal, Uttar Pradesh, 244302, India",
+                "state": "UTTAR PRADESH",
+                "district": "SAMBHAL",
+                "phoneNumber": "+918077594524",
+                "email": "stl659sambhal@gmail.com"
+              },
+              {
+                "labName": "District Soil Testing Lab",
+                "address": "Orai, Jalaun, Uttar Pradesh, India",
+                "state": "UTTAR PRADESH",
+                "district": "JALAUN",
+                "phoneNumber": "+919695089390",
+                "email": "soiltestinglaborai@gmail.com"
+              },
+              {
+                "labName": "District Soil Testing Laboratory",
+                "address": "NH927, Masauli, Nawabganj, Barabanki, Uttar Pradesh, 225203, India",
+                "state": "UTTAR PRADESH",
+                "district": "BARABANKI",
+                "phoneNumber": "+917982142074",
+                "email": "anuraglko12@gmail.com"
+              },
+              {
+                "labName": "Soil Testing Lab Rampur",
+                "address": "Rampur, Rampur District, Uttar Pradesh, 244901, India",
+                "state": "UTTAR PRADESH",
+                "district": "RAMPUR",
+                "phoneNumber": "+918218775459",
+                "email": "gajendrapalsingh5283@gmail.com"
+              },
+              {
+                "labName": "LAB_deoria",
+                "address": "UMA Nagar, Deoria, Uttar Pradesh, 274001, India",
+                "state": "UTTAR PRADESH",
+                "district": "DEORIA",
+                "phoneNumber": "+918858298112",
+                "email": "smchaurasiya77@gmail.com"
+              },
+              {
+                "labName": "Regional Soil Testing Laboratory Alambagh Lucknow",
+                "address": "Charbagh, Lucknow, Uttar Pradesh, 226019, India",
+                "state": "UTTAR PRADESH",
+                "district": "LUCKNOW",
+                "phoneNumber": "+919838153951",
+                "email": "munendrata@gmail.com"
+              },
+              {
+                "labName": "Soil Testing Lab Raebareli",
+                "address": "रायबरेली, Raebareli, Uttar Pradesh, 229001, India",
+                "state": "UTTAR PRADESH",
+                "district": "RAE BARELI",
+                "phoneNumber": "+918423251978",
+                "email": "sgovind1087@gmail.com"
+              },
+              {
+                "labName": "STL, Lalitpur",
+                "address": "Lalitpur, Lalitpur Tehsil, Lalitpur, Uttar Pradesh, 284403, India",
+                "state": "UTTAR PRADESH",
+                "district": "LALITPUR",
+                "phoneNumber": "+917309700324",
+                "email": "ramjankhan.rjk88@gmail.com"
+              },
+              {
+                "labName": "Soil Testing Lab Chandauli",
+                "address": "चंदौली, Chandauli, Uttar Pradesh, 232104, India",
+                "state": "UTTAR PRADESH",
+                "district": "CHANDAULI",
+                "phoneNumber": "+919616782971",
+                "email": "samarbahadurdaulatiya9@gmail.com"
+              },
+              {
+                "labName": "Assistant Director Soil Testing and Culture Bilwa Bareilly",
+                "address": "NH530, Bareilly, Bareilly District, Uttar Pradesh, 243001, India",
+                "state": "UTTAR PRADESH",
+                "district": "BAREILLY",
+                "phoneNumber": "+917276516781",
+                "email": "jitu.singh0070@gmail.com"
+              },
+              {
+                "labName": "Soil Testing Lab Budaun",
+                "address": "Budaun, Uttar Pradesh, 243600, India",
+                "state": "UTTAR PRADESH",
+                "district": "BUDAUN",
+                "phoneNumber": "+918279867188",
+                "email": "pushpendra6889@gmail.com"
+              },
+              {
+                "labName": "Soil Testing Lab Amroha",
+                "address": "अमरोहा, Amroha, Jyotiba Phule Nagar, उत्तर प्रदेश, 244221, भारत",
+                "state": "UTTAR PRADESH",
+                "district": "AMROHA",
+                "phoneNumber": "+917983315219",
+                "email": "surendrasinghaai@gmail.com"
+              },
+              {
+                "labName": "District Soil Testing Laboratory",
+                "address": "Maharajganj, Mahrajganj, Uttar Pradesh, 273303, India",
+                "state": "UTTAR PRADESH",
+                "district": "MAHARAJGANJ",
+                "phoneNumber": "+919026449743",
+                "email": "ks294193@gmail.com"
+              },
+              {
+                "labName": "Soil Testing Lab Aligarh",
+                "address": "Koil, अलीगढ़ जिला, Uttar Pradesh, India",
+                "state": "UTTAR PRADESH",
+                "district": "ALIGARH",
+                "phoneNumber": "+919719037174",
+                "email": "ppsingh020882@gmail.com"
+              },
+              
+                {
+                  "labName": "S.T.L Bijnor",
+                  "address": "बिजनौर, Bijnor, Uttar Pradesh, 246700, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "BIJNOR",
+                  "phoneNumber": "+919258841948",
+                  "email": "subodhkumar130789@gmail.com"
+                },
+                {
+                  "labName": "LAB SITAPUR",
+                  "address": "Sitapur, Uttar Pradesh, 261001, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "SITAPUR",
+                  "phoneNumber": "+919412183168",
+                  "email": "yadavshivkumar34@gmail.com"
+                },
+                {
+                  "labName": "District Soil Testing Lab, Mau",
+                  "address": "Mau, Maunath Bhanjan, Mau, Uttar Pradesh, 275101, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "MAU",
+                  "phoneNumber": "+919670032034",
+                  "email": "laxmikantyadav119@gmail.com"
+                },
+                {
+                  "labName": "Soil Testing Lab Shravasti",
+                  "address": "Bhinga, Sharawasti, Uttar Pradesh, 271831, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "SHRAVASTI",
+                  "phoneNumber": "+919935168084",
+                  "email": "ikhlaqknp@gmail.com"
+                },
+                {
+                  "labName": "Lab Jaunpur",
+                  "address": "NH31;NH731, Jaunpur, Uttar Pradesh, 222001, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "JAUNPUR",
+                  "phoneNumber": "+919450241796",
+                  "email": "soiltestinglabjaunpur@gmail.com"
+                },
+                {
+                  "labName": "STL ETAH",
+                  "address": "Etah, Uttar Pradesh, 207001, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "ETAH",
+                  "phoneNumber": "+919457604077",
+                  "email": "scyadav181@gmail.com"
+                },
+                {
+                  "labName": "LAB PRATAPGARH",
+                  "address": "Katra Road, Pratapgarh, Uttar Pradesh, 230001, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "PRATAPGARH",
+                  "phoneNumber": "+918318007727",
+                  "email": "pbhsoil123@gmail.com"
+                },
+                {
+                  "labName": "SOIL TESTING LAB",
+                  "address": "Delhi road, Meerut, Uttar Pradesh, 250002, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "MEERUT",
+                  "phoneNumber": "+919458738043",
+                  "email": "ANILK19911991@GMAIL.COM"
+                },
+                {
+                  "labName": "Lab Kannauj",
+                  "address": "Kannauj, Uttar Pradesh, 209725, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "KANNAUJ",
+                  "phoneNumber": "+919761450542",
+                  "email": "stl.kannauj155@gmail.com"
+                },
+                {
+                  "labName": "Janpadiya Bhumi Parikshad Prayogsala",
+                  "address": "Padrauna, Kushinagar, Uttar Pradesh, 274304, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "KUSHI NAGAR",
+                  "phoneNumber": "+917905433001",
+                  "email": "sarveshkumarsharma182@gmail.com"
+                },
+                {
+                  "labName": "मृदा परीक्षण प्रयोगशाला कासगंज",
+                  "address": "Kasganj, Uttar Pradesh, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "Kasganj",
+                  "phoneNumber": "+918279563471",
+                  "email": "rohitashkumar1824@gmail.com"
+                },
+                {
+                  "labName": "soil testing lab hapur",
+                  "address": "Hapur, Uttar Pradesh, 245101, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "HAPUR",
+                  "phoneNumber": "+919837760836",
+                  "email": "prvnnehra@gmail.com"
+                },
+                {
+                  "labName": "Soil Testing Lab Baghpat",
+                  "address": "Baghpat, Uttar Pradesh, 250609, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "BAGHPAT",
+                  "phoneNumber": "+919058595892",
+                  "email": "Rishpal092@gmail.com"
+                },
+                {
+                  "labName": "soil testing lab, bhadohi",
+                  "address": "Gyanpur-Bhadohi Road, Gyanpur, Sant Ravidas Nagar, Uttar Pradesh, 221304, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "BHADOHI",
+                  "phoneNumber": "+917071523641",
+                  "email": "pavanbhu07@gmail.com"
+                },
+                {
+                  "labName": "Regional Soil Testing Lab, Kanpur Nagar",
+                  "address": "Krashi Bhavan , Kanpur Mandal Kanpur, Rawatpur Kanpur Nagar, Uttar Pradesh, 208002, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "KANPUR NAGAR",
+                  "phoneNumber": "+919058595892",
+                  "email": "chhotebabu1983@gmail.com"
+                },
+                {
+                  "labName": "Regional soil testing lab kotwa azamgarh",
+                  "address": "NH28, Azamgarh, Uttar Pradesh, 276001, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "AZAMGARH",
+                  "phoneNumber": "+919628589044",
+                  "email": "stlazamgarh123@gmail.com"
+                },
+                {
+                  "labName": "soil testing lab Ghaziabad",
+                  "address": "Ghaziabad, Ghaziabad District, Uttar Pradesh, 201002, India",
+                  "state": "UTTAR PRADESH",
+                  "district": "GHAZIABAD",
+                  "phoneNumber": "+917987704682",
+                  "email": "soillabghaziabad@gmail.com"
+                },
+                
+                  {
+                    "labName": "SOIL TESTING LABORATORY LOHAGHAT CHAMPAWAT",
+                    "address": "SH 10, Lohaghat, Champawat, Uttarakhand, 262524, India",
+                    "state": "UTTARAKHAND",
+                    "district": "CHAMPAWAT",
+                    "phoneNumber": "+919756319629",
+                    "email": "stllohaghat@gmail.com"
+                  },
+                  {
+                    "labName": "REGIONAL SOIL TESTING LAB RUDRAPUR",
+                    "address": "NH109, Rudrapur, Kichha, Udham Singh Nagar, Uttarakhand, 263153, India",
+                    "state": "UTTARAKHAND",
+                    "district": "UDHAM SINGH NAGAR",
+                    "phoneNumber": "+919756979211",
+                    "email": "adsoilrudrapur@gmail.com"
+                  },
+                  {
+                    "labName": "GOVT SOIL TESTING LAB ALMORA",
+                    "address": "NH109, Kosi, Almora, Uttarakhand, 263601, India",
+                    "state": "UTTARAKHAND",
+                    "district": "ALMORA",
+                    "phoneNumber": "+919411119573",
+                    "email": "kosialmora1@gmail.com"
+                  },
+                  {
+                    "labName": "GOVT SOIL TESTING LAB BAGESHWAR",
+                    "address": "Ara, Kathayatbara, Bageshwar, Uttarakhand, 263642, India",
+                    "state": "UTTARAKHAND",
+                    "district": "BAGESHWAR",
+                    "phoneNumber": "+918394050530",
+                    "email": "dr.narendersingh75@gmail.com"
+                  },
+                  {
+                    "labName": "GOVT SOIL TESTING LAB UTTARKASHI",
+                    "address": "Nim, Bhatwari, Uttarkashi district, Uttarakhand, 249151, India",
+                    "state": "UTTARAKHAND",
+                    "district": "UTTAR KASHI",
+                    "phoneNumber": "+919458328968",
+                    "email": "caouki.agri@gmail.com"
+                  },
+                  {
+                    "labName": "GOVT SOIL TESTING LAB RUDRAPRAYAG",
+                    "address": "Khurar, Rudraprayag, Uttarakhand, 246495, India",
+                    "state": "UTTARAKHAND",
+                    "district": "RUDRA PRAYAG",
+                    "phoneNumber": "+919456327478",
+                    "email": "bdsemwal1963@gmail.com"
+                  },
+                  {
+                    "labName": "GOVT SOIL TESTING LAB CHAMOLI",
+                    "address": "Lālsānga, Chamoli-Gopeshwar, Chamoli Tehsil, Chamoli district, Uttarakhand, 246401, India",
+                    "state": "UTTARAKHAND",
+                    "district": "CHAMOLI",
+                    "phoneNumber": "+919720486814",
+                    "email": "mangeramdhariwal555@gmail.com"
+                  },
+                  {
+                    "labName": "REGIONAL SOIL TESTING LABORATORY SRINAGAR",
+                    "address": "Rampur, Srinagar, Pauri Garhwal, Uttarakhand, 246147, India",
+                    "state": "UTTARAKHAND",
+                    "district": "PAURI GARHWAL",
+                    "phoneNumber": "+918126293240",
+                    "email": "adstlsrinagar@gmail.com"
+                  },
+                  {
+                    "labName": "GOVT SOIL TESTING LAB TEHRI GARHWAL",
+                    "address": "Budogi, Moldhar, Tehri, Tehri Garhwal, Uttarakhand, 249001, India",
+                    "state": "UTTARAKHAND",
+                    "district": "TEHRI GARHWAL",
+                    "phoneNumber": "+919568251219",
+                    "email": "jawaharlalraturi111@gmail.com"
+                  },
+                  {
+                    "labName": "GOVT SOIL TESTING LAB NAINITAL",
+                    "address": "Bharatpur, Nainital, Uttarakhand, 263136, India",
+                    "state": "UTTARAKHAND",
+                    "district": "NAINITAL",
+                    "phoneNumber": "+919410158761",
+                    "email": "bhupal.agr@gmail.com"
+                  },
+                  {
+                    "labName": "GOVT SOIL TESTING LAB PITHORAGARH",
+                    "address": "B C Joshi APS, Jhulaghat Road, Kashni, Pithoragarh Tehsil, Pithoragarh district, Uttarakhand, 262500, India",
+                    "state": "UTTARAKHAND",
+                    "district": "PITHORAGARH",
+                    "phoneNumber": "+918449794807",
+                    "email": "bhuwantiwari0101@gmail.com"
+                  },
+                  {
+                    "labName": "GOVT SOIL TESTING LAB DEHRADUN",
+                    "address": "Kolhūpāni, Vikasnagar, Dehradun, Uttarakhand, 248007, India",
+                    "state": "UTTARAKHAND",
+                    "district": "DEHRADUN",
+                    "phoneNumber": "+917895651472",
+                    "email": "stldehradun01@gmail.com"
+                  },
+                  {
+                    "labName": "SOIL TESTING LABORATORY HARIDWAR",
+                    "address": "Bahadrabad, Haridwar, Uttarakhand, 249401, India",
+                    "state": "UTTARAKHAND",
+                    "district": "HARIDWAR",
+                    "phoneNumber": "+919719118566",
+                    "email": "soillabharidwar2023@gmail.com"
+                  },
+                  {
+                    "labName": "PRIVATE VILLAGE SOIL TESTING LAB",
+                    "address": "Laksar, Haridwar, Uttarakhand, India",
+                    "state": "UTTARAKHAND",
+                    "district": "HARIDWAR",
+                    "phoneNumber": "+918218821010",
+                    "email": "sumitgujjar836@gmail.com"
+                  },
+                  {
+                    "labName": "KVK CHINYALI",
+                    "address": "Krishi Vigyan Kendra Chinyalisaur Uttarkashi, Chinyalisour, Uttarakhand, India",
+                    "state": "UTTARAKHAND",
+                    "district": "UTTAR KASHI",
+                    "phoneNumber": "+919719432384",
+                    "email": "kvkchinyalisaur@gmail.com"
+                  },
+                  
+                 
+                
           
       
     ];

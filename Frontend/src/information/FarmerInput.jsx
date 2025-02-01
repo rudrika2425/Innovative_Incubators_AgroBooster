@@ -123,7 +123,7 @@ const FarmerInput = () => {
       className="space-y-6 bg-white p-6 rounded-lg shadow-lg"
     >
       <div className="flex flex-row">
-        <h2 className="text-3xl font-bold text-green-600">Basic Information</h2>
+        <h2 className="text-4xl font-bold text-green-600">Basic Information</h2>
         <div className="ml-190">
           <label className="block font-semibold mb-2">Select Language</label>
           <select
