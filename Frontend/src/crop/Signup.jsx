@@ -69,6 +69,7 @@ const Signup = () => {
       });
 
       if (response.data.message) {
+        console.log(response.data);
         alert("Signup successful!");
         window.location.href = '/login';
       }
