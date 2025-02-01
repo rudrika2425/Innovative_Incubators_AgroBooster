@@ -21,6 +21,7 @@ function App() {
   return (
 
     <LanguageProvider>  
+       <UserProvider>   
       <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />
@@ -37,6 +38,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
+      </UserProvider>
     </LanguageProvider>
   );
 }

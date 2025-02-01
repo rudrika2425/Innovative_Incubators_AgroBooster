@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useUser } from "../Context/UserContext";
-import { Phone, Lock, LogIn, Sprout } from "lucide-react";
-import loginImage from "../assets/login.jpg"; // Replace with the appropriate image path
+import { Phone, Lock, Sprout } from "lucide-react";
+import loginImage from "../assets/login.jpg"; 
 
 const Login = () => {
   const { setUser } = useUser();
