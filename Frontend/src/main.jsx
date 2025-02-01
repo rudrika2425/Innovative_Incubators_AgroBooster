@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import 'font-awesome/css/font-awesome.min.css';
 import "./i18n"; 
+import 'regenerator-runtime/runtime';
 
 
 createRoot(document.getElementById('root')).render(

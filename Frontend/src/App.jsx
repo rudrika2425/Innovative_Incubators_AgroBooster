@@ -15,28 +15,28 @@ import FarmerInput from "./information/FarmerInput";
 import SoilTest from "./information/SoilTest";
 import TestUser from "./information/Test2";
 
+
+
 function App() {
   return (
-    <LanguageProvider>
-      <UserProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/rent" element={<Rent />} />
-            <Route path="/receive" element={<RentProduct />} />
-            <Route path="/description" element={<Description />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/chatbot" element={<Chatbot />} />
-            <Route path="/testuser" element={<TestUser/>}/>
-            <Route path="/test" element={<SoilTestReportUploader />} />
-            <Route path="/farmer-Information" element={<FarmerDashboard />}>
-              <Route path="step1" element={<FarmerInput />} />
-              <Route path="step2" element={<SoilTest />} />
-            </Route>
-          </Routes>
-        </Router>
-      </UserProvider>
+
+    <LanguageProvider>  
+      <Router>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/rent" element={<Rent />} />
+          <Route path="/receive" element={<RentProduct />} />
+          <Route path="/description" element={<Description />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/test" element={<SoilTestReportUploader />} />
+          <Route path="/farmer-Information" element={<FarmerDashboard />}>
+            <Route path="basicInformation" element={<FarmerInput />} />
+            <Route path="soilTesting" element={<SoilTest />} />
+          </Route>
+        </Routes>
+      </Router>
     </LanguageProvider>
   );
 }
