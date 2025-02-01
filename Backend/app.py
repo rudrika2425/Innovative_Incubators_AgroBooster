@@ -1,10 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
-from flask_pymongo import PyMongo
+import pymongo
 from config import Config
-
-# Initialize PyMongo globally but do not initialize it yet
-mongo = PyMongo()
 
 def create_app():
     app = Flask(__name__)
@@ -14,19 +11,20 @@ def create_app():
     
     # Initialize extensions
     CORS(app)
-    
-    # Initialize MongoDB with the app
-    mongo.init_app(app)
+
+    # Initialize MongoDB
+    client = pymongo.MongoClient(app.config["MONGO_URI"])
+    app.db = client.get_database()  # ✅ This makes db accessible as current_app.db
 
     # Test MongoDB connection
     try:
-        mongo.db.command('ping')  # Pings MongoDB to check if it's connected
+        app.db.command('ping')  # ✅ Pings MongoDB to check if it's connected
         print("✅ MongoDB connection successful!")
     except Exception as e:
         print(f"❌ MongoDB connection failed! Error: {e}")
         raise e  # Stop app if MongoDB fails
 
-    # Import blueprints after initializing mongo
+    # Import blueprints after initializing MongoDB
     from routes.auth_routes import auth_bp
     from routes.twilio_routes import twilio_bp
     from routes.analyze_soil_report_routes import analyze_soil_report_bp
@@ -37,13 +35,19 @@ def create_app():
     # Register blueprints
     app.register_blueprint(auth_bp, url_prefix="/user")
     app.register_blueprint(twilio_bp, url_prefix="/twilio")
-    app.register_blueprint(analyze_soil_report_bp, url_prefix='/analyze_soil')
-    app.register_blueprint(location_bp, url_prefix='/location')
-    app.register_blueprint(weather_bp, url_prefix='/weather')
-    app.register_blueprint(weather_forecast_bp, url_prefix='/weather_forecast')
+    app.register_blueprint(analyze_soil_report_bp, url_prefix="/analyze_soil")
+    app.register_blueprint(location_bp, url_prefix="/location")
+    app.register_blueprint(weather_bp, url_prefix="/weather")
+    app.register_blueprint(weather_forecast_bp, url_prefix="/weather_forecast")
+
+    # Attach MongoDB client to app for access in routes
+    app.mongo_client = client  # ✅ Fixed this
 
     return app
 
 if __name__ == "__main__":
     app = create_app()
-    app.run(debug=True, port=4000)
+    if app:
+        app.run(debug=True, port=4000)  # Run the Flask app only if MongoDB is connected
+    else:
+        print("❌ Application startup failed due to MongoDB connection error.")

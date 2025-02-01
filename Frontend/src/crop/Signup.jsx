@@ -86,91 +86,100 @@ const Signup = () => {
         <h2 className="text-6xl font-bold mb-10">Sign Up</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <form className="w-3/4" onSubmit={handleSignup}>
-          <input 
-            type="text" 
-            placeholder="Your Name" 
-            value={fullname} 
-            onChange={(e) => setFullname(e.target.value)} 
+          <input
+            type="text"
+            placeholder="Your Name"
+            value={fullname}
+            onChange={(e) => setFullname(e.target.value)}
             className="w-full p-2 mb-4 bg-white rounded-lg"
-            required 
+            required
           />
-          <input 
-            type="text" 
-            placeholder="Phone Number" 
-            value={phoneNumber} 
-            onChange={(e) => setPhoneNumber(e.target.value)} 
+          <input
+            type="text"
+            placeholder="Phone Number"
+            value={phoneNumber}
+            onChange={(e) => {
+              let input = e.target.value;
+
+              // Ensure it always starts with +91
+              if (!input.startsWith("+91")) {
+                input = "+91" + input.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+              }
+
+              setPhoneNumber(input);
+            }}
             className="w-full p-2 mb-4 bg-white rounded-lg"
-            required 
+            required
           />
-          <button 
-            type="button" 
-            onClick={handleSendOtp} 
-            className="w-full bg-green-500 text-white py-2 rounded-xl mb-4 hover:bg-green-600 disabled:bg-green-300" 
+          <button
+            type="button"
+            onClick={handleSendOtp}
+            className="w-full bg-green-500 text-white py-2 rounded-xl mb-4 hover:bg-green-600 disabled:bg-green-300"
             disabled={isOtpSent}
           >
             {isOtpSent ? "OTP Sent" : "Send OTP"}
           </button>
-          
+
           {isOtpSent && !isOtpVerified && (
             <>
-              <input 
-                type="text" 
-                placeholder="Enter OTP" 
-                value={otp} 
-                onChange={(e) => setOtp(e.target.value)} 
+              <input
+                type="text"
+                placeholder="Enter OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
                 className="w-full p-2 mb-4 bg-white rounded-lg"
-                required 
+                required
               />
-              <button 
-                type="button" 
-                onClick={handleVerifyOtp} 
+              <button
+                type="button"
+                onClick={handleVerifyOtp}
                 className="w-full bg-green-500 text-white py-2 rounded-xl hover:bg-green-600"
               >
                 Verify OTP
               </button>
             </>
           )}
-          
+
           {isOtpVerified && (
             <>
-              <input 
-                type="password" 
-                placeholder="Password" 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full p-2 mb-4 bg-white rounded-lg"
-                required 
+                required
               />
-              <input 
-                type="password" 
-                placeholder="Confirm Password" 
-                value={confirmPassword} 
-                onChange={(e) => setConfirmPassword(e.target.value)} 
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full p-2 mb-4 bg-white rounded-lg"
-                required 
+                required
               />
-              <button 
-                type="submit" 
-                className="w-full bg-green-500 text-white py-2 rounded-xl hover:bg-green-600 disabled:bg-green-300" 
+              <button
+                type="submit"
+                className="w-full bg-green-500 text-white py-2 rounded-xl hover:bg-green-600 disabled:bg-green-300"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Signing Up..." : "Sign Up"}
               </button>
             </>
           )}
-          
+
           <p className="text-sm mt-4">
-            Already have an account? 
+            Already have an account?
             <a href="/login" className="text-green-500 hover:text-green-600 ml-1">
               Login
             </a>
           </p>
         </form>
       </div>
-      <div 
-        className="w-96 h-96 mt-40 bg-cover bg-center flex justify-center items-center" 
+      <div
+        className="w-96 h-96 mt-40 bg-cover bg-center flex justify-center items-center"
         style={{ backgroundImage: "url('/Images/farmer.webp')" }}
-        role="img" 
+        role="img"
         aria-label="Farmer illustration"
       />
     </div>
