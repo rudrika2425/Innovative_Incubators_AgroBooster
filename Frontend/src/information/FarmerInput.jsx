@@ -1,7 +1,7 @@
 // components/BasicInfoForm.jsx
 import React, { useState } from "react";
 
-const BasicInfoForm = () => {
+const FarmerInput = () => {
   const [formData, setFormData] = useState({
     landArea: "",
     farmingTools: "",
@@ -81,4 +81,4 @@ const BasicInfoForm = () => {
   );
 };
 
-export default BasicInfoForm;
+export default FarmerInput;

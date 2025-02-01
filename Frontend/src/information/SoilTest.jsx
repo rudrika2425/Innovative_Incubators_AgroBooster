@@ -1,7 +1,7 @@
 // components/SoilTestForm.jsx
 import React from "react";
 
-const SoilTestForm = () => {
+const SoilTest = () => {
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     console.log("Uploaded file:", file);
@@ -36,4 +36,4 @@ const SoilTestForm = () => {
   );
 };
 
-export default SoilTestForm;
+export default SoilTest;
