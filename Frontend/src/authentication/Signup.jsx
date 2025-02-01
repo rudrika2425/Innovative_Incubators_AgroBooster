@@ -84,7 +84,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-yellow-50 to-green-100">
+    <div className="min-h-screen bg-gradient-to-br from-green-600 via-yellow-50 to-green-500">
       <div className="container mx-auto px-4 h-screen flex items-center justify-center">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden w-full max-w-6xl flex">
           {/* Left Panel - Form */}
