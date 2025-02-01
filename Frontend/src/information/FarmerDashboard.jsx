@@ -21,8 +21,10 @@ const FarmerDashboard = () => {
     >
       <aside className="w-64 bg-green-600 bg-opacity-80 text-white h-screen pt-6 fixed shadow-lg">
         <Link to="/">
-          <h1 className="text-4xl font-bold mb-8 ml-8">AgroBooster</h1>
+          <h1 className="text-4xl font-bold mb-8 ml-5">AgroBooster</h1>
         </Link>
+        <h3 className="text-lg ml-5">Welcomes, you Name</h3>
+
         <nav>
           <ul className="mt-32">
             <li className="mb-10 ">
