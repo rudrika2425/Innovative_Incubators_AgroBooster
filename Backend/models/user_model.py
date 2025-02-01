@@ -4,13 +4,13 @@ from flask import current_app
 class User:
     @staticmethod
     def create_user(fullname, phone_number, password):
-        mongo = current_app.extensions['pymongo']  # Get PyMongo instance
+        mongo = current_app.db  # ✅ Correct way to access PyMongo in Flask
 
-        if mongo.db.users.find_one({"phone_number": phone_number}):
+        if mongo["users"].find_one({"phone_number": phone_number}):
             return {"error": "Phone number already registered"}
 
         hashed_password = generate_password_hash(password)
-        user_id = mongo.db.users.insert_one({
+        user_id = mongo["users"].insert_one({
             "fullname": fullname,
             "phone_number": phone_number,
             "password": hashed_password
@@ -20,8 +20,8 @@ class User:
 
     @staticmethod
     def find_by_phone(phone_number):
-        mongo = current_app.extensions['pymongo']
-        return mongo.db.users.find_one({"phone_number": phone_number})
+        mongo = current_app.db  # ✅ Fix here too
+        return mongo["users"].find_one({"phone_number": phone_number})
 
     @staticmethod
     def verify_password(stored_password, input_password):

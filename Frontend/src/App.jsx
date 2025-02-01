@@ -5,13 +5,13 @@ import Dashboard from "./home/Dashboard";
 import Rent from "./rental/rent";
 import RentProduct from "./rental/receiveRent";
 import Description from "./rental/description";
-import Login from "./crop/Login";
-import Signup from "./crop/Signup";
-import SoilTestReportUploader from "./dashboard/test";
-import FarmerDashboard from "./dashboard/DashboardFarmer";
+import Login from "./authentication/Login";
+import Signup from "./authentication/Signup";
+import SoilTestReportUploader from "./information/Test";
+import FarmerDashboard from "./information/FarmerDashboard";
 import Chatbot from "./ChatBoat/Chatboat";
-import BasicInfoForm from "./dashboard/BasicInfoForm";
-import SoilTestForm from "./dashboard/SoilTestForm";
+import FarmerInput from "./information/FarmerInput";
+import SoilTest from "./information/SoilTest";
 
 function App() {
   return (
@@ -27,8 +27,8 @@ function App() {
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/test" element={<SoilTestReportUploader />} />
           <Route path="/farmer-Information" element={<FarmerDashboard />}>
-            <Route path="step1" element={<BasicInfoForm />} />
-            <Route path="step2" element={<SoilTestForm />} />
+            <Route path="step1" element={<FarmerInput />} />
+            <Route path="step2" element={<SoilTest />} />
           </Route>
         </Routes>
       </Router>

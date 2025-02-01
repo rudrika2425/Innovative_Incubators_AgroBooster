@@ -24,7 +24,7 @@ const Hero = ({ id }) => {
         </p>
         <div className="flex flex-row gap-10 -ml-10">
           <a
-            href="#learn-more"
+            href="/chatbot"
             className="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg text-lg font-medium drop-shadow-md"
           >
             Plant Bot
