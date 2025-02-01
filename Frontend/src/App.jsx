@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./Context/LanguageContext";  
+import { UserProvider } from "./Context/UserContext";
 import Dashboard from "./home/Dashboard";
 import Rent from "./rental/rent";
 import RentProduct from "./rental/receiveRent";
@@ -12,11 +13,13 @@ import FarmerDashboard from "./information/FarmerDashboard";
 import Chatbot from "./ChatBoat/Chatboat";
 import FarmerInput from "./information/FarmerInput";
 import SoilTest from "./information/SoilTest";
+import TestUser from "./information/Test2";
 
 
 
 function App() {
   return (
+
     <LanguageProvider>  
       <Router>
         <Routes>
