@@ -13,6 +13,8 @@ import Chatbot from "./ChatBoat/Chatboat";
 import FarmerInput from "./information/FarmerInput";
 import SoilTest from "./information/SoilTest";
 
+
+
 function App() {
   return (
     <LanguageProvider>  
@@ -27,8 +29,8 @@ function App() {
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/test" element={<SoilTestReportUploader />} />
           <Route path="/farmer-Information" element={<FarmerDashboard />}>
-            <Route path="step1" element={<FarmerInput />} />
-            <Route path="step2" element={<SoilTest />} />
+            <Route path="basicInformation" element={<FarmerInput />} />
+            <Route path="soilTesting" element={<SoilTest />} />
           </Route>
         </Routes>
       </Router>

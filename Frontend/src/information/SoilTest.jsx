@@ -9,7 +9,7 @@ const SoilTest = () => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-orange-600 mb-6">
+      <h2 className="text-2xl font-bold text-green-600 mb-6">
         Soil Testing Agencies
       </h2>
 
