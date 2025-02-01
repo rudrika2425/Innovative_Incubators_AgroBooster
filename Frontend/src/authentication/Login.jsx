@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useUser } from "../Context/UserContext"; // Import useUser hook
 
 const Login = () => {
+  const { setUser } = useUser(); // Get setUser from context
   const [formData, setFormData] = useState({ phoneNumber: "+91", password: "" });
   const [error, setError] = useState("");
 
@@ -19,7 +21,7 @@ const Login = () => {
       return;
     }
     setError("");
-    
+  
     try {
       const response = await fetch("http://localhost:4000/user/login", {
         method: "POST",
@@ -31,18 +33,29 @@ const Login = () => {
           password: formData.password,
         }),
       });
-      
+  
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data.error || "Login failed");
       }
-      
-      console.log("Login successful", data);
-      // Handle successful login (e.g., save token, redirect, etc.)
+  
+      // Store user data in localStorage
+      const userData = {
+        fullname: data.user.fullname,
+        id: data.user.id,
+        phone_number: data.user.phone_number,
+      };
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData)); // Save to local storage
+  
+      console.log("Login successful", userData);
+      window.location.href = "/testuser"; // Redirect after login
+  
     } catch (err) {
       setError(err.message);
     }
   };
+  
 
   return (
     <div className="flex h-screen bg-green-100">
