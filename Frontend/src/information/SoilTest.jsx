@@ -16,11 +16,6 @@ const SoilTest = () => {
   const [isListeningState, setIsListeningState] = useState(false); // Listening state for state input
   const [isListeningDistrict, setIsListeningDistrict] = useState(false);
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    console.log("Uploaded file:", file);
-  };
-
   const handleSearch = () => {
     const results = labData.filter(
       (lab) =>
@@ -62,11 +57,11 @@ const SoilTest = () => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
-      <h2 className="text-4xl font-bold text-green-600 mb-6">
+      <h2 className="text-4xl font-bold text-green-600 mb-1">
         Soil Testing Agencies
       </h2>
       <div className="flex flex-row">
-        <p className="mb-4 text-lg -mr-15">
+        <p className="mb-4 text-lg -mr-15 mt-7">
           Find nearby soil testing agencies or upload your soil test report.
         </p>
         <div className="mb-4 ml-130">
