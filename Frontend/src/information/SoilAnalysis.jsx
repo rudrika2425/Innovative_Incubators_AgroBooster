@@ -1,62 +1,101 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const SoilTestReportUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [fileName, setFileName] = useState('');
+  const [fileName, setFileName] = useState("");
   const [result, setResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [farmerInput, setFarmerInput] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [farmerData, setFarmerData] = useState(null);
+
+  const fetchLocationAndFarmerData = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:4000/location/ip-location");
+      if (!response.ok) throw new Error("Failed to fetch location");
+      const locationData = await response.json();
+
+      const storedFarmerData = localStorage.getItem("farmerInput");
+      const parsedFarmerData = storedFarmerData ? JSON.parse(storedFarmerData) : {};
+      // Store farmerInput and location in state
+      setFarmerInput(parsedFarmerData);
+      setLocation(locationData);
+
+    } catch (error) {
+      console.error("Error fetching location:", error);
+    }
+  };
+  
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
-    setFileName(file ? file.name : '');
+    setFileName(file ? file.name : "");
   };
 
   const handleUpload = async () => {
     if (!selectedFile) {
-      alert('Please select a file first.');
+      alert("Please select a file first.");
       return;
     }
-
+  
     setIsLoading(true);
-    setErrorMessage(null); // Reset error message if a new upload is attempted
+    setErrorMessage(null);
+  
     const formData = new FormData();
-    formData.append('file', selectedFile);
-
+    formData.append("file", selectedFile);
+  
     try {
-      const response = await axios.post('http://127.0.0.1:4000/analyze_soil/api/analyze-soil-report', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      // Handle response data properly
+      const response = await axios.post(
+        "http://127.0.0.1:4000/analyze_soil/api/analyze-soil-report",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+  
       if (response.data?.analysis) {
-        setResult(response.data.analysis); // Set the simple string response
+        const analysisResult = response.data.analysis;
+  
+        setResult(analysisResult);
       } else {
-        setErrorMessage('No analysis result received.');
+        setErrorMessage("No analysis result received.");
       }
     } catch (error) {
-      console.error('Error uploading file:', error);
-      setErrorMessage('Failed to analyze the report. Please try again.');
+      console.error("Error uploading file:", error);
+      setErrorMessage("Failed to analyze the report. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
-  const handleSubmit=async()=>{
-   if(!result){
-    alert("please upload the soil report")
-    return;
-   }
-  }
+  
+
+  const handleSubmit = async () => {
+    if (!result) {
+      alert("Please upload the soil report first.");
+      return;
+    }
+
+    fetchLocationAndFarmerData();
+
+    setFarmerData({
+      farmerInput: farmerInput,
+      location: location,
+      soilAnalysisReport: result
+    })
+
+    console.log(farmerData);
+
+  };
 
   return (
     <div>
       <h2 className="text-4xl font-bold mb-4 text-green-600 mb-6 mt-10">Upload Soil Test Report</h2>
 
-      {/* Show file input box if no file is selected */}
       {!selectedFile ? (
         <input
           type="file"
@@ -73,14 +112,13 @@ const SoilTestReportUploader = () => {
       <button
         onClick={handleUpload}
         disabled={isLoading || !selectedFile}
-        className={`px-4 py-2 text-white rounded-md ${isLoading || !selectedFile ? 'bg-green-600' : 'bg-green-600 hover:bg-green-700'}`}
+        className={`px-4 py-2 text-white rounded-md ${
+          isLoading || !selectedFile ? "bg-green-600" : "bg-green-600 hover:bg-green-700"
+        }`}
       >
-        {isLoading ? 'Analyzing...' : 'Upload and Analyze'}
+        {isLoading ? "Analyzing..." : "Upload and Analyze"}
       </button>
 
-
-
-      {/* Display error message if any */}
       {errorMessage && (
         <div className="w-full max-w-md p-4 mt-4 border rounded-lg shadow-md bg-red-100 text-red-700">
           <h3 className="text-lg font-semibold mb-2">Error</h3>
@@ -88,23 +126,25 @@ const SoilTestReportUploader = () => {
         </div>
       )}
 
-      {/* Display analysis result if available */}
       {result && (
-        <div className="w-full max-w-md p-4 mt-4  rounded-lg shadow-md">
+        <div className="w-full max-w-md p-4 mt-4 rounded-lg shadow-md">
           <h3 className="text-xl font-semibold mb-2">Analysis Result</h3>
           <div className="p-2 bg-gray-100 rounded-md">
             <p>{result}</p>
           </div>
         </div>
       )}
-     <div className="flex justify-end">
-  <button 
-    onClick={handleSubmit}
-    className={`px-4 py-2 rounded-lg transition ${result ? "bg-green-600 text-white hover:bg-green-700" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`}
-  >
-    Submit
-  </button>
-</div>
+
+      <div className="flex justify-end">
+        <button
+          onClick={handleSubmit}
+          className={`px-4 py-2 rounded-lg transition ${
+            result ? "bg-green-600 text-white hover:bg-green-700" : "bg-gray-400 text-gray-700 cursor-not-allowed"
+          }`}
+        >
+          Submit
+        </button>
+      </div>
     </div>
   );
 };

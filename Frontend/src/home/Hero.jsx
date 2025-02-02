@@ -30,7 +30,7 @@ const Hero = ({ id }) => {
             Plant Bot
           </a>
           <a
-            href="/signup"
+            href="/login"
             className="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg text-lg font-medium drop-shadow-md"
           >
             Grow Crop
