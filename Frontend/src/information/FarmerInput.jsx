@@ -98,30 +98,26 @@ const FarmerInput = () => {
 
   const handleNext = (e) => {
     e.preventDefault();
-  
-    // Check if all fields are filled
+
     if (!formData.farmName || !formData.landArea || !formData.irrigationSystem || formData.farmingTools.length === 0) {
       alert("Please fill in all fields before proceeding.");
       return;
     }
-  
-    // Save farmer input to localStorage
+
     localStorage.setItem("farmerInput", JSON.stringify(formData));
-  
-    // Navigate to the next page
     window.location.href = "/farmer-information/soilTesting";
   };
 
   return (
-    <form className="space-y-6 bg-white p-6 rounded-lg shadow-lg">
-      <div className="flex flex-row">
-        <h2 className="text-4xl font-bold text-green-600 mt-3">Basic Information</h2>
-        <div className="ml-170">
-          <label className="block font-semibold mb-2">Select Language</label>
+    <form className="max-w-8xl mx-auto space-y-6 bg-white p-6 rounded-xl shadow-2xl md:p-8 lg:p-10">
+      <div className="flex flex-col md:flex-row md:justify-between items-center">
+        <h2 className="text-3xl md:text-4xl font-semibold  text-green-600 mb-4 md:mb-0">Basic Information</h2>
+        <div>
+          <label className="block font-semibold mb-1 text-gray-700">Select Language</label>
           <select
             value={language}
             onChange={(e) => !isLanguageLocked && setLanguage(e.target.value)}
-            className="w-full p-2 border rounded-lg"
+            className="w-full md:w-48 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             disabled={isLanguageLocked}
           >
             <option value="en-US">English</option>
@@ -130,54 +126,36 @@ const FarmerInput = () => {
         </div>
       </div>
 
-      <div>
-        <label htmlFor="farmName" className="block font-semibold mb-2">Farm Name</label>
-        <div className="flex">
-          <input
-            type="text"
-            id="farmName"
-            name="farmName"
-            value={formData.farmName}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-lg"
-            placeholder="Enter farm name"
-          />
-          <button
-            type="button"
-            onClick={() => startListening("farmName")}
-            className="ml-2 px-4 py-2 bg-green-600 text-white rounded-lg"
-          >
-            <FontAwesomeIcon icon={faMicrophone} />
-          </button>
+      {['farmName', 'landArea'].map((field, index) => (
+        <div key={index}>
+          <label htmlFor={field} className="block font-semibold mb-2 capitalize text-gray-800">
+            {field === 'farmName' ? 'Farm Name' : 'Area of Land (in acres)'}
+          </label>
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              id={field}
+              name={field}
+              value={formData[field]}
+              onChange={handleChange}
+              className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder={`Enter ${field === 'farmName' ? 'farm name' : 'area of land'}`}
+            />
+            <button
+              type="button"
+              onClick={() => startListening(field)}
+              className="p-3 bg-green-600 text-white rounded-full hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <FontAwesomeIcon icon={faMicrophone} />
+            </button>
+          </div>
         </div>
-      </div>
+      ))}
 
       <div>
-        <label htmlFor="landArea" className="block font-semibold mb-2">Area of Land (in acres)</label>
-        <div className="flex">
-          <input
-            type="text"
-            id="landArea"
-            name="landArea"
-            value={formData.landArea}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-lg"
-            placeholder="Enter area of land"
-          />
-          <button
-            type="button"
-            onClick={() => startListening("landArea")}
-            className="ml-2 px-4 py-2 bg-green-600 text-white rounded-lg"
-          >
-            <FontAwesomeIcon icon={faMicrophone} />
-          </button>
-        </div>
-      </div>
-
-      <div>
-        <label htmlFor="farmingTools" className="block font-semibold mb-2">Farming Tools</label>
+        <label className="block font-semibold mb-2 text-gray-800">Farming Tools</label>
         <select
-          className="w-full p-2 border rounded-lg"
+          className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
           onChange={(e) => handleToolSelect(e.target.value)}
         >
           <option value="">Select a Tool</option>
@@ -185,31 +163,29 @@ const FarmerInput = () => {
             <option key={index} value={tool}>{tool}</option>
           ))}
         </select>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <div className="mt-3 flex flex-wrap gap-2">
           {formData.farmingTools.map((tool, index) => (
             <button
               key={index}
               type="button"
-              className="flex items-center bg-green-400 text-white py-1 px-3 rounded-full"
+              className="flex items-center bg-green-400 text-white py-1 px-3 rounded-full shadow-md hover:bg-green-500"
               onClick={() => handleToolRemove(tool)}
             >
               {tool}
-              <span className="ml-1 text-white">
-                <FontAwesomeIcon icon={faXmark} />
-              </span>
+              <FontAwesomeIcon icon={faXmark} className="ml-2" />
             </button>
           ))}
         </div>
       </div>
 
       <div>
-        <label htmlFor="irrigationSystem" className="block font-semibold mb-2">Irrigation System</label>
+        <label className="block font-semibold mb-2 text-gray-700">Irrigation System</label>
         <select
           id="irrigationSystem"
           name="irrigationSystem"
           value={formData.irrigationSystem}
           onChange={handleChange}
-          className="w-full p-2 border rounded-lg"
+          className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
         >
           <option value="">Select Irrigation System</option>
           {irrigationSystems.map((system, index) => (
@@ -221,7 +197,7 @@ const FarmerInput = () => {
       <button
         type="button"
         onClick={handleNext}
-        className={`px-4 py-2 rounded-lg transition ${formData.farmName && formData.landArea && formData.farmingTools.length > 0 && formData.irrigationSystem ? "bg-green-600 text-white hover:bg-green-700" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`}
+        className={`  px-5 py-2 rounded-md text-lg font-semibold transition-all duration-300 ${formData.farmName && formData.landArea && formData.farmingTools.length > 0 && formData.irrigationSystem ? "bg-green-600 text-white hover:bg-green-700" : "bg-gray-300 text-gray-600 cursor-not-allowed"}`}
       >
         Next
       </button>

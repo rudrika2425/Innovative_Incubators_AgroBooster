@@ -1,34 +1,27 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone, faXmark } from '@fortawesome/free-solid-svg-icons';
 import labData from "./../LabData.js";
-import Test from './Test';
-
-
+import Test from './SoilAnalysis.jsx';
 
 const SoilTest = () => {
   const [selectedState, setSelectedState] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [filteredLabs, setFilteredLabs] = useState([]);
-  const [selectedLanguage, setSelectedLanguage] = useState("en-IN"); // Default language is English
-  const [languageLocked, setLanguageLocked] = useState(false); // To lock the language dropdown
-  const [isListening, setIsListening] = useState(false); // To track if voice input is in progress
-  const [isListeningState, setIsListeningState] = useState(false); // Listening state for state input
+  const [selectedLanguage, setSelectedLanguage] = useState("en-IN");
+  const [languageLocked, setLanguageLocked] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [isListeningState, setIsListeningState] = useState(false);
   const [isListeningDistrict, setIsListeningDistrict] = useState(false);
   const [farmerData, setFarmerData] = useState(null);
 
   useEffect(() => {
-    // Retrieve farmer input from localStorage
     const storedFarmerData = localStorage.getItem("farmerInput");
     if (storedFarmerData) {
       setFarmerData(JSON.parse(storedFarmerData));
-
-      // Remove farmerInput from localStorage
       localStorage.removeItem("farmerInput");
     }
   }, []);
-
-  console.log(farmerData)
 
   const handleSearch = () => {
     const results = labData.filter(
@@ -41,8 +34,9 @@ const SoilTest = () => {
 
   const handleVoiceInput = (field) => {
     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = selectedLanguage; // Use the selected language
+    recognition.lang = selectedLanguage;
     recognition.start();
+    
     if (field === "state") {
       setIsListeningState(true);
       recognition.onresult = (event) => {
@@ -57,7 +51,6 @@ const SoilTest = () => {
       };
     }
 
-    // Lock the language dropdown after the first voice input
     setLanguageLocked(true);
 
     recognition.onend = () => {
@@ -70,109 +63,125 @@ const SoilTest = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg">
-      <h2 className="text-4xl font-bold text-green-600 mb-1">
-        Soil Testing Agencies
-      </h2>
-      <div className="flex flex-row">
-        <p className="mb-4 text-lg -mr-15 mt-7">
-          Find nearby soil testing agencies or upload your soil test report.
-        </p>
-        <div className="mb-4 ml-130">
-          <label className="block font-semibold mb-2">Select Language</label>
-          <select
-            value={selectedLanguage}
-            onChange={(e) => !languageLocked && setSelectedLanguage(e.target.value)}  // Disable if languageLocked is true
-            className="block w-full border rounded-lg p-2"
-            disabled={languageLocked} // Disable the dropdown once locked
-          >
-            <option value="en-IN">English</option>
-            <option value="hi-IN">Hindi</option>
-          </select>
+    <div className="bg-white p-4 md:p-6 rounded-lg shadow-lg">
+      {/* Header Section */}
+      <div className="space-y-4 md:space-y-6">
+        <h2 className="text-2xl md:text-4xl font-bold text-green-600">
+          Soil Testing Agencies
+        </h2>
+        
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <p className="text-base md:text-lg">
+            Find nearby soil testing agencies or upload your soil test report.
+          </p>
+          
+          <div className="w-full md:w-64">
+            <label className="block font-semibold mb-2">Select Language</label>
+            <select
+              value={selectedLanguage}
+              onChange={(e) => !languageLocked && setSelectedLanguage(e.target.value)}
+              className="w-full border rounded-lg p-2"
+              disabled={languageLocked}
+            >
+              <option value="en-IN">English</option>
+              <option value="hi-IN">Hindi</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      <div className="flex flex-row">
-        <div className="mb-6 flex flex-row gap-56">
+      {/* Search Section */}
+      <div className="mt-6 space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          {/* State Input */}
           <div>
             <label htmlFor="stateInput" className="block font-semibold mb-2">
               Select a State
             </label>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
               <input
                 type="text"
                 id="stateInput"
                 placeholder="Enter state"
                 value={selectedState}
                 onChange={(e) => setSelectedState(e.target.value)}
-                className="block w-full border rounded-lg p-2 mb-4"
+                className="flex-1 border rounded-lg p-2"
               />
               <button
                 onClick={() => handleVoiceInput("state")}
-                className="ml-2 bg-green-600 text-white px-4 py-2 rounded-lg flex flex-row gap-2 text-md -mt-4 hover:bg-green-700"
+                className="bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition flex items-center gap-2"
               >
-                <FontAwesomeIcon className="mt-1" icon={isListening ? faXmark : faMicrophone} />
-                <p className="">Voice</p>
+                <FontAwesomeIcon icon={isListeningState ? faXmark : faMicrophone} />
+                <span className="hidden md:inline">Voice</span>
               </button>
             </div>
           </div>
+
+          {/* District Input */}
           <div>
             <label htmlFor="districtInput" className="block font-semibold mb-2">
               Select a District
             </label>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
               <input
                 type="text"
                 id="districtInput"
                 placeholder="Enter district"
                 value={selectedDistrict}
                 onChange={(e) => setSelectedDistrict(e.target.value)}
-                className="block w-full border rounded-lg p-2 mb-4"
+                className="flex-1 border rounded-lg p-2"
               />
               <button
                 onClick={() => handleVoiceInput("district")}
-                className="ml-2 bg-green-600 text-white px-4 py-2 rounded-lg flex flex-row gap-2 text-md -mt-4 hover:bg-green-700"
+                className="bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition flex items-center gap-2"
               >
-                <FontAwesomeIcon className="mt-1" icon={isListening ? faXmark : faMicrophone} />
-                <p className="">Voice</p>
+                <FontAwesomeIcon icon={isListeningDistrict ? faXmark : faMicrophone} />
+                <span className="hidden md:inline">Voice</span>
               </button>
             </div>
           </div>
 
-          <button
-            onClick={handleSearch}
-            className="bg-green-600 text-white px-4 py-2 h-10 w-36 mt-8 rounded-lg hover:bg-green-700 transition mr-4"
-          >
-            Search
-          </button>
+          {/* Search Button */}
+          <div className="flex items-end">
+            <button
+              onClick={handleSearch}
+              className="w-full md:w-auto bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
+            >
+              Search
+            </button>
+          </div>
         </div>
       </div>
 
+      {/* Results Table */}
       {filteredLabs.length > 0 && (
-        <table className="w-full mt-6">
-          <thead>
-            <tr>
-              <th className="px-4 py-2 text-left bg-green-100">State</th>
-              <th className="px-4 py-2 text-left bg-green-100">District</th>
-              <th className="px-4 py-2 text-left bg-green-100">Lab Name</th>
-              <th className="px-4 py-2 text-left bg-green-100">Address</th>
-              <th className="px-4 py-2 text-left bg-green-100">Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredLabs.map((lab, index) => (
-              <tr key={index} className="hover:bg-gray-100">
-                <td className="px-4 py-2">{lab.state}</td>
-                <td className="px-4 py-2">{lab.district}</td>
-                <td className="px-4 py-2">{lab.labName}</td>
-                <td className="px-4 py-2">{lab.address}</td>
-                <td className="px-4 py-2">{lab.email}</td>
+        <div className="mt-6 overflow-x-auto">
+          <table className="w-full min-w-[640px]">
+            <thead>
+              <tr>
+                <th className="px-4 py-2 text-left bg-green-100">State</th>
+                <th className="px-4 py-2 text-left bg-green-100">District</th>
+                <th className="px-4 py-2 text-left bg-green-100">Lab Name</th>
+                <th className="px-4 py-2 text-left bg-green-100">Address</th>
+                <th className="px-4 py-2 text-left bg-green-100">Email</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredLabs.map((lab, index) => (
+                <tr key={index} className="hover:bg-gray-100">
+                  <td className="px-4 py-2">{lab.state}</td>
+                  <td className="px-4 py-2">{lab.district}</td>
+                  <td className="px-4 py-2">{lab.labName}</td>
+                  <td className="px-4 py-2">{lab.address}</td>
+                  <td className="px-4 py-2">{lab.email}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
-      <Test/>
+
+      <Test />
     </div>
   );
 };

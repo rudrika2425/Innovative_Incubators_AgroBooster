@@ -45,6 +45,12 @@ const SoilTestReportUploader = () => {
       setIsLoading(false);
     }
   };
+  const handleSubmit=async()=>{
+   if(!result){
+    alert("please upload the soil report")
+    return;
+   }
+  }
 
   return (
     <div>
@@ -72,6 +78,8 @@ const SoilTestReportUploader = () => {
         {isLoading ? 'Analyzing...' : 'Upload and Analyze'}
       </button>
 
+
+
       {/* Display error message if any */}
       {errorMessage && (
         <div className="w-full max-w-md p-4 mt-4 border rounded-lg shadow-md bg-red-100 text-red-700">
@@ -89,6 +97,14 @@ const SoilTestReportUploader = () => {
           </div>
         </div>
       )}
+     <div className="flex justify-end">
+  <button 
+    onClick={handleSubmit}
+    className={`px-4 py-2 rounded-lg transition ${result ? "bg-green-600 text-white hover:bg-green-700" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`}
+  >
+    Submit
+  </button>
+</div>
     </div>
   );
 };

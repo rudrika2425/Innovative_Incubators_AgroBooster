@@ -8,7 +8,7 @@ import RentProduct from "./rental/receiveRent";
 import Description from "./rental/description";
 import Login from "./authentication/Login";
 import Signup from "./authentication/Signup";
-import SoilTestReportUploader from "./information/Test";
+import SoilTestReportUploader from "./information/SoilAnalysis";
 import FarmerDashboard from "./information/FarmerDashboard";
 import Chatbot from "./ChatBoat/Chatboat";
 import FarmerInput from "./information/FarmerInput";

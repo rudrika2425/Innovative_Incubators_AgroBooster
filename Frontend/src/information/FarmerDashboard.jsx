@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../Context/UserContext";
+import { UserCircle } from "lucide-react";
 
 const FarmerDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const {user}  = useUser();
-  console.log(user.id);
+  const { user } = useUser();
 
-  // Redirect to "basicInformation" if the user is on "/farmer-Information"
   useEffect(() => {
     if (location.pathname === "/farmer-Information") {
       navigate("/farmer-information/basicInformation", { replace: true });
@@ -17,45 +16,56 @@ const FarmerDashboard = () => {
 
   return (
     <div
-      className="min-h-screen flex bg-cover bg-center"
-      style={{
-        backgroundImage: `url('../images/Home-img.png')`,
-      }}
     >
-      <aside className="w-64 bg-green-600 bg-opacity-80 text-white h-screen pt-6 fixed shadow-lg">
-        <Link to="/">
-          <h1 className="text-4xl font-bold mb-8 ml-5">AgroBooster</h1>
-        </Link>
-        <h3 className="text-lg ml-5">Welcomes, {user.fullname}</h3>
+      {/* Professional Navbar */}
+      <nav className="bg-green-600 shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Left side - Logo */}
+            <Link to="/" className="flex items-center">
+              <h1 className="text-3xl font-bold text-white hover:text-yellow-500 transition-colors">
+                AgroBooster
+              </h1>
+            </Link>
 
-        <nav>
-          <ul className="mt-32">
-            <li className="mb-10 ">
-              <Link
-                to="basicInformation"
-                className="block p-3 hover:bg-gray-100 hover:text-green-600 text-white cursor-pointer font-semibold text-2xl text-center w-full transition-all duration-300"
-              >
-                Basic Information
-              </Link>
-            </li>
-            <li className="mb-4">
-              <Link
-                to="soilTesting"
-                className="block p-3 hover:bg-gray-100 hover:text-green-600 text-white cursor-pointer font-semibold text-2xl text-center w-full transition-all duration-300"
-              >
-                Soil Testing
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </aside>
+            {/* Right side - User Info */}
+            <div className="flex items-center space-x-4">
+              <span className="text-gray-600">
+                Welcome, <span className="font-medium text-white">{user.fullname}</span>
+              </span>
+              <div className="relative group">
+                <UserCircle 
+                  className="w-10 h-10 text-gray-600 cursor-pointer hover:text-gray-700 transition-colors" 
+                />
+                {/* Dropdown menu */}
+                <div className="hidden  absolute right-0 w-48 py-2 mt-2 bg-white rounded-md shadow-lg border border-gray-100">
+                  <Link 
+                    to="/farmer-information/basicInformation" 
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50"
+                  >
+                    Basic Information
+                  </Link>
+                  <Link 
+                    to="/farmer-information/soilTesting" 
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50"
+                  >
+                    Soil Testing
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
 
-      <div className="flex-1 ml-64 relative">
+      {/* Main Content */}
+      <div className="relative flex-1">
         <div className="absolute inset-0 bg-white bg-opacity-70"></div>
-
         <div className="relative z-10">
-          <main className="p-6 bg-opacity-30 bg-gray-100 rounded-lg shadow-md mx-6 mt-6">
-            <Outlet />
+          <main className="max-w-7xl mx-auto p-6">
+            <div className="bg-white bg-opacity-95 rounded-lg shadow-md p-6">
+              <Outlet />
+            </div>
           </main>
         </div>
       </div>
