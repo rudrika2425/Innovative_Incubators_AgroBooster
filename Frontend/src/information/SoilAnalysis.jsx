@@ -9,6 +9,7 @@ const SoilTestReportUploader = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [farmerInput, setFarmerInput] = useState(null);
   const [location, setLocation] = useState(null);
+  const [weather, setWeather] = useState(null);
   const [farmerData, setFarmerData] = useState(null);
 
   const fetchLocationAndFarmerData = async () => {
@@ -16,9 +17,10 @@ const SoilTestReportUploader = () => {
       const response = await fetch("http://127.0.0.1:4000/location/ip-location");
       if (!response.ok) throw new Error("Failed to fetch location");
       const locationData = await response.json();
-
+      
       const storedFarmerData = localStorage.getItem("farmerInput");
       const parsedFarmerData = storedFarmerData ? JSON.parse(storedFarmerData) : {};
+      
       // Store farmerInput and location in state
       setFarmerInput(parsedFarmerData);
       setLocation(locationData);
@@ -27,6 +29,19 @@ const SoilTestReportUploader = () => {
       console.error("Error fetching location:", error);
     }
   };
+
+  const fetchWeather = async (lat,lon) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:4000/weather/get_weather?lat=${lat}&lon=${lon}`);
+      if (!response.ok) throw new Error("Failed to fetch weather");
+      const weatherData = await response.json();
+      console.log(weatherData)
+      setWeather(weatherData);
+
+    } catch (error) {
+      console.error("Error fetching weather:", error);
+    }
+  }
   
 
   const handleFileChange = (event) => {
@@ -60,7 +75,6 @@ const SoilTestReportUploader = () => {
   
       if (response.data?.analysis) {
         const analysisResult = response.data.analysis;
-  
         setResult(analysisResult);
       } else {
         setErrorMessage("No analysis result received.");
@@ -82,14 +96,27 @@ const SoilTestReportUploader = () => {
 
     fetchLocationAndFarmerData();
 
+    const lat = location.latitude;
+    const lon = location.longitude;
+    console.log(lat);
+    console.log(lon);
+
+    fetchWeather(lat,lon)
+
+    alert("Agrobooster is accesssing your location..")  
+    
+    console.log(farmerInput)
+    console.log(location)
+    console.log(weather)
+
     setFarmerData({
       farmerInput: farmerInput,
       location: location,
+      weather: weather,
       soilAnalysisReport: result
     })
 
-    console.log(farmerData);
-
+    console.log(farmerData)
   };
 
   return (
