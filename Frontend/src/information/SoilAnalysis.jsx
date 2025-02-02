@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useUser } from "../Context/UserContext";
 
 const SoilTestReportUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -8,41 +8,48 @@ const SoilTestReportUploader = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [farmerInput, setFarmerInput] = useState(null);
-  const [location, setLocation] = useState(null);
-  const [weather, setWeather] = useState(null);
-  const [farmerData, setFarmerData] = useState(null);
+
+  const {user} = useUser();
+  
+
+  // Fetch initial farmer data from localStorage on component mount
+  useEffect(() => {
+    const storedFarmerData = localStorage.getItem("farmerInput");
+    if (storedFarmerData) {
+      try {
+        const parsedFarmerData = JSON.parse(storedFarmerData);
+        setFarmerInput(parsedFarmerData);
+      } catch (error) {
+        console.error("Error parsing farmer data:", error);
+      }
+    }
+  }, []);
 
   const fetchLocationAndFarmerData = async () => {
     try {
       const response = await fetch("http://127.0.0.1:4000/location/ip-location");
       if (!response.ok) throw new Error("Failed to fetch location");
       const locationData = await response.json();
-      
-      const storedFarmerData = localStorage.getItem("farmerInput");
-      const parsedFarmerData = storedFarmerData ? JSON.parse(storedFarmerData) : {};
-      
-      // Store farmerInput and location in state
-      setFarmerInput(parsedFarmerData);
-      setLocation(locationData);
-
+      return locationData;
     } catch (error) {
       console.error("Error fetching location:", error);
+      throw error;
     }
   };
 
-  const fetchWeather = async (lat,lon) => {
+  const fetchWeather = async (lat, lon) => {
     try {
-      const response = await fetch(`http://127.0.0.1:4000/weather/get_weather?lat=${lat}&lon=${lon}`);
+      const response = await fetch(
+        `http://127.0.0.1:4000/weather/get_weather?lat=${lat}&lon=${lon}`
+      );
       if (!response.ok) throw new Error("Failed to fetch weather");
       const weatherData = await response.json();
-      console.log(weatherData)
-      setWeather(weatherData);
-
+      return weatherData;
     } catch (error) {
       console.error("Error fetching weather:", error);
+      throw error;
     }
-  }
-  
+  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -55,27 +62,30 @@ const SoilTestReportUploader = () => {
       alert("Please select a file first.");
       return;
     }
-  
+
     setIsLoading(true);
     setErrorMessage(null);
-  
+
     const formData = new FormData();
     formData.append("file", selectedFile);
-  
+
     try {
-      const response = await axios.post(
+      const response = await fetch(
         "http://127.0.0.1:4000/analyze_soil/api/analyze-soil-report",
-        formData,
         {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+          method: 'POST',
+          body: formData,
         }
       );
-  
-      if (response.data?.analysis) {
-        const analysisResult = response.data.analysis;
-        setResult(analysisResult);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (data?.analysis) {
+        setResult(data.analysis);
       } else {
         setErrorMessage("No analysis result received.");
       }
@@ -86,7 +96,6 @@ const SoilTestReportUploader = () => {
       setIsLoading(false);
     }
   };
-  
 
   const handleSubmit = async () => {
     if (!result) {
@@ -94,34 +103,44 @@ const SoilTestReportUploader = () => {
       return;
     }
 
-    fetchLocationAndFarmerData();
+    setIsLoading(true);
+    try {
+      // Fetch location data first
+      const locationData = await fetchLocationAndFarmerData();
+      
+      // Then fetch weather data using the location
+      const weatherData = await fetchWeather(
+        locationData.latitude,
+        locationData.longitude
+      );
 
-    const lat = location.latitude;
-    const lon = location.longitude;
-    console.log(lat);
-    console.log(lon);
+      // Update the final farmer data state with all collected information
+      const farmerData = {
+        farmerId: user.id,
+        farmerInput,
+        location: locationData,
+        weather: weatherData,
+        soilAnalysisReport: result
+      };
 
-    fetchWeather(lat,lon)
+      alert("AgroBooster is accessing your location")
 
-    alert("Agrobooster is accesssing your location..")  
-    
-    console.log(farmerInput)
-    console.log(location)
-    console.log(weather)
+      console.log(farmerData);
 
-    setFarmerData({
-      farmerInput: farmerInput,
-      location: location,
-      weather: weather,
-      soilAnalysisReport: result
-    })
-
-    console.log(farmerData)
+      
+    } catch (error) {
+      setErrorMessage("Failed to collect all required data. Please try again.");
+      console.error("Error in submit:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div>
-      <h2 className="text-4xl font-bold mb-4 text-green-600 mb-6 mt-10">Upload Soil Test Report</h2>
+      <h2 className="text-4xl font-bold mb-4 text-green-600 mb-6 mt-10">
+        Upload Soil Test Report
+      </h2>
 
       {!selectedFile ? (
         <input
@@ -140,7 +159,9 @@ const SoilTestReportUploader = () => {
         onClick={handleUpload}
         disabled={isLoading || !selectedFile}
         className={`px-4 py-2 text-white rounded-md ${
-          isLoading || !selectedFile ? "bg-green-600" : "bg-green-600 hover:bg-green-700"
+          isLoading || !selectedFile
+            ? "bg-green-600"
+            : "bg-green-600 hover:bg-green-700"
         }`}
       >
         {isLoading ? "Analyzing..." : "Upload and Analyze"}
@@ -162,14 +183,17 @@ const SoilTestReportUploader = () => {
         </div>
       )}
 
-      <div className="flex justify-end">
+      <div className="flex justify-end mt-4">
         <button
           onClick={handleSubmit}
+          disabled={isLoading}
           className={`px-4 py-2 rounded-lg transition ${
-            result ? "bg-green-600 text-white hover:bg-green-700" : "bg-gray-400 text-gray-700 cursor-not-allowed"
+            result && !isLoading
+              ? "bg-green-600 text-white hover:bg-green-700"
+              : "bg-gray-400 text-gray-700 cursor-not-allowed"
           }`}
         >
-          Submit
+          {isLoading ? "Processing..." : "Submit"}
         </button>
       </div>
     </div>
