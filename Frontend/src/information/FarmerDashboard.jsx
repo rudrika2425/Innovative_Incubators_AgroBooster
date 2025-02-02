@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
 import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
+import { useUser } from "../Context/UserContext";
 
 const FarmerDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const {user}  = useUser();
+  console.log(user.id);
 
-  // Redirect to "step1" if the user is on "/farmer-Information"
+  // Redirect to "basicInformation" if the user is on "/farmer-Information"
   useEffect(() => {
     if (location.pathname === "/farmer-Information") {
-      navigate("/farmer-Information/step1", { replace: true });
+      navigate("/farmer-information/basicInformation", { replace: true });
     }
   }, [location, navigate]);
 
@@ -23,7 +26,7 @@ const FarmerDashboard = () => {
         <Link to="/">
           <h1 className="text-4xl font-bold mb-8 ml-5">AgroBooster</h1>
         </Link>
-        <h3 className="text-lg ml-5">Welcomes, you Name</h3>
+        <h3 className="text-lg ml-5">Welcomes, {user.fullname}</h3>
 
         <nav>
           <ul className="mt-32">

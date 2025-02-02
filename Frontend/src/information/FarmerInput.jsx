@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const FarmerInput = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,8 @@ const FarmerInput = () => {
   const [currentField, setCurrentField] = useState(null);
   const [language, setLanguage] = useState("en-US");
   const [isLanguageLocked, setIsLanguageLocked] = useState(false);  // New state for locking the language
+
+  const navigate = useNavigate();
 
   // List of farming tools
   const farmingToolsList = [
@@ -245,7 +248,7 @@ const FarmerInput = () => {
       </div>
 
       <button
-        type="submit"
+        onClick={navigate('/soilTesting')}
         className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
       >
         Next
