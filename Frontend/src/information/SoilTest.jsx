@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone, faXmark } from '@fortawesome/free-solid-svg-icons';
 import labData from "./../LabData.js";
@@ -15,6 +15,20 @@ const SoilTest = () => {
   const [isListening, setIsListening] = useState(false); // To track if voice input is in progress
   const [isListeningState, setIsListeningState] = useState(false); // Listening state for state input
   const [isListeningDistrict, setIsListeningDistrict] = useState(false);
+  const [farmerData, setFarmerData] = useState(null);
+
+  useEffect(() => {
+    // Retrieve farmer input from localStorage
+    const storedFarmerData = localStorage.getItem("farmerInput");
+    if (storedFarmerData) {
+      setFarmerData(JSON.parse(storedFarmerData));
+
+      // Remove farmerInput from localStorage
+      localStorage.removeItem("farmerInput");
+    }
+  }, []);
+
+  console.log(farmerData)
 
   const handleSearch = () => {
     const results = labData.filter(

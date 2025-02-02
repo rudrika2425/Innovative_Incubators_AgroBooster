@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const FarmerInput = () => {
   const [formData, setFormData] = useState({
@@ -14,31 +13,18 @@ const FarmerInput = () => {
   const [isListening, setIsListening] = useState(false);
   const [currentField, setCurrentField] = useState(null);
   const [language, setLanguage] = useState("en-US");
-  const [isLanguageLocked, setIsLanguageLocked] = useState(false);  // New state for locking the language
+  const [isLanguageLocked, setIsLanguageLocked] = useState(false);
 
-  const navigate = useNavigate();
-
-  // List of farming tools
   const farmingToolsList = [
-    "Tractor",
-    "Plough",
-    "Harvester",
-    "Sprayer",
-    "Cultivator",
-    "Seeder",
-    "Water Pump",
-    "Plow",
-    "Rake",
-    "Hoe",
+    "Tractor", "Plough", "Harvester", "Sprayer",
+    "Cultivator", "Seeder", "Water Pump", "Plow",
+    "Rake", "Hoe"
   ];
 
-  // List of irrigation systems
   const irrigationSystems = [
-    "Drip Irrigation",
-    "Sprinkler Irrigation",
-    "Flood Irrigation",
-    "Surface Irrigation",
-    "Subsurface Irrigation",
+    "Drip Irrigation", "Sprinkler Irrigation",
+    "Flood Irrigation", "Surface Irrigation",
+    "Subsurface Irrigation"
   ];
 
   const SpeechRecognition =
@@ -57,21 +43,19 @@ const FarmerInput = () => {
     }
 
     if (!isLanguageLocked) {
-      setIsLanguageLocked(true); // Lock language after first input
+      setIsLanguageLocked(true);
     }
 
     setIsListening(true);
     setCurrentField(field);
-    recognition.lang = language; // Set recognition language
+    recognition.lang = language;
     recognition.start();
 
     recognition.onresult = (event) => {
       const speechResult = event.results[0][0].transcript;
       let value = speechResult.trim();
 
-      // If the field is landArea, ensure it's a valid number
       if (field === "landArea") {
-        // Parse the speech result as a number (allowing decimals and negatives)
         const numericValue = parseFloat(value);
         if (!isNaN(numericValue) && value !== "") {
           value = numericValue;
@@ -82,7 +66,6 @@ const FarmerInput = () => {
         }
       }
 
-      // Update form data with the value
       setFormData((prev) => ({ ...prev, [field]: value }));
       setIsListening(false);
     };
@@ -97,12 +80,6 @@ const FarmerInput = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Basic Information:", formData);
-  };
-
-  // Handle adding selected farming tool to formData
   const handleToolSelect = (tool) => {
     if (!formData.farmingTools.includes(tool)) {
       setFormData((prev) => ({
@@ -112,7 +89,6 @@ const FarmerInput = () => {
     }
   };
 
-  // Handle removing a tool from the list
   const handleToolRemove = (tool) => {
     setFormData((prev) => ({
       ...prev,
@@ -120,20 +96,33 @@ const FarmerInput = () => {
     }));
   };
 
+  const handleNext = (e) => {
+    e.preventDefault();
+  
+    // Check if all fields are filled
+    if (!formData.farmName || !formData.landArea || !formData.irrigationSystem || formData.farmingTools.length === 0) {
+      alert("Please fill in all fields before proceeding.");
+      return;
+    }
+  
+    // Save farmer input to localStorage
+    localStorage.setItem("farmerInput", JSON.stringify(formData));
+  
+    // Navigate to the next page
+    window.location.href = "/farmer-information/soilTesting";
+  };
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-6 bg-white p-6 rounded-lg shadow-lg"
-    >
+    <form className="space-y-6 bg-white p-6 rounded-lg shadow-lg">
       <div className="flex flex-row">
         <h2 className="text-4xl font-bold text-green-600 mt-3">Basic Information</h2>
         <div className="ml-170">
           <label className="block font-semibold mb-2">Select Language</label>
           <select
             value={language}
-            onChange={(e) => !isLanguageLocked && setLanguage(e.target.value)} // Prevent language change if locked
-            className="w-full p-2 border rounded-lg "
-            disabled={isLanguageLocked} // Disable language change if locked
+            onChange={(e) => !isLanguageLocked && setLanguage(e.target.value)}
+            className="w-full p-2 border rounded-lg"
+            disabled={isLanguageLocked}
           >
             <option value="en-US">English</option>
             <option value="hi-IN">Hindi</option>
@@ -141,11 +130,8 @@ const FarmerInput = () => {
         </div>
       </div>
 
-      {/* Farm Name */}
       <div>
-        <label htmlFor="farmName" className="block font-semibold mb-2 " >
-          Farm Name
-        </label>
+        <label htmlFor="farmName" className="block font-semibold mb-2">Farm Name</label>
         <div className="flex">
           <input
             type="text"
@@ -166,11 +152,8 @@ const FarmerInput = () => {
         </div>
       </div>
 
-      {/* Land Area */}
       <div>
-        <label htmlFor="landArea" className="block font-semibold mb-2">
-          Area of Land (in acres)
-        </label>
+        <label htmlFor="landArea" className="block font-semibold mb-2">Area of Land (in acres)</label>
         <div className="flex">
           <input
             type="text"
@@ -191,46 +174,36 @@ const FarmerInput = () => {
         </div>
       </div>
 
-      {/* Farming Tools Dropdown */}
       <div>
-        <label htmlFor="farmingTools" className="block font-semibold mb-2">
-          Farming Tools
-        </label>
-        <div className="relative">
-          <select
-            className="w-full p-2 border rounded-lg"
-            onChange={(e) => handleToolSelect(e.target.value)}
-          >
-            <option value="">Select a Tool</option>
-            {farmingToolsList.map((tool, index) => (
-              <option key={index} value={tool}>
-                {tool}
-              </option>
-            ))}
-          </select>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {formData.farmingTools.map((tool, index) => (
-              <button
-                key={index}
-                type="button"
-                className="flex items-center bg-green-400 text-white py-1 px-3 rounded-full"
-                onClick={() => handleToolRemove(tool)}
-              >
-                {tool}
-                <span className="ml-1 text-white">
+        <label htmlFor="farmingTools" className="block font-semibold mb-2">Farming Tools</label>
+        <select
+          className="w-full p-2 border rounded-lg"
+          onChange={(e) => handleToolSelect(e.target.value)}
+        >
+          <option value="">Select a Tool</option>
+          {farmingToolsList.map((tool, index) => (
+            <option key={index} value={tool}>{tool}</option>
+          ))}
+        </select>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {formData.farmingTools.map((tool, index) => (
+            <button
+              key={index}
+              type="button"
+              className="flex items-center bg-green-400 text-white py-1 px-3 rounded-full"
+              onClick={() => handleToolRemove(tool)}
+            >
+              {tool}
+              <span className="ml-1 text-white">
                 <FontAwesomeIcon icon={faXmark} />
-                </span>
-              </button>
-            ))}
-          </div>
+              </span>
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Irrigation System Dropdown */}
       <div>
-        <label htmlFor="irrigationSystem" className="block font-semibold mb-2">
-          Irrigation System
-        </label>
+        <label htmlFor="irrigationSystem" className="block font-semibold mb-2">Irrigation System</label>
         <select
           id="irrigationSystem"
           name="irrigationSystem"
@@ -240,16 +213,15 @@ const FarmerInput = () => {
         >
           <option value="">Select Irrigation System</option>
           {irrigationSystems.map((system, index) => (
-            <option key={index} value={system}>
-              {system}
-            </option>
+            <option key={index} value={system}>{system}</option>
           ))}
         </select>
       </div>
 
       <button
-        onClick={navigate('/soilTesting')}
-        className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+        type="button"
+        onClick={handleNext}
+        className={`px-4 py-2 rounded-lg transition ${formData.farmName && formData.landArea && formData.farmingTools.length > 0 && formData.irrigationSystem ? "bg-green-600 text-white hover:bg-green-700" : "bg-gray-400 text-gray-700 cursor-not-allowed"}`}
       >
         Next
       </button>
