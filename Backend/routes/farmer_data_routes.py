@@ -27,7 +27,10 @@ def save_farmer_data():
 def get_farmer_data(farmer_id):
     try:
         # Query the 'farmers' collection using the provided farmerId
-        data = current_app.db.farmers.find_one({'farmerId': farmer_id})
+        data = current_app.db.farmers.find_one(
+            {'farmerId': farmer_id}, 
+            sort=[('_id', -1)]  # Newest entry based on MongoDB ObjectId
+        )
         if not data:
             return jsonify({"error": "Farmer data not found"}), 404
 
@@ -39,3 +42,26 @@ def get_farmer_data(farmer_id):
             "error": "An error occurred while retrieving data",
             "details": str(e)
         }), 500
+    
+@farmer_data_bp.route('/get-all-farmer-data/<string:farmer_id>', methods=['GET'])
+def get_all_farmer_data(farmer_id):
+    try:
+        # Fetch all entries for the given farmerId, sorted by createdAt in descending order
+        data = list(current_app.db.farmers.find(
+            {'farmerId': farmer_id}
+        ).sort('createdAt', -1))  # Sorting to get latest first
+
+        if not data:
+            return jsonify({"error": "No records found for this farmer ID"}), 404
+
+        # Convert ObjectId to string for JSON serialization
+        for entry in data:
+            entry['_id'] = str(entry['_id'])
+
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({
+            "error": "An error occurred while retrieving data",
+            "details": str(e)
+        }), 500
+

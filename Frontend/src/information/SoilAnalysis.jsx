@@ -18,6 +18,7 @@ const SoilTestReportUploader = () => {
       try {
         const parsedFarmerData = JSON.parse(storedFarmerData);
         setFarmerInput(parsedFarmerData);
+        localStorage.removeItem("farmerInput");
       } catch (error) {
         console.error("Error parsing farmer data:", error);
       }
