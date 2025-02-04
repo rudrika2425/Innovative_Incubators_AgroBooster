@@ -31,6 +31,7 @@ def create_app():
     from routes.get_location import location_bp
     from routes.weather_routes import weather_bp
     from routes.weather_forcast import weather_forecast_bp
+    from routes.farmer_data_routes import farmer_data_bp
 
     # Register blueprints
     app.register_blueprint(auth_bp, url_prefix="/user")
@@ -39,6 +40,7 @@ def create_app():
     app.register_blueprint(location_bp, url_prefix="/location")
     app.register_blueprint(weather_bp, url_prefix="/weather")
     app.register_blueprint(weather_forecast_bp, url_prefix="/weather_forecast")
+    app.register_blueprint(farmer_data_bp, url_prefix="/farmer_data")
 
     # Attach MongoDB client to app for access in routes
     app.mongo_client = client  # ✅ Fixed this

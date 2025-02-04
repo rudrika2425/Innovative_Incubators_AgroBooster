@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useUser } from "../Context/UserContext";
+import {useUser} from "../Context/UserContext";
 
 const SoilTestReportUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileName, setFileName] = useState("");
   const [result, setResult] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [farmerInput, setFarmerInput] = useState(null);
 
   const {user} = useUser();
-  
 
-  // Fetch initial farmer data from localStorage on component mount
   useEffect(() => {
     const storedFarmerData = localStorage.getItem("farmerInput");
     if (storedFarmerData) {
@@ -63,7 +62,7 @@ const SoilTestReportUploader = () => {
       return;
     }
 
-    setIsLoading(true);
+    setIsAnalyzing(true);
     setErrorMessage(null);
 
     const formData = new FormData();
@@ -93,7 +92,7 @@ const SoilTestReportUploader = () => {
       console.error("Error uploading file:", error);
       setErrorMessage("Failed to analyze the report. Please try again.");
     } finally {
-      setIsLoading(false);
+      setIsAnalyzing(false);
     }
   };
 
@@ -102,43 +101,57 @@ const SoilTestReportUploader = () => {
       alert("Please upload the soil report first.");
       return;
     }
-
-    setIsLoading(true);
+  
+    setIsSubmitting(true);
     try {
-      // Fetch location data first
+      // Collect location and weather data
       const locationData = await fetchLocationAndFarmerData();
-      
-      // Then fetch weather data using the location
       const weatherData = await fetchWeather(
         locationData.latitude,
         locationData.longitude
       );
-
-      // Update the final farmer data state with all collected information
+  
+      // Assuming you have a user object available with an id
+      const farmerId = user.id;
+  
+      // Prepare the data payload
       const farmerData = {
-        farmerId: user.id,
-        farmerInput,
+        farmerId, // Include farmerId directly in the payload
+        farmerInput: farmerInput, // Hardcoded for now, should be passed as a prop
         location: locationData,
         weather: weatherData,
-        soilAnalysisReport: result
+        soilAnalysisReport: result,
       };
-
-      alert("AgroBooster is accessing your location")
-
-      console.log(farmerData);
-
-      
+  
+      alert("AgroBooster is accessing your location");
+  
+      // Send the data to the backend via a POST request
+      const response = await fetch("http://127.0.0.1:4000/farmer_data/save-farmer-data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(farmerData),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to store data in backend");
+      }
+  
+      const responseData = await response.json();
+      console.log("Data stored successfully:", responseData);
     } catch (error) {
       setErrorMessage("Failed to collect all required data. Please try again.");
       console.error("Error in submit:", error);
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
+  
 
   return (
     <div>
-      <h2 className="text-4xl font-bold mb-4 text-green-600 mb-6 mt-10">
+      <h2 className="text-4xl font-bold text-green-600 mb-6 mt-10">
         Upload Soil Test Report
       </h2>
 
@@ -157,14 +170,14 @@ const SoilTestReportUploader = () => {
 
       <button
         onClick={handleUpload}
-        disabled={isLoading || !selectedFile}
+        disabled={isAnalyzing || !selectedFile}
         className={`px-4 py-2 text-white rounded-md ${
-          isLoading || !selectedFile
+          isAnalyzing || !selectedFile
             ? "bg-green-600"
             : "bg-green-600 hover:bg-green-700"
         }`}
       >
-        {isLoading ? "Analyzing..." : "Upload and Analyze"}
+        {isAnalyzing ? "Analyzing..." : "Upload and Analyze"}
       </button>
 
       {errorMessage && (
@@ -186,14 +199,14 @@ const SoilTestReportUploader = () => {
       <div className="flex justify-end mt-4">
         <button
           onClick={handleSubmit}
-          disabled={isLoading}
+          disabled={isSubmitting}
           className={`px-4 py-2 rounded-lg transition ${
-            result && !isLoading
+            result && !isSubmitting
               ? "bg-green-600 text-white hover:bg-green-700"
               : "bg-gray-400 text-gray-700 cursor-not-allowed"
           }`}
         >
-          {isLoading ? "Processing..." : "Submit"}
+          {isSubmitting ? "Processing..." : "Submit"}
         </button>
       </div>
     </div>
