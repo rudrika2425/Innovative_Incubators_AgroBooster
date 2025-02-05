@@ -1,84 +1,125 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React from "react"; 
+import { 
+  BarChart2, 
+  Landmark, 
+  TestTube2, 
+  Microscope, 
+  CloudSun, 
+  CropIcon,
+  Leaf,
+  Wheat,
+  Sun
+} from "lucide-react";    
 
 const Service = ({ id }) => {
   const purposes = [
     {
+      icon: <BarChart2 />,
       title: "Data-Driven Insights",
-      description: 
-        "Provide real-time, location-based analysis of weather, soil, and terrain to help farmers make tailored farming decisions. Use predictive analytics to anticipate weather patterns, pest invasions, and disease outbreaks, ensuring proactive management of farm resources.",
+      description: "Access real-time analysis of weather, soil, and terrain conditions to make informed farming decisions. Optimize practices to ensure optimal crop growth.",
+      iconBg: "bg-amber-100",
+      iconColor: "text-amber-600"
     },
     {
+      icon: <Landmark />,
       title: "Precision Tools",
-      description: 
-        "Offer personalized crop calendars and task schedules for tasks such as irrigation, fertilization, and pest control. Provide early disease detection tools and suggest organic pest management practices to enhance farm productivity.",
+      description: "Receive personalized crop calendars and task schedules tailored to your farm. Improve efficiency and productivity by managing time and resources effectively.",
+      iconBg: "bg-orange-100",
+      iconColor: "text-orange-600"
     },
     {
-      title: "Soil Testing Integration",
-      description: 
-        "Integrate soil testing services with the platform, enabling farmers to receive crop recommendations based on soil quality. Help farmers make data-backed decisions to optimize soil health and maximize crop yields.",
+      icon: <TestTube2 />,
+      title: "Soil Testing",
+      description: "Get data-backed recommendations for soil health to enhance crop yields. Identify nutrient deficiencies and optimize soil management..",
+      iconBg: "bg-pink-100",
+      iconColor: "text-pink-600"
     },
     {
-      title: "Disease Detection Plant Bot",
-      description: 
-        "Introduce a plant disease detection bot that uses image recognition to identify diseases in plants. As farmers upload images of their crops, the bot analyzes the images to provide timely alerts and recommendations for treatment.",
+      icon: <Microscope />,
+      title: "Disease Detection",
+      description: "AI-powered plant disease recognition detects issues early, minimizing crop loss. Proactively manage plant health and reduce pesticide use.",
+      iconBg: "bg-rose-100",
+      iconColor: "text-rose-600"
     },
     {
-      title: "Weather and Pest Prediction",
-      description: 
-        "Utilize AI-driven predictive models to forecast weather changes and predict pest invasions, enabling farmers to take preventive actions before issues arise, minimizing crop damage and improving harvest outcomes.",
+      icon: <CloudSun />,
+      title: "Weather Prediction",
+      description: "AI-driven weather and pest invasion forecasts help farmers prepare for extreme conditions. Make proactive decisions to safeguard crops from unpredictable weather.",
+      iconBg: "bg-emerald-100",
+      iconColor: "text-emerald-600"
     },
     {
-      title: "Actionable Reports and Alerts",
-      description: 
-        "Generate actionable reports and alerts based on real-time data. Provide insights that farmers can immediately act on, such as irrigation recommendations, disease warnings, or soil nutrient adjustments, helping farmers stay ahead of challenges.",
-    },
+      icon: <CropIcon />,
+      title: "Actionable Insights",
+      description: "Receive real-time, actionable reports to enhance farming decisions. Proactively manage crops and operations with clear, data-driven insights.",
+      iconBg: "bg-slate-100",
+      iconColor: "text-slate-600"
+    }
   ];
-  
+
+  const FloatingElements = () => (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 ">
+      {[...Array(20)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute animate-float opacity-20"
+          style={{
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            animation: `float ${8 + Math.random() * 4}s infinite ${Math.random() * 2}s`,
+          }}
+        >
+          {i % 3 === 0 ? (
+            <Leaf className="w-10 h-10 text-emerald-600" />
+          ) : i % 3 === 1 ? (
+            <Wheat className="w-10 h-10 text-amber-600" />
+          ) : (
+            <Sun className="w-10 h-10 text-yellow-600" />
+          )}
+        </div>
+      ))}
+    </div>
+  );
 
   return (
-    <div id={id} className="relative">
-      <img
-        src="/Images/hero-img.png"
-        alt="background image"
-        className="absolute top-0 left-0 w-full h-full object-cover"
-      />
-      <div className="absolute top-0 left-0 w-full h-full bg-black opacity-70"></div>
+    <div id={id} className="relative min-h-screen overflow-hidden bg-gradient-to-b from-green-50 to-emerald-200 py-16">
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(5deg); }
+        }
+      `}</style>
+      
+      <FloatingElements />
 
-      <motion.h3 className="text-5xl font-bold text-center mb-5 pt-20 text-white opacity-75">
-        Our Services
-      </motion.h3>
-
-      <div className="flex flex-wrap justify-center gap-14  p-9">
-        {purposes.map((purpose, index) => (
-          <motion.div
-            key={index}
-            className="purpose-section max-w-xs w-1/3 rounded overflow-hidden shadow-lg  bg-white opacity-75 transition-all duration-500 transform hover:scale-105 cursor-pointer"
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 5 }}
-            transition={{
-              duration: 0.8,
-              delay: 0.2 + index * 0.2,
-              type: "spring",
-            }}
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 15px 25px rgba(0, 0, 0, 0.2)",
-              transition: { duration: 0.2, ease: "easeInOut" },
-            }}
-          >
+      <div className="container mx-auto px-4 relative z-10">
+        <h2 className="text-4xl font-extrabold text-emerald-900 text-center mb-12">
+          Our <span className="text-amber-600">Services</span>
+        </h2>
+        <div className="grid md:grid-cols-3 gap-6 m-15">
+          {purposes.map((purpose, index) => (
             <div
-              className={`bg-green-600 h-16 relative flex justify-center items-center `}
+              key={index}
+              className="bg-white border border-emerald-100 rounded-2xl p-6 text-center 
+              transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl 
+              flex flex-col items-center justify-between"
             >
-              <h3 className="text-xl font-semibold text-white">
-                {purpose.title}
-              </h3>
+              <div className={`p-4 rounded-full mb-4 ${purpose.iconBg} flex items-center justify-center`}>
+                {React.cloneElement(purpose.icon, {
+                  className: `w-10 h-10 ${purpose.iconColor}`
+                })}
+              </div>
+              <div>
+                <h3 className={`text-xl font-bold mb-3 ${purpose.iconColor}`}>
+                  {purpose.title}
+                </h3>
+                <p className="text-emerald-800 text-sm">
+                  {purpose.description}
+                </p>
+              </div>
             </div>
-            <div className="p-4">
-              <p className="text-gray-600">{purpose.description}</p>
-            </div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

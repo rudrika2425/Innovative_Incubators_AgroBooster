@@ -14,6 +14,7 @@ import Chatbot from "./ChatBoat/Chatboat";
 import FarmerInput from "./information/FarmerInput";
 import SoilTest from "./information/SoilTest";
 import TestUser from "./information/Test2";
+import OnboardingGuide from "./authentication/onboardingGuide";
 
 
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/guide" element={<OnboardingGuide />} />
           <Route path="/test" element={<SoilTestReportUploader />} />
           <Route path="/farmer-Information" element={<FarmerDashboard />}>
             <Route path="basicInformation" element={<FarmerInput />} />

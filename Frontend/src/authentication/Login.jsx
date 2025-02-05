@@ -51,7 +51,7 @@ const Login = () => {
       setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
 
-      window.location.href = "/farmer-information/basicInformation";
+      window.location.href = "/guide";
     } catch (err) {
       setError(err.message);
     } finally {
