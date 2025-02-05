@@ -3,7 +3,7 @@ import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../Context/UserContext";
 import { UserCircle } from "lucide-react";
 
-const FarmerDashboard = () => {
+const InfoDashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useUser();
@@ -73,4 +73,4 @@ const FarmerDashboard = () => {
   );
 };
 
-export default FarmerDashboard;
+export default InfoDashboard;

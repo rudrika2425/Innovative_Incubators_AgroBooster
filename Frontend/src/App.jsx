@@ -9,12 +9,16 @@ import Description from "./rental/description";
 import Login from "./authentication/Login";
 import Signup from "./authentication/Signup";
 import SoilTestReportUploader from "./information/SoilAnalysis";
-import FarmerDashboard from "./information/FarmerDashboard";
 import Chatbot from "./ChatBoat/Chatboat";
 import FarmerInput from "./information/FarmerInput";
 import SoilTest from "./information/SoilTest";
-import TestUser from "./information/Test2";
 import OnboardingGuide from "./authentication/onboardingGuide";
+import FarmerDashboard from "./Farmers/FarmerDashbord";
+import InfoDashboard from "./information/InfoDashboard";
+import RentOutTools from "./Farmers/RentOutTools";
+import BorrowTools from "./Farmers/BorrowTools";
+import YourFarms from "./Farmers/YourFarms";
+import Home from "./Farmers/Home";
 
 
 
@@ -34,7 +38,13 @@ function App() {
           <Route path="/chatbot" element={<Chatbot />} />
           <Route path="/guide" element={<OnboardingGuide />} />
           <Route path="/test" element={<SoilTestReportUploader />} />
-          <Route path="/farmer-Information" element={<FarmerDashboard />}>
+          <Route path="/farmerdashboard" element={<FarmerDashboard />}>
+            <Route index element={<Home />} />
+            <Route path="your-farms" element={<YourFarms />} />
+            <Route path="rent-out-tools" element={<RentOutTools />} />
+            <Route path="borrow-tools" element={<BorrowTools />} />
+          </Route>
+          <Route path="/farmer-Information" element={<InfoDashboard />}>
             <Route path="basicInformation" element={<FarmerInput />} />
             <Route path="soilTesting" element={<SoilTest />} />
           </Route>

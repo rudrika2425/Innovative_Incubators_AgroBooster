@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
+
 // Create User Context
 const UserContext = createContext(null);
 
@@ -8,6 +9,7 @@ export const useUser = () => useContext(UserContext);
 
 // Provider Component
 export const UserProvider = ({ children }) => {
+
   // Load user from localStorage on initialization
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
@@ -23,8 +25,15 @@ export const UserProvider = ({ children }) => {
     }
   }, [user]);
 
+  // Logout function
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+    localStorage.removeItem("authToken");
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, logout }}>
       {children}
     </UserContext.Provider>
   );
