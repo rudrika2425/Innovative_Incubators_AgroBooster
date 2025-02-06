@@ -1,102 +1,64 @@
-import React, { useState } from "react";
-import { Sprout, Leaf, Sun, Tractor, Search, Heart, ShoppingCart } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 const BorrowTools = () => {
+  const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  
-  const products = [
-    {
-      id: 1,
-      title: "Eco-Friendly Sofa",
-      category: "harvester",
-      brand: "GreenLiving",
-      model: "GLS-2025",
-      condition: "New",
-      specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-      rate: "Rs. 25 per day",
-      availability: "Available",
-      deposit: "Rs. 1000",
-      address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002",
-      deliveryRange: "Within 20 km radius of Ludhiana",
-      renterName: "John Doe",
-      contact: "9876543210",
-      terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-      images: ["/api/placeholder/400/300"]
-    }
-  ];
+  const navigate = useNavigate();
 
-  const handleInfo = (product) => {
-    setSelectedProduct(product);
-    // You can implement your own way to show product details, 
-    // such as setting a state to show a modal or updating the UI
-  };
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/tools")
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching tools:", error);
+      });
+  }, []);
 
   const filteredProducts = selectedCategory
     ? products.filter((product) => product.category === selectedCategory)
     : products;
 
-  // Floating Elements Component
-  const FloatingElements = () => (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(15)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute animate-float opacity-30"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            animation: `float ${8 + Math.random() * 4}s infinite ${Math.random() * 2}s`,
-            zIndex: 0
-          }}
-        >
-          {i % 4 === 0 ? (
-            <Leaf className="w-8 h-8 text-emerald-600" />
-          ) : i % 4 === 1 ? (
-            <Sprout className="w-9 h-9 text-lime-600" />
-          ) : i % 4 === 2 ? (
-            <Sun className="w-10 h-10 text-yellow-600" />
-          ) : (
-            <Tractor className="w-11 h-11 text-green-600" />
-          )}
-        </div>
-      ))}
-    </div>
-  );
+  const handleInfo = (product) => {
+    navigate("/description", { state: { product } });
+  };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-30px) rotate(5deg); }
-        }
-      `}</style>
-
-      <FloatingElements />
-
+    <div
+      style={{
+        backgroundImage: `url('/Images/des.png')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        opacity: 0.8,
+      }}
+      className="min-h-screen bg-gradient-to-b from-green-50 to-green-100"
+    >
       {/* Navbar */}
       <nav className="relative z-10 bg-emerald-600/90 backdrop-blur-sm shadow-lg">
         <div className="w-full px-6 py-4 flex justify-between items-center">
           <div className="flex space-x-6">
-            {["Shop All", "Tractor", "Harvester", "Irrigation System", "Plow", "Other"].map((category) => (
-              <button
-                key={category}
-                className={`text-white font-medium hover:text-yellow-200 transition duration-300 ${
-                  (category.toLowerCase() === "shop all" && !selectedCategory) || 
-                  category.toLowerCase() === selectedCategory 
-                    ? "border-b-2 border-yellow-300" 
-                    : ""
-                }`}
-                onClick={() => setSelectedCategory(category.toLowerCase() === "shop all" ? "" : category.toLowerCase())}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-          <div className="flex items-center space-x-4">
-            
-           
+            {["Shop All", "Tractor", "Harvester", "Irrigation System", "Plow", "Other"].map(
+              (category) => (
+                <button
+                  key={category}
+                  className={`text-white font-medium hover:text-yellow-200 transition duration-300 ${
+                    (category.toLowerCase() === "shop all" && !selectedCategory) ||
+                    category.toLowerCase() === selectedCategory
+                      ? "border-b-2 border-yellow-300"
+                      : ""
+                  }`}
+                  onClick={() =>
+                    setSelectedCategory(category.toLowerCase() === "shop all" ? "" : category.toLowerCase())
+                  }
+                >
+                  {category}
+                </button>
+              )
+            )}
           </div>
         </div>
       </nav>
@@ -125,7 +87,6 @@ const BorrowTools = () => {
                   onClick={() => handleInfo(product)}
                   className="w-full mt-4 bg-emerald-600 text-white py-2 rounded-full hover:bg-emerald-500 transition-all duration-300 flex items-center justify-center gap-2"
                 >
-                  <Tractor className="w-5 h-5" />
                   <span>View More Details</span>
                 </button>
               </div>
