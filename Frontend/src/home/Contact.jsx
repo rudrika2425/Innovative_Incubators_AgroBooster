@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Wheat, Sprout, Leaf, Sun, Cloud, Droplet, Tractor } from "lucide-react";
+import axios from 'axios';
 
 const Contact = ({ id }) => {
   const [formData, setFormData] = useState({
@@ -48,11 +49,35 @@ const Contact = ({ id }) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatusMessage("Message sent successfully!");
-    setFormData({ fullName: "", phoneNumber: "", message: "" });
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // Prepare the form data to be sent to the backend
+  const contactData = {
+    fullName: formData.fullName,
+    phoneNumber: formData.phoneNumber,
+    message: formData.message,
   };
+
+  try {
+    // Send a POST request using Axios to the Flask backend
+    const response = await axios.post("http://127.0.0.1:4000/contact/submit-contact-data", contactData);
+
+    // If the response is successful, set the success message
+    setStatusMessage(response.data.message);
+    setFormData({ fullName: "", phoneNumber: "", message: "" });
+  } catch (error) {
+    // If an error occurs, handle it
+    if (error.response) {
+      // Backend returned an error response
+      setStatusMessage(`Error: ${error.response.data.error}`);
+    } else {
+      // Network error or no response
+      setStatusMessage("Something went wrong. Please try again later.");
+    }
+  }
+};
+
 
   return (
     <div id={id} className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100 py-20">

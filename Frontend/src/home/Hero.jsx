@@ -56,7 +56,7 @@ const Hero = ({ id }) => {
           </div>
 
           {/* Main Title */}
-          <h1 className="text-4xl md:text-6xl font-extrabold text-emerald-900 mb-4 tracking-tight leading-tight">
+          <h1 className="text-4xl md:text-6xl font-extrabold text-yellow-900 mb-4 tracking-tight leading-tight">
             AGRICULTURAL COMMUNITY SERVICE
           </h1>
 

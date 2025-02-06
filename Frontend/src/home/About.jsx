@@ -57,10 +57,10 @@ const About = ({ id }) => {
         <div className="flex flex-col lg:flex-row items-center space-y-10 lg:space-y-0 lg:space-x-12 ">
           <div className="w-full lg:w-1/2 text-center lg:text-left">
             <h2 className="text-4xl md:text-5xl font-extrabold text-emerald-900 mb-6 tracking-tight leading-tight">
-               <span className="text-emerald-700">AgroBooster</span>
+               <span className="text-yellow-700">AgroBooster</span>
             </h2>
-            <p className="text-xl text-emerald-800 leading-relaxed mb-8">
-              At <span className="text-emerald-700 font-semibold">AgroBooster</span>, we are revolutionizing agriculture
+            <p className="text-xl text-yellow-800 leading-relaxed mb-8">
+              At <span className="text-yellow-700 font-semibold">AgroBooster</span>, we are revolutionizing agriculture
               through cutting-edge artificial intelligence. Our mission is to empower farmers with intelligent
               tools that maximize crop yields, reduce environmental impact, and transform data into actionable insights.
             </p>
