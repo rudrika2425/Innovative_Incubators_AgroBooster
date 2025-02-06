@@ -1,5 +1,5 @@
 import React from "react";
-import { Leaf, Sprout, Sun, Tractor, Droplet, Wheat, Cloud } from "lucide-react";
+import { Leaf, Sprout, Sun, Tractor, Droplet, Wheat } from "lucide-react";
 
 const About = ({ id }) => {
   const FloatingElements = () => (
@@ -41,9 +41,9 @@ const About = ({ id }) => {
   );
 
   return (
-    <section 
-      id={id} 
-      className="relative min-h-screen bg-gradient-to-b from-green-50 to-yellow-500 flex items-center "
+    <section
+      id={id}
+      className="relative min-h-screen bg-gradient-to-b from-green-50 to-yellow-500 flex items-center"
     >
       <style>{`
         @keyframes float {
@@ -85,32 +85,32 @@ const About = ({ id }) => {
               About <span className="text-emerald-700">AgroBooster</span>
             </h2>
             <p className="text-xl text-emerald-800 leading-relaxed mb-8">
-              At <span className="text-emerald-700 font-semibold">AgroBooster</span>, we are revolutionizing agriculture 
-              through cutting-edge artificial intelligence. Our mission is to empower farmers with intelligent 
+              At <span className="text-emerald-700 font-semibold">AgroBooster</span>, we are revolutionizing agriculture
+              through cutting-edge artificial intelligence. Our mission is to empower farmers with intelligent
               tools that maximize crop yields, reduce environmental impact, and transform data into actionable insights.
             </p>
           </div>
 
           <div className="w-full lg:w-1/2 grid grid-cols-2 gap-6">
-            <StatCard 
-              icon={Tractor} 
-              value="500+" 
-              label="Farms Transformed" 
+            <StatCard
+              icon={Tractor}
+              value="500+"
+              label="Farms Transformed"
             />
-            <StatCard 
-              icon={Leaf} 
-              value="30%" 
-              label="Yield Increase" 
+            <StatCard
+              icon={Leaf}
+              value="30%"
+              label="Yield Increase"
             />
-            <StatCard 
-              icon={Droplet} 
-              value="40%" 
-              label="Water Saved" 
+            <StatCard
+              icon={Droplet}
+              value="40%"
+              label="Water Saved"
             />
-            <StatCard 
-              icon={Sun} 
-              value="95%" 
-              label="Sustainability" 
+            <StatCard
+              icon={Sun}
+              value="95%"
+              label="Sustainability"
             />
           </div>
         </div>
