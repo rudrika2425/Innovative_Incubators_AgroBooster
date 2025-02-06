@@ -106,7 +106,7 @@ function RentOutTools() {
   return (
     <div
       style={{
-        backgroundImage: url('/Images/bgRent.png'),
+        backgroundImage: "url('/Images/bgRent.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         opacity: 0.8,
