@@ -2,6 +2,11 @@ from flask import Flask
 from flask_cors import CORS
 import pymongo
 from config import Config
+import logging
+
+werkzeug_logger = logging.getLogger("werkzeug")
+werkzeug_logger.setLevel(logging.ERROR)
+logging.getLogger('pymongo').setLevel(logging.WARNING)
 
 def create_app():
     app = Flask(__name__)
