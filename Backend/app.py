@@ -2,7 +2,11 @@ from flask import Flask
 from flask_cors import CORS
 import pymongo
 from config import Config
+import logging
 
+werkzeug_logger = logging.getLogger("werkzeug")
+werkzeug_logger.setLevel(logging.ERROR)
+logging.getLogger('pymongo').setLevel(logging.WARNING)
 def create_app():
     app = Flask(__name__)
     
@@ -31,6 +35,7 @@ def create_app():
     from routes.get_location import location_bp
     from routes.weather_routes import weather_bp
     from routes.weather_forcast import weather_forecast_bp
+    # from routes.crop_prediction_routes import crop_prediction_bp
 
     # Register blueprints
     app.register_blueprint(auth_bp, url_prefix="/user")
@@ -39,6 +44,8 @@ def create_app():
     app.register_blueprint(location_bp, url_prefix="/location")
     app.register_blueprint(weather_bp, url_prefix="/weather")
     app.register_blueprint(weather_forecast_bp, url_prefix="/weather_forecast")
+    # app.register_blueprint(crop_prediction_bp, url_prefix="/crop_prediction")
+    
 
     # Attach MongoDB client to app for access in routes
     app.mongo_client = client  # ✅ Fixed this

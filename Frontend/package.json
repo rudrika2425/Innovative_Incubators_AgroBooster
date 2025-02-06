@@ -12,6 +12,7 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@google-cloud/translate": "^8.5.0",
     "@react-oauth/google": "^0.12.1",
     "@tailwindcss/vite": "^4.0.0",
     "axios": "^1.7.9",
