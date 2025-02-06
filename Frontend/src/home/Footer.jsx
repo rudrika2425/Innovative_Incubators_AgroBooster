@@ -2,8 +2,8 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-300 text-white -mb-5 ">
-      <div className="  bg-green-600 bg-opacity-50 rounded-lg pb-4">
+    <footer className="bg-gradient-to-br from-yellow-100/80 to-yellow-300/80 text-emerald-700 -mb-5 ">
+      <div className="  rounded-lg pb-4">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-2">
           <div className="p-6">
             <h2 className="font-bold text-lg">COMPANY</h2>
@@ -12,7 +12,7 @@ const Footer = () => {
               nisi dolorem aperiam commodi possimus voluptatibus eum enim vitae
               eligendi perspiciatis.
             </p>
-          </div>
+          </div>  
 
           <div className="p-6 space-y-6">
             <div>
