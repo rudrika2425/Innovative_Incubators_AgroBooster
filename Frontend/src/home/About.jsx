@@ -54,7 +54,7 @@ const About = ({ id }) => {
       <FloatingElements />
 
       <div className="relative z-10 container mx-auto px-6">
-        <div className="flex flex-col lg:flex-row items-center space-y-10 lg:space-y-0 lg:space-x-12">
+        <div className="flex flex-col lg:flex-row items-center space-y-10 lg:space-y-0 lg:space-x-12 ">
           <div className="w-full lg:w-1/2 text-center lg:text-left">
             <h2 className="text-4xl md:text-5xl font-extrabold text-emerald-900 mb-6 tracking-tight leading-tight">
                <span className="text-emerald-700">AgroBooster</span>

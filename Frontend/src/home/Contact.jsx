@@ -66,14 +66,14 @@ const Contact = ({ id }) => {
       <FloatingElements />
 
       <div className="relative z-10 container mx-auto px-4">
-        <h3 className="text-5xl font-bold text-center text-emerald-900 mb-12">
+        <h3 className="text-5xl font-bold text-center text-emerald-600 mb-12">
           Contact Us
         </h3>
 
         <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row">
             {/* Contact Info Side */}
-            <div className="md:w-1/2 bg-amber-600 text-white p-8 flex flex-col justify-between rounded-l-xl">
+            <div className="md:w-1/2 bg-gradient-to-br from-lime-200/80 to-lime-300/80 text-emerald-900 p-8 flex flex-col justify-between rounded-l-xl">
               <div>
                 <h2 className="text-2xl font-bold mb-4 flex items-center">
                   <Wheat className="mr-3 w-8 h-8 text-amber-400" />
@@ -101,7 +101,7 @@ const Contact = ({ id }) => {
             </div>
 
             {/* Form Side */}
-            <div className="md:w-1/2 bg-gradient-to-b from-yellow-50 to-orange-300 flex items-center text-white p-8 flex flex-col justify-between rounded-r-xl">
+            <div className="md:w-1/2 bg-gradient-to-br from-lime-200/80 to-lime-200/80 flex items-center text-white p-8 flex flex-col justify-between rounded-r-xl">
               <h2 className="text-2xl font-bold text-emerald-900 mb-6">
                 Send Us a Message
               </h2>
@@ -113,7 +113,7 @@ const Contact = ({ id }) => {
                     value={formData.fullName}
                     onChange={handleInputChange}
                     placeholder="Full Name"
-                    className="w-full px-4 py-2 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-4 py-2 border border-emerald-200 rounded-lg  text-emerald-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     required
                   />
                 </div>
@@ -124,7 +124,7 @@ const Contact = ({ id }) => {
                     value={formData.phoneNumber}
                     onChange={handleInputChange}
                     placeholder="Phone Number"
-                    className="w-full px-4 py-2 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-4 py-2 border border-emerald-200 rounded-lg text-emerald-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     required
                   />
                 </div>
@@ -135,7 +135,7 @@ const Contact = ({ id }) => {
                     onChange={handleInputChange}
                     placeholder="Your Message"
                     rows="4"
-                    className="w-full px-4 py-2 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-4 py-2 border border-emerald-200 rounded-lg  text-emerald-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     required
                   ></textarea>
                 </div>
