@@ -11,7 +11,7 @@ const BorrowTools = () => {
   // Fetch tools from the backend when the component mounts
   useEffect(() => {
     axios
-      .get("http://localhost:5000/tools") // Replace with the actual backend URL
+      .get("http://127.0.0.1:4000/tools/gettools") // Replace with the actual backend URL
       .then((response) => {
         setProducts(response.data); // Set the fetched tools into state
       })

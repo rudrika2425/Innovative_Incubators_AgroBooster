@@ -2,6 +2,7 @@ from flask import current_app
 import datetime
 from bson import ObjectId
 
+
 class ToolRental:
     @staticmethod
     def create_tool_rental(data):
