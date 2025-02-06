@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import axios from "axios";
 // import NavbarRent from "./NavbarRent";
+import {useUser} from "../Context/UserContext"
 
 function RentOutTools() {
+  const {user} = useUser();
   const [formData, setFormData] = useState({
+    farmer_id:user.id,
     title: "",
     category: "",
     brand: "",
@@ -16,6 +20,8 @@ function RentOutTools() {
     deliveryRange: "",
     renterName: "",
     contact: "",
+    district:"",
+    state:"",
     terms: "",
     images: [],
   });
@@ -41,11 +47,36 @@ function RentOutTools() {
   };
 
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
+    try {
+      // Create a new FormData object for sending the form data including images
+      const formDataToSend = new FormData();
+      for (let key in formData) {
+        if (key !== "images") {
+          formDataToSend.append(key, formData[key]);
+        } else {
+          formData.images.forEach((file) => {
+            formDataToSend.append("images", file);
+          });
+        }
+      }
+  const response = await axios.post("http://127.0.0.1:4000/tools/addtools", formDataToSend, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  if (response.status === 201) {
     alert("Details submitted successfully!");
-  };
+  }
+} catch (error) {
+  console.error("Error submitting form data:", error);
+  alert("An error occurred while submitting your data.");
+}
+};
+
+    
 
   return (
     <>
@@ -271,6 +302,28 @@ function RentOutTools() {
                 type="text"
                 name="contact"
                 placeholder="Phone number or email"
+                className="w-full border border-gray-300 rounded-lg p-2"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">District</label>
+              <input
+                type="text"
+                name="district"
+                placeholder="District"
+                className="w-full border border-gray-300 rounded-lg p-2"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">State</label>
+              <input
+                type="text"
+                name="state"
+                placeholder="State"
                 className="w-full border border-gray-300 rounded-lg p-2"
                 onChange={handleChange}
                 required

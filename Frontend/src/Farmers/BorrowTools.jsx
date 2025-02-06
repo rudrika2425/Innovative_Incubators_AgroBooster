@@ -1,177 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios"; // Import axios for API requests
 import { motion } from "framer-motion"; // Install Framer Motion with npm install framer-motion
 import { useNavigate } from "react-router-dom";
 
 const BorrowTools = () => {
-  const products = [
-    {   id:1,
-        title: "Eco-Friendly Sofa",
-        category: "harvester",
-        brand: "GreenLiving",
-        model: "GLS-2025",
-        condition: "New",
-        specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-        rate: "Rs. 25 per day",
-        availability: "Available",
-        deposit: "Rs. 1000",
-        address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002 Landmark: Opposite Guru Nanak Stadium",
-        deliveryRange: "Within 20 km radius of Ludhiana",
-        renterName: "John Doe",
-        contact: "9876543210",
-        terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-        images: [
-          "https://via.placeholder.com/150",
-          "https://via.placeholder.com/150",
-          "https://via.placeholder.com/150"
-        ],
-      },
-    {
-      id: 2,
-      title: "Eco-Friendly Sofa",
-      category: "harvester",
-      brand: "GreenLiving",
-      model: "GLS-2025",
-      condition: "New",
-      specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-      rate: "Rs. 25 per day",
-      availability: "Available",
-      deposit: "Rs. 1000",
-      address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002 Landmark: Opposite Guru Nanak Stadium",
-      deliveryRange: "Within 20 km radius of Ludhiana",
-      renterName: "John Doe",
-      contact: "9876543210",
-      terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-      images: [
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150"
-      ],
-    },
-        {
-            title: "Eco-Friendly Sofa",
-            category: "other",
-            brand: "GreenLiving",
-            model: "GLS-2025",
-            condition: "New",
-            specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-            rate: "Rs. 25 per day",
-            availability: "Available",
-            deposit: "Rs. 1000",
-            address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002 Landmark: Opposite Guru Nanak Stadium",
-            deliveryRange: "Within 20 km radius of Ludhiana",
-            renterName: "John Doe",
-            contact: "9876543210",
-            terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-            images: [
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150"
-            ],
-        },
-        {
-            title: "Eco-Friendly Sofa",
-            category: "other",
-            brand: "GreenLiving",
-            model: "GLS-2025",
-            condition: "New",
-            specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-            rate: "Rs. 25 per day",
-            availability: "Available",
-            deposit: "Rs. 1000",
-            address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002 Landmark: Opposite Guru Nanak Stadium",
-            deliveryRange: "Within 20 km radius of Ludhiana",
-            renterName: "John Doe",
-            contact: "9876543210",
-            terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-            images: [
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150"
-            ],
-        },
-        {
-            title: "Eco-Friendly Sofa",
-            category: "other",
-            brand: "GreenLiving",
-            model: "GLS-2025",
-            condition: "New",
-            specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-            rate: "Rs. 25 per day",
-            availability: "Available",
-            deposit: "Rs. 1000",
-            address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002 Landmark: Opposite Guru Nanak Stadium",
-            deliveryRange: "Within 20 km radius of Ludhiana",
-            renterName: "John Doe",
-            contact: "9876543210",
-            terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-            images: [
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150"
-            ],
-        },
-        {
-            title: "Eco-Friendly Sofa",
-            category: "other",
-            brand: "GreenLiving",
-            model: "GLS-2025",
-            condition: "New",
-            specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-            rate: "Rs. 25 per day",
-            availability: "Available",
-            deposit: "Rs. 1000",
-            address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002 Landmark: Opposite Guru Nanak Stadium",
-            deliveryRange: "Within 20 km radius of Ludhiana",
-            renterName: "John Doe",
-            contact: "9876543210",
-            terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-            images: [
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150"
-            ],
-        },
-        {
-            title: "Eco-Friendly Sofa",
-            category: "irrigation system",
-            brand: "GreenLiving",
-            model: "GLS-2025",
-            condition: "New",
-            specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-            rate: "Rs. 25 per day",
-            availability: "Available",
-            deposit: "Rs. 1000",
-            address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002 Landmark: Opposite Guru Nanak Stadium",
-            deliveryRange: "Within 20 km radius of Ludhiana",
-            renterName: "John Doe",
-            contact: "9876543210",
-            terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-            images: [
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150"
-            ],
-        },
-      ];
- const navigate=useNavigate();
+  const [products, setProducts] = useState([]); // Store tools in state
   const [selectedCategory, setSelectedCategory] = useState("");
+  const navigate = useNavigate();
 
-  const handleInfo=(product)=>{
-    navigate('/description',{state:{product}});
-  }     
+  // Fetch tools from the backend when the component mounts
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/tools") // Replace with the actual backend URL
+      .then((response) => {
+        setProducts(response.data); // Set the fetched tools into state
+      })
+      .catch((error) => {
+        console.error("Error fetching tools:", error);
+      });
+  }, []);
+
   // Adjusted logic to show all products when no category is selected
   const filteredProducts = selectedCategory
     ? products.filter((product) => product.category === selectedCategory)
     : products;
 
+  const handleInfo = (product) => {
+    navigate('/description', { state: { product } });
+  };
+
   return (
-    <>
-    <div style={{
+    <div
+      style={{
         backgroundImage: `url('/Images/des.png')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
         opacity: 0.8, // Adjust transparency
-      }} className="min-h-screen bg-gradient-to-b from-green-50 to-green-100">
+      }}
+      className="min-h-screen bg-gradient-to-b from-green-50 to-green-100"
+    >
       {/* Navbar */}
       <nav className="bg-green-600 shadow-lg">
         <div className="w-full px-4 py-4 flex justify-between items-center">
@@ -241,9 +108,7 @@ const BorrowTools = () => {
         </motion.div>
       </div>
     </div>
-    </>
   );
 };
-
 
 export default BorrowTools;
