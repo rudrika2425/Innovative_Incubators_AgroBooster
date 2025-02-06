@@ -1,249 +1,101 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion"; // Install Framer Motion with npm install framer-motion
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const BorrowTools = () => {
-  const products = [
-    {   id:1,
-        title: "Eco-Friendly Sofa",
-        category: "harvester",
-        brand: "GreenLiving",
-        model: "GLS-2025",
-        condition: "New",
-        specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-        rate: "Rs. 25 per day",
-        availability: "Available",
-        deposit: "Rs. 1000",
-        address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002 Landmark: Opposite Guru Nanak Stadium",
-        deliveryRange: "Within 20 km radius of Ludhiana",
-        renterName: "John Doe",
-        contact: "9876543210",
-        terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-        images: [
-          "https://via.placeholder.com/150",
-          "https://via.placeholder.com/150",
-          "https://via.placeholder.com/150"
-        ],
-      },
-    {
-      id: 2,
-      title: "Eco-Friendly Sofa",
-      category: "harvester",
-      brand: "GreenLiving",
-      model: "GLS-2025",
-      condition: "New",
-      specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-      rate: "Rs. 25 per day",
-      availability: "Available",
-      deposit: "Rs. 1000",
-      address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002 Landmark: Opposite Guru Nanak Stadium",
-      deliveryRange: "Within 20 km radius of Ludhiana",
-      renterName: "John Doe",
-      contact: "9876543210",
-      terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-      images: [
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150",
-        "https://via.placeholder.com/150"
-      ],
-    },
-        {
-            title: "Eco-Friendly Sofa",
-            category: "other",
-            brand: "GreenLiving",
-            model: "GLS-2025",
-            condition: "New",
-            specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-            rate: "Rs. 25 per day",
-            availability: "Available",
-            deposit: "Rs. 1000",
-            address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002 Landmark: Opposite Guru Nanak Stadium",
-            deliveryRange: "Within 20 km radius of Ludhiana",
-            renterName: "John Doe",
-            contact: "9876543210",
-            terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-            images: [
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150"
-            ],
-        },
-        {
-            title: "Eco-Friendly Sofa",
-            category: "other",
-            brand: "GreenLiving",
-            model: "GLS-2025",
-            condition: "New",
-            specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-            rate: "Rs. 25 per day",
-            availability: "Available",
-            deposit: "Rs. 1000",
-            address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002 Landmark: Opposite Guru Nanak Stadium",
-            deliveryRange: "Within 20 km radius of Ludhiana",
-            renterName: "John Doe",
-            contact: "9876543210",
-            terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-            images: [
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150"
-            ],
-        },
-        {
-            title: "Eco-Friendly Sofa",
-            category: "other",
-            brand: "GreenLiving",
-            model: "GLS-2025",
-            condition: "New",
-            specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-            rate: "Rs. 25 per day",
-            availability: "Available",
-            deposit: "Rs. 1000",
-            address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002 Landmark: Opposite Guru Nanak Stadium",
-            deliveryRange: "Within 20 km radius of Ludhiana",
-            renterName: "John Doe",
-            contact: "9876543210",
-            terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-            images: [
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150"
-            ],
-        },
-        {
-            title: "Eco-Friendly Sofa",
-            category: "other",
-            brand: "GreenLiving",
-            model: "GLS-2025",
-            condition: "New",
-            specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-            rate: "Rs. 25 per day",
-            availability: "Available",
-            deposit: "Rs. 1000",
-            address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002 Landmark: Opposite Guru Nanak Stadium",
-            deliveryRange: "Within 20 km radius of Ludhiana",
-            renterName: "John Doe",
-            contact: "9876543210",
-            terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-            images: [
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150"
-            ],
-        },
-        {
-            title: "Eco-Friendly Sofa",
-            category: "irrigation system",
-            brand: "GreenLiving",
-            model: "GLS-2025",
-            condition: "New",
-            specs: "Made from 100% recycled materials, 3-seater, adjustable backrest, removable covers for easy cleaning.",
-            rate: "Rs. 25 per day",
-            availability: "Available",
-            deposit: "Rs. 1000",
-            address: "House No. 45, Model Town Extension, Ludhiana, Punjab - 141002 Landmark: Opposite Guru Nanak Stadium",
-            deliveryRange: "Within 20 km radius of Ludhiana",
-            renterName: "John Doe",
-            contact: "9876543210",
-            terms: "No smoking or pets allowed. Minimum rental period of 3 days.",
-            images: [
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150"
-            ],
-        },
-      ];
- const navigate=useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("");
 
-  const handleInfo=(product)=>{
-    navigate('/description',{state:{product}});
-  }     
-  // Adjusted logic to show all products when no category is selected
+const BorrowTools = () => {
+  const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/tools")
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching tools:", error);
+      });
+  }, []);
+
   const filteredProducts = selectedCategory
     ? products.filter((product) => product.category === selectedCategory)
     : products;
 
+  const handleInfo = (product) => {
+    navigate("/description", { state: { product } });
+  };
+
   return (
-    <>
-    <div style={{
+    <div
+      style={{
         backgroundImage: `url('/Images/des.png')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        opacity: 0.8, // Adjust transparency
-      }} className="min-h-screen bg-gradient-to-b from-green-50 to-green-100">
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        opacity: 0.8,
+      }}
+      className="min-h-screen bg-gradient-to-b from-green-50 to-green-100"
+    >
       {/* Navbar */}
-      <nav className="bg-green-600 shadow-lg">
-        <div className="w-full px-4 py-4 flex justify-between items-center">
+      <nav className="relative z-10 bg-emerald-600/90 backdrop-blur-sm shadow-lg">
+        <div className="w-full px-6 py-4 flex justify-between items-center">
           <div className="flex space-x-6">
-            {["Shop All", "Tractor", "Harvester", "Irrigation System", "Plow", "Other"].map((category) => (
-              <a
-                key={category}
-                href="#"
-                className="text-white font-semibold hover:text-green-300 transition duration-200"
-                onClick={() => setSelectedCategory(category.toLowerCase() === "shop all" ? "" : category.toLowerCase())}
-              >
-                {category}
-              </a>
-            ))}
-          </div>
-          <div className="flex items-center space-x-4">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="p-2 border border-gray-300 rounded-md focus:outline-none"
-            />
-            <button className="bg-green-800 text-white px-4 py-2 rounded-md hover:bg-green-400 transition duration-200">
-              Search
-            </button>
-            <a href="#" className="text-white hover:text-green-300 transition duration-200">
-              Wishlist
-            </a>
-            <a href="#" className="text-white hover:text-green-300 transition duration-200">
-              Cart (0)
-            </a>
+            {["Shop All", "Tractor", "Harvester", "Irrigation System", "Plow", "Other"].map(
+              (category) => (
+                <button
+                  key={category}
+                  className={`text-white font-medium hover:text-yellow-200 transition duration-300 ${
+                    (category.toLowerCase() === "shop all" && !selectedCategory) ||
+                    category.toLowerCase() === selectedCategory
+                      ? "border-b-2 border-yellow-300"
+                      : ""
+                  }`}
+                  onClick={() =>
+                    setSelectedCategory(category.toLowerCase() === "shop all" ? "" : category.toLowerCase())
+                  }
+                >
+                  {category}
+                </button>
+              )
+            )}
           </div>
         </div>
       </nav>
 
-      {/* Products Section */}
-      <div className="w-full px-4 py-12">
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        >
+      {/* Products Grid */}
+      <div className="relative z-10 container mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
-            <motion.div
+            <div
               key={product.id}
-              className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
-              whileHover={{ scale: 1.03 }}
+              className="group bg-white/80 backdrop-blur-sm rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-emerald-100"
             >
-              <img
-                src={product.images[0]}
-                alt={product.title}
-                className="w-full h-40 object-cover"
-              />
+              <div className="relative h-48 overflow-hidden">
+                <img
+                  src={product.images[0]}
+                  alt={product.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </div>
               <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-800">{product.title}</h3>
-                <p className="text-green-600 font-bold mt-2">{product.rate}</p>
-                <p className="text-xs text-gray-500 mt-1">{product.address}</p>
+                <h3 className="text-lg font-semibold text-emerald-900">{product.title}</h3>
+                <p className="text-amber-600 font-bold mt-2">{product.rate}</p>
+                <p className="text-sm text-emerald-700 mt-1 truncate">{product.address}</p>
                 <button
                   onClick={() => handleInfo(product)}
-                  className="w-full mt-4 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition duration-300"
+                  className="w-full mt-4 bg-emerald-600 text-white py-2 rounded-full hover:bg-emerald-500 transition-all duration-300 flex items-center justify-center gap-2"
                 >
-                  Rent Now
+                  <span>View More Details</span>
                 </button>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </div>
-    </>
   );
 };
-
 
 export default BorrowTools;

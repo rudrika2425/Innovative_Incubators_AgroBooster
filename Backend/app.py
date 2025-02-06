@@ -4,10 +4,10 @@ import pymongo
 from config import Config
 import logging
 
+
 werkzeug_logger = logging.getLogger("werkzeug")
 werkzeug_logger.setLevel(logging.ERROR)
 logging.getLogger('pymongo').setLevel(logging.WARNING)
-
 def create_app():
     app = Flask(__name__)
     
@@ -36,8 +36,17 @@ def create_app():
     from routes.get_location import location_bp
     from routes.weather_routes import weather_bp
     from routes.weather_forcast import weather_forecast_bp
+
+    # from routes.crop_prediction_routes import crop_prediction_bp
+
     from routes.farmer_data_routes import farmer_data_bp
     from routes.contact_routes import contact_bp
+
+    from routes.predict_routes import predict_bp
+
+    from routes.rent import tool_rental_bp
+
+
 
     # Register blueprints
     app.register_blueprint(auth_bp, url_prefix="/user")
@@ -46,8 +55,16 @@ def create_app():
     app.register_blueprint(location_bp, url_prefix="/location")
     app.register_blueprint(weather_bp, url_prefix="/weather")
     app.register_blueprint(weather_forecast_bp, url_prefix="/weather_forecast")
+
+    # app.register_blueprint(crop_prediction_bp, url_prefix="/crop_prediction")
+
     app.register_blueprint(farmer_data_bp, url_prefix="/farmer_data")
     app.register_blueprint(contact_bp, url_prefix="/contact")
+
+    app.register_blueprint(predict_bp, url_prefix="/predict")
+
+    app.register_blueprint(tool_rental_bp, url_prefix="/tools") 
+
 
     # Attach MongoDB client to app for access in routes
     app.mongo_client = client  # ✅ Fixed this

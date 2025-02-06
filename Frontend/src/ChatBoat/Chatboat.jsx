@@ -120,7 +120,7 @@ const Chatbot = () => {
       }
   
       speech.rate = currentLanguage === 'hi' ? 0.8 : 0.9;
-      speech.pitch = currentLanguage === 'hi' ? 1.1 : 1.0;
+      speech.pitch = currentLanguage === 'hi' ? 0.9 : 1.0;
   
       speech.onend = () => {
         // Speak next chunk
@@ -236,7 +236,7 @@ const Chatbot = () => {
   return (
     <div className="flex h-screen bg-green-100">
       {/* Sidebar */}
-      <div className="w-64 bg-green-800 text-white p-4 flex flex-col shadow-lg rounded-r-lg">
+      <div className="w-64 bg-green-600 text-white p-4 flex flex-col shadow-lg rounded-r-lg">
         <div className="flex items-center space-x-2 mb-8">
           <Leaf className="w-8 h-8" />
           <h1 className="text-2xl font-bold">Plant Assistant</h1>

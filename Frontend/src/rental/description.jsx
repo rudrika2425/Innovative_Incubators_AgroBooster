@@ -70,6 +70,8 @@ const DescriptionPage = () => {
               <h4 className="text-xl font-semibold text-gray-700">Contact Info:</h4>
               <p className="text-gray-700">Renter: {product.renterName}</p>
               <p className="text-gray-700">Contact: {product.contact}</p>
+              <p className="text-gray-700">District: {product.district}</p>
+              <p className="text-gray-700">State: {product.state}</p>
             </div>
 
             <div className="space-y-3">
