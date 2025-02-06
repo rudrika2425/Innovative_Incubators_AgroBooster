@@ -39,8 +39,8 @@ export const Sidebar = () => {
             }}
             className={`flex items-center w-full px-6 py-3 text-left rounded-lg transition-all duration-300
                 ${location.pathname === item.path
-                    ? 'bg-gradient-to-r from-emerald-100 to-lime-50 text-emerald-700 border-r-4 border-emerald-600'
-                    : 'text-emerald-800 hover:bg-emerald-50'
+                    ? 'bg-gradient-to-r from-yellow-100 to-lime-50 text-yellow-700 border-r-4 border-yellow-600'
+                    : 'text-yellow-800 hover:bg-yellow-50'
                 }`}
         >
             <item.icon className="w-5 h-5 mr-3" />
@@ -52,13 +52,13 @@ export const Sidebar = () => {
         <>
             <button 
                 onClick={() => setIsOpen(!isOpen)}
-                className="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-md shadow-lg text-emerald-600"
+                className="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-md shadow-lg text-yellow-600"
             >
                 {isOpen ? <X /> : <Menu />}
             </button>
 
             <div className={`
-                w-64 h-screen bg-gradient-to-b from-yellow-50 to-yellow-100 shadow-xl fixed left-0 top-0 
+                w-64 h-screen bg-gradient-to-b from-yellow-100 to-yellow-200 shadow-xl fixed left-0 top-0 
                 transform transition-transform duration-300
                 md:translate-x-0 
                 ${isOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -67,12 +67,12 @@ export const Sidebar = () => {
                 <div className="flex-1">
                     <div className="p-6 flex flex-col items-center">
                         <div className="flex items-center gap-2 mb-6">
-                            <Sprout className="w-8 h-8 text-emerald-600" />
-                            <h1 className="text-3xl font-bold text-emerald-900">AgroBooster</h1>
+                            <Sprout className="w-8 h-8 text-yellow-600" />
+                            <h1 className="text-3xl font-bold text-yellow-900">AgroBooster</h1>
                         </div>
                         
                         <div className="relative">
-                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-lime-400 rounded-full blur-xl opacity-20"></div>
+                            <div className="absolute inset-0 bg-gradient-to-r from-yellow-500 to-lime-400 rounded-full blur-xl opacity-20"></div>
                             <img 
                                 src={user?.profilePicture || "https://img.freepik.com/premium-psd/male-farmer-3d-avatar-isolated-transparent-background-3d-rendering-illustration_986479-585.jpg"} 
                                 alt="Profile" 
@@ -81,7 +81,7 @@ export const Sidebar = () => {
                         </div>
                         
                         <div className="text-center mb-8">
-                            <h2 className="text-2xl font-semibold text-emerald-900">{user?.fullname || "Farmer"}</h2>
+                            <h2 className="text-2xl font-semibold text-yellow-900">{user?.fullname || "Farmer"}</h2>
                         </div>
 
                         <nav className="w-full space-y-2">
