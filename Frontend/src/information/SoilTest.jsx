@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone, faXmark } from '@fortawesome/free-solid-svg-icons';
 import labData from "./../LabData.js";
@@ -13,15 +13,7 @@ const SoilTest = () => {
   const [isListening, setIsListening] = useState(false);
   const [isListeningState, setIsListeningState] = useState(false);
   const [isListeningDistrict, setIsListeningDistrict] = useState(false);
-  const [farmerData, setFarmerData] = useState(null);
-
-  useEffect(() => {
-    const storedFarmerData = localStorage.getItem("farmerInput");
-    if (storedFarmerData) {
-      setFarmerData(JSON.parse(storedFarmerData));
-      localStorage.removeItem("farmerInput");
-    }
-  }, []);
+  
 
   const handleSearch = () => {
     const results = labData.filter(
@@ -145,7 +137,7 @@ const SoilTest = () => {
           <div className="flex items-end">
             <button
               onClick={handleSearch}
-              className="w-full md:w-auto bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
+              className="w-full md:w-auto bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition ml-65"
             >
               Search
             </button>

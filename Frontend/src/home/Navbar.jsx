@@ -7,8 +7,8 @@ function Navbar() {
   const { t } = useTranslation();
 
   return (
-    <nav className="bg-transparent sticky bg-opacity-90 fixed top-0 left-0 w-full z-50 shadow-none">
-      <div className="container text-black mx-auto px-10 flex justify-between items-center py-4">
+    <nav className="bg-transparent sticky bg-opacity-90 fixed top-0 left-0 w-full z-50 shadow-none -mb-17">
+      <div className="container text-emerald-600 mx-auto px-10 flex justify-between items-center py-4">
         <Link
           to="hero"
           spy={true}
@@ -16,7 +16,7 @@ function Navbar() {
           duration={500}
           className="cursor-pointer font-bold text-3xl"
         >
-         {t("Agro")}<span className="text-green-700">{t("Booster")}</span>
+         {t("Agro")}<span className="text-amber-600">{t("Booster")}</span>
         </Link>
 
         <ul className="hidden lg:flex space-x-8 mr-10">
@@ -26,7 +26,7 @@ function Navbar() {
               spy={true}
               smooth={true}
               duration={500}
-              className="cursor-pointer font-semibold text-lg hover:text-green-700"
+              className="cursor-pointer font-semibold text-lg hover:text-amber-600"
             >
               {t("home")}
             </Link>
@@ -37,7 +37,7 @@ function Navbar() {
               spy={true}
               smooth={true}
               duration={500}
-              className="cursor-pointer font-semibold text-lg hover:text-green-700"
+              className="cursor-pointer font-semibold text-lg hover:text-amber-600"
             >
               {t("about")}
             </Link>
@@ -48,7 +48,7 @@ function Navbar() {
               spy={true}
               smooth={true}
               duration={500}
-              className="cursor-pointer font-semibold text-lg hover:text-green-700"
+              className="cursor-pointer font-semibold text-lg hover:text-amber-600"
             >
               {t("services")}
             </Link>
@@ -59,7 +59,7 @@ function Navbar() {
               spy={true}
               smooth={true}
               duration={500}
-              className="cursor-pointer font-semibold text-lg hover:text-green-700"
+              className="cursor-pointer font-semibold text-lg hover:text-amber-600"
             >
               {t("contact")}
             </Link>

@@ -1,40 +1,104 @@
 import React from "react";
+import { Sprout, Leaf, Sun, Cloud, Tractor } from "lucide-react";
 
 const Hero = ({ id }) => {
+  const FloatingElements = () => (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {[...Array(30)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute animate-float opacity-40" // Increased opacity for better visibility
+          style={{
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            animation: `float ${8 + Math.random() * 4}s infinite ${Math.random() * 2}s`,
+            zIndex: 0 // Ensuring this stays in the background
+          }}
+        >
+          {i % 5 === 0 ? (
+            <Leaf className="w-8 h-8 text-emerald-600" />
+          ) : i % 5 === 1 ? (
+            <Sprout className="w-9 h-9 text-lime-600" />
+          ) : i % 5 === 2 ? (
+            <Sun className="w-10 h-10 text-yellow-600" />
+          ) : i % 5 === 3 ? (
+            <Tractor className="w-11 h-11 text-green-600" />
+          ) : (
+            <Cloud className="w-10 h-10 text-gray-600" />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+
   return (
-    <div
-      id={id}
-      className="relative h-screen bg-cover bg-center -mt-17"
-    >
-      <div
-        className="absolute inset-0 bg-black bg-opacity-90 object-cover"
-        style={{
-          backgroundImage: `url('/Images/hero-img.png')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center", 
-        }}
-      ></div>
-<div className="absolute top-0 left-0 w-full h-full bg-black opacity-0"></div>
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
-        <h1 className="text-6xl font-extrabold text-black mb-6 drop-shadow-lg -mt- mb-10">
-          AGRICULTURAL COMMUNITY SERVICE
-        </h1>
-        <p className="text-4xl text-black  font-bold mb-14 drop-shadow-md mt-3">
-          Bringing innovative solutions to farming communities.
-        </p>
-        <div className="flex flex-row gap-10 -ml-10">
-          <a
-            href="/chatbot"
-            className="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg text-lg font-medium drop-shadow-md"
-          >
-            Plant Bot
-          </a>
-          <a
-            href="/signup"
-            className="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg text-lg font-medium drop-shadow-md"
-          >
-            Grow Crop
-          </a>
+    <div id={id} className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-30px) rotate(5deg); } /* Slightly more movement */
+        }
+      `}</style>
+
+      <FloatingElements />
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4">
+        <div className="space-y-6 max-w-5x mt-5l">
+          {/* Icon Group */}
+          <div className="flex justify-center gap-4 mb-4">
+            <div className="p-4 bg-emerald-100 rounded-full shadow-lg animate-bounce-slow">
+              <Sprout className="w-12 h-12 text-emerald-600" />
+            </div>
+            <div className="p-4 bg-lime-100 rounded-full shadow-lg animate-bounce-slow delay-100">
+              <Leaf className="w-12 h-12 text-lime-600" />
+            </div>
+          </div>
+
+          {/* Main Title */}
+          <h1 className="text-4xl md:text-6xl font-extrabold text-emerald-900 mb-4 tracking-tight leading-tight">
+            AGRICULTURAL COMMUNITY SERVICE
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-2xl md:text-4xl text-emerald-800 font-medium mb- max-w-3xl mx-auto leading-relaxed">
+            Bringing innovative solutions to 
+            <span className="text-amber-600"> farming communities</span>
+          </p>
+
+          {/* Feature Points */}
+          <div className="flex flex-wrap justify-center gap-6 mb-12">
+            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full border border-emerald-200 shadow-lg">
+              <Sprout className="w-5 h-5 text-emerald-600" />
+              <span className="text-emerald-900">Sustainable Farming</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full border border-emerald-200 shadow-lg">
+              <Sun className="w-5 h-5 text-amber-600" />
+              <span className="text-emerald-900">Smart Agriculture</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full border border-emerald-200 shadow-lg">
+              <Cloud className="w-5 h-5 text-lime-600" />
+              <span className="text-emerald-900">Weather Intelligence</span>
+            </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <a
+              href="/chatbot"
+              className="group relative inline-flex items-center gap-3 bg-emerald-600 text-white px-8 py-4 rounded-full hover:bg-emerald-500 transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl"
+            >
+              <Sprout className="w-6 h-6" />
+              <span>Plant Bot</span>
+            </a>
+            <a
+              href="/login"
+              className="group relative inline-flex items-center gap-3 bg-amber-600 text-white px-8 py-4 rounded-full hover:bg-amber-500 transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl"
+            >
+              <Sprout className="w-6 h-6" />
+              <span>Grow Crop</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
