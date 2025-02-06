@@ -1,15 +1,5 @@
 import React from "react"; 
-import { 
-  BarChart2, 
-  Landmark, 
-  TestTube2, 
-  Microscope, 
-  CloudSun, 
-  CropIcon,
-  Leaf,
-  Wheat,
-  Sun
-} from "lucide-react";    
+import { BarChart2, Landmark, TestTube2, Microscope, CloudSun, CropIcon,Leaf,Wheat,Sun} from "lucide-react";    
 
 const Service = ({ id }) => {
   const purposes = [
@@ -82,7 +72,7 @@ const Service = ({ id }) => {
   );
 
   return (
-    <div id={id} className="relative min-h-screen overflow-hidden bg-gradient-to-b from-green-50 to-emerald-200 py-16">
+    <div id={id} className="relative min-h-screen overflow-hidden bg-gradient-to-b from-yellow-50 to-yellow-100 py-16">
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0) rotate(0deg); }

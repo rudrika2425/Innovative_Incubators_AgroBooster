@@ -7,12 +7,12 @@ const Hero = ({ id }) => {
       {[...Array(30)].map((_, i) => (
         <div
           key={i}
-          className="absolute animate-float opacity-20"
+          className="absolute animate-float opacity-40" // Increased opacity for better visibility
           style={{
             top: `${Math.random() * 100}%`,
             left: `${Math.random() * 100}%`,
             animation: `float ${8 + Math.random() * 4}s infinite ${Math.random() * 2}s`,
-            zIndex: 1
+            zIndex: 0 // Ensuring this stays in the background
           }}
         >
           {i % 6 === 0 ? (
@@ -25,8 +25,10 @@ const Hero = ({ id }) => {
             <Tractor className="w-11 h-11 text-green-600" />
           ) : i % 6 === 4 ? (
             <Droplet className="w-9 h-9 text-blue-600" />
-          ) : (
+          ) : i % 6 === 5 ? (
             <Cloud className="w-10 h-10 text-gray-600" />
+          ) : (
+            <Wheat className="w-10 h-10 text-amber-600" />
           )}
         </div>
       ))}
@@ -34,11 +36,11 @@ const Hero = ({ id }) => {
   );
 
   return (
-    <div id={id} className="relative min-h-screen bg-gradient-to-b from-green-50 to-emerald-200">
+    <div id={id} className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(5deg); }
+          50% { transform: translateY(-30px) rotate(5deg); } /* Slightly more movement */
         }
       `}</style>
 
