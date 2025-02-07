@@ -19,7 +19,8 @@ import RentOutTools from "./Farmers/RentOutTools";
 import BorrowTools from "./Farmers/BorrowTools";
 import YourFarms from "./Farmers/YourFarms";
 import Home from "./Farmers/Home";
-import CropPrediction from "./Farmers/CropPrediction";
+import CropPrediction from "./information/CropPrediction";
+
 
 
 
