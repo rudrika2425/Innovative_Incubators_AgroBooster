@@ -58,7 +58,7 @@ export const Sidebar = () => {
             </button>
 
             <div className={`
-                w-64 h-screen bg-gradient-to-b from-yellow-100 to-yellow-200 shadow-xl fixed left-0 top-0 
+                w-64 h-screen bg-gradient-to-b from-yellow-50 to-yellow-200 shadow-xl fixed left-0 top-0 
                 transform transition-transform duration-300
                 md:translate-x-0 
                 ${isOpen ? 'translate-x-0' : '-translate-x-full'}
