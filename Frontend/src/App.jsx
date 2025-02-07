@@ -19,6 +19,8 @@ import RentOutTools from "./Farmers/RentOutTools";
 import BorrowTools from "./Farmers/BorrowTools";
 import YourFarms from "./Farmers/YourFarms";
 import Home from "./Farmers/Home";
+import CropPrediction from "./information/CropPrediction";
+
 
 
 
@@ -36,6 +38,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/crop" element={<CropPrediction />} />
           <Route path="/guide" element={<OnboardingGuide />} />
           <Route path="/test" element={<SoilTestReportUploader />} />
           <Route path="/farmerdashboard" element={<FarmerDashboard />}>
@@ -44,6 +47,7 @@ function App() {
             <Route path="rent-out-tools" element={<RentOutTools />} />
             <Route path="borrow-tools" element={<BorrowTools />} />
           </Route>
+
           <Route path="/farmer-Information" element={<InfoDashboard />}>
             <Route path="basicInformation" element={<FarmerInput />} />
             <Route path="soilTesting" element={<SoilTest />} />

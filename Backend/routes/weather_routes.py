@@ -18,7 +18,7 @@ def get_weather():
 
     try:
         # Construct API URL
-        api_url = f"https://weather.googleapis.com/v1/weather?location={lat},{lon}&key=AIzaSyDPMJgjhQ-E28ntMZFACLI_N0SfEeEjQFE"
+        api_url = f"https://api.agromonitoring.com/agro/1.0/weather?lat={lat}&lon={lon}&appid={API_KEY}"
 
         # Make request to AgroMonitoring API
         response = requests.get(api_url)

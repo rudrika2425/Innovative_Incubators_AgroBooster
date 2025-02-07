@@ -4,6 +4,7 @@ from bson import ObjectId
 import cloudinary.uploader
 from werkzeug.datastructures import FileStorage
 
+
 class ToolRental:
     @staticmethod
     def create_tool_rental(data):

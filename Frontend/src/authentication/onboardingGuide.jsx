@@ -4,6 +4,7 @@ import {
   ArrowRight, CheckCircle, Leaf, Sun, Cloud, Droplets,
   ThermometerSun, Sprout, Wheat
 } from 'lucide-react';
+import { Link } from 'react-router-dom'; 
 
 const OnboardingGuide = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -147,7 +148,7 @@ const OnboardingGuide = () => {
           </div>
           
           <h1 className="text-5xl font-bold text-stone-800 mb-6">
-            Welcome to FarmWise
+            Welcome to Agro Booster
           </h1>
           
           <p className="text-xl text-stone-700 max-w-2xl mx-auto leading-relaxed">
@@ -212,11 +213,13 @@ const OnboardingGuide = () => {
 
         <div className="text-center pt-12 pb-16 space-y-4">
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-emerald-700 to-lime-600 text-white px-8 py-4 rounded-full hover:from-emerald-600 hover:to-lime-500 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl w-full sm:w-auto">
-              <span className="relative z-10">Start Your Journey</span>
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-lime-400 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
-            </button>
+          <Link to="/farmer-Information" className="block w-full sm:w-auto">
+  <button className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-emerald-700 to-lime-600 text-white px-8 py-4 rounded-full hover:from-emerald-600 hover:to-lime-500 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl w-full sm:w-auto">
+    <span className="relative z-10">Start Your Journey</span>
+    <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-lime-400 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
+  </button>
+</Link>
 
             <button className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-amber-700 to-yellow-600 text-white px-8 py-4 rounded-full hover:from-amber-600 hover:to-yellow-500 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl w-full sm:w-auto">
               <span className="relative z-10">Browse Equipment</span>
