@@ -20,6 +20,7 @@ import BorrowTools from "./Farmers/BorrowTools";
 import YourFarms from "./Farmers/YourFarms";
 import Home from "./Farmers/Home";
 import CropPrediction from "./information/CropPrediction";
+import WeatherForecast from "./Farmers/WeatherForcast";
 
 
 
@@ -46,6 +47,7 @@ function App() {
             <Route path="your-farms" element={<YourFarms />} />
             <Route path="rent-out-tools" element={<RentOutTools />} />
             <Route path="borrow-tools" element={<BorrowTools />} />
+            <Route path="weather-forecast" element={<WeatherForecast />} />
           </Route>
 
           <Route path="/farmer-Information" element={<InfoDashboard />}>
