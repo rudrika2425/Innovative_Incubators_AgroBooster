@@ -108,6 +108,7 @@ const OnboardingGuide = () => {
       </div>
     );
   };
+  
 
   return (
     <div className="min-h-screen bg-[#f4f1de] p-6 relative overflow-hidden">
@@ -196,15 +197,16 @@ const OnboardingGuide = () => {
               <div className="pt-4 pb-6 px-6">
                 <p className="text-lg text-stone-700 mb-6 leading-relaxed">{step.description}</p>
                 <div className="grid md:grid-cols-2 gap-4">
-                  {step.details.map((detail, idx) => (
-                    <div 
-                      key={idx} 
-                      className="flex items-center gap-3 bg-white/95 backdrop-blur p-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-stone-200/50 hover:scale-105"
-                    >
-                      <CheckCircle className={`w-5 h-5 text-${step.accent}-600 flex-shrink-0`} />
-                      <span className="text-stone-700">{detail}</span>
-                    </div>
-                  ))}
+                {step.details.map((detail, idx) => (
+  <div 
+    key={idx} 
+    className="flex items-center gap-3 bg-white/95 backdrop-blur p-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-stone-200/50 hover:scale-105"
+  >
+    <CheckCircle className={`w-5 h-5 text-${step.accent}-600 flex-shrink-0`} />
+    <span className="text-stone-700">{detail}</span>
+  </div>
+))}
+
                 </div>
               </div>
             </div>
