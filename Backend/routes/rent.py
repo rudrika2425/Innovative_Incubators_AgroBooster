@@ -9,7 +9,7 @@ tool_rental_bp = Blueprint('tool_rental', __name__)
 @tool_rental_bp.route('/addtools', methods=['POST'])
 def create_tool_rental():
     try:
-        # Handle multipart/form-data
+   
         if request.files:
             data = request.form.to_dict()
             data['images'] = request.files.getlist('images')

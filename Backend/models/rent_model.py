@@ -89,7 +89,7 @@ class ToolRental:
         mongo = current_app.db
         
         try:
-            # First, get the tool to retrieve image URLs
+            
             tool = mongo["rentalTools"].find_one({"_id": ObjectId(tool_id)})
             
             if not tool:

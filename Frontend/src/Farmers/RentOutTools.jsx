@@ -33,7 +33,7 @@ function RentOutTools() {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
 
-    // Limit the number of files to 5
+ 
     if (files.length > 5) {
       alert("You can upload up to 5 images only.");
       return;
