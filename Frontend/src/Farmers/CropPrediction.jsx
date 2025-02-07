@@ -39,7 +39,6 @@ const CropCard = ({ cropData = {} }) => {
           )}
         </div>
 
-        {/* Variety Highlight */}
         <div className="mb-4 flex items-center gap-2 bg-emerald-50 p-3 rounded-lg">
           <Sprout className="w-6 h-6 text-emerald-600" />
           <div>
@@ -121,7 +120,8 @@ const CropPrediction = () => {
         predictions.push(currentCrop);
       }
 
-      return predictions;
+      // Remove the first element from predictions array
+      return predictions.slice(1);
     } catch (parseError) {
       console.error("Parsing error:", parseError);
       return [];
