@@ -42,6 +42,7 @@ def create_app():
     from routes.contact_routes import contact_bp
     from routes.predict_routes import predict_bp
     from routes.rent import tool_rental_bp
+    from routes.calendar import calendar_bp
 
     # Register blueprints
     app.register_blueprint(auth_bp, url_prefix="/user")
@@ -54,6 +55,7 @@ def create_app():
     app.register_blueprint(contact_bp, url_prefix="/contact")
     app.register_blueprint(predict_bp, url_prefix="/predict")
     app.register_blueprint(tool_rental_bp, url_prefix="/tools") 
+    app.register_blueprint(calendar_bp,url_prefix='/calendar')
 
     GOOGLE_PLACES_API_KEY = os.getenv("GOOGLE_PLACES_API_KEY")
 

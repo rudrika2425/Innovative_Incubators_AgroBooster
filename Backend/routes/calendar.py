@@ -3,126 +3,125 @@ from flask_cors import CORS
 import google.generativeai as genai
 import json
 from datetime import datetime
+from bson import ObjectId
+from flask import Blueprint
 import re
-app = Flask(__name__)
-CORS(app)  # Allow frontend to fetch data
+from pymongo import MongoClient
+ 
 
-# Configure Gemini API Key
+calendar_bp = Blueprint('calendar_bp', __name__)
+CORS(calendar_bp)
+
+# MongoDB connection
+client = MongoClient('mongodb://localhost:27017/')
+db = client['agrobooster']
+farms_collection = db['farmers']
+
 genai.configure(api_key="AIzaSyDfNKh9DapTzLwXRO1kFsmTkPtTighZDJs")
 
-# Root route
-@app.route("/", methods=["GET"])
-def home():
-    return "Welcome to the Flask API!"
+@calendar_bp.route("/generate_schedule/<farm_id>", methods=["GET"])
+def get_farmer_info(farm_id):
+    try:
+        # Fetch the farmer document using ObjectId
+        farmer_data = farms_collection.find_one({"_id": ObjectId(farm_id)})
+        
+        if not farmer_data:
+            return jsonify({"error": "Farmer not found"}), 404
+        response = {
+            "farmName": farmer_data.get("farmerInput", {}).get("farmName"),
+            "landArea": farmer_data.get("farmerInput", {}).get("landArea"),
+            "farmingTools": farmer_data.get("farmerInput", {}).get("farmingTools", []),
+            "irrigationSystem": farmer_data.get("farmerInput", {}).get("irrigationSystem"),
+            "location": farmer_data.get("location"),
+            "weather": farmer_data.get("weather"),
+            "soilAnalysisReport": farmer_data.get("soilAnalysisReport"),
+            "crop_type":"rice",
+            "variety":"IR 64 Parboil Rice",
+            "current_date" : datetime.today().date()
 
-@app.route("/generate_schedule", methods=["GET"])
-def generate_schedule():
-    # Set parameters (same as before)
-    soil_report="pH: 7.6 unitless, Nitrogen: 280ppm, Phosphorus: 25 ppm, Potassium: 300 ppm, Zinc: 1.5 ppm, Sulfur: 15 ppm, Organic Carbon: 0.75%"
-    rainfall = 750.00
-    humidity = 65.00
-    temperature = 28.00
-    pressure=1013.25
-    soil_type = "Clay loam with good drainage"
-    organic_matter = 1.7
-    altitude = 165
-    irrigation_type = "Drip Irrigation or Sprinkler Irrigation"  
-    region = "Bundelkhand Region" 
-    state = "Uttar Pradesh"
-    city = "Jhansi" 
-    climate_zone = "Tropical Savanna" 
-    cloud_coverage=56
-    latitude = 25.5693
-    longitude =  78.8099
-    crop_type = "cash crop"
-    crop = "Pigeon Pea"
-    variety = "ICP 9063"
-    land_area=6.5
-    current_date = datetime.today().date()
+        }
+        crop_type = response["crop_type"]
+        variety = response["variety"]
+        location = response["location"]
+        soil_analysis_report = response["soilAnalysisReport"]
+        land_area = response["landArea"]
+        irrigation_system = response["irrigationSystem"]
+        weather = response["weather"]
+        current_date = response["current_date"]
 
+        input_prompt = f"""
+        Based on the provided agricultural parameters, generate a detailed and precise growing schedule for {crop_type} and variety {variety}, cultivation in {location} , including:
+        Using the provided Soil and Environmental Analysis Report:
 
-    input_prompt = f"""
-    Based on the provided agricultural parameters, generate a detailed and precise growing schedule for {crop} and variety {variety}, cultivation in {state} {city} district, including:
-    Using the provided Soil and Environmental Analysis Report:
+            
+        Soil and Environmental Analysis Report:
+        - soilAnalysisReport : {soil_analysis_report}
+        - Land Area: {land_area} hectares
+        - Crop Type: {crop_type}
+        - Irrigation System: {irrigation_system}
 
-    soil Report: {soil_report}
-    crop_type:{crop_type}
-    organic_matter:{organic_matter}
-    soil_type:{soil_type}
-    land_area:{land_area}
-    
-    The soil report includes the following parameters:
-    - NPK (Nitrogen, Phosphorus, Potassium), Zn, pH, Sulphur, Organic Carbon. The analysis is taken by Gemini.
+        Environmental Conditions:
+        - Humidity: {weather.get('humidity')}%
+        - Temperature: {weather.get('temperature')}°C
+        - Pressure: {weather.get('pressure')} hPa
+        - Cloud Coverage: {weather.get('cloud_coverage')}%
+        - Wind Speed: {weather.get('wind_speed')} m/s
+        - Weather Description: {weather.get('weather_description')}
 
-    Environmental Conditions:
-    - Rainfall: {rainfall} mm/month
-    - Humidity: {humidity}%
-    - Temperature: {temperature}°C
-    - pressure:{pressure}hPa
+        Growing Conditions:
+        - Altitude: {location.get('altitude')} meters
+        - Latitude: {location.get('latitude')}° N
+        - Longitude: {location.get('longitude')}° E
+        - Region: {location.get('region')}
+        - Climate Zone: {location.get('tropical_zone')}
 
-    Growing Conditions:
-    - Altitude: {altitude} meters
-    - Location: {state}, {city}
-    - Latitude: {latitude}° N
-    - Longitude: {longitude}° E
+        Tasks should be generated as:
+        [Task Title] | [Brief Task Description]
+        Start Date: YYYY-MM-DD
+        End Date: YYYY-MM-DD
+        Description: [Detailed description]
+        Sustainable resources that can be used: [Resources]
 
-    Region:
-    - Region: {region}
-    - Water Management: Irrigation Type: {irrigation_type}
-    - Climate Zone: {climate_zone}
-    - cloud_coverage: {cloud_coverage}
-    
-     **Unit Conversion**:
-    - Convert all units to standard agricultural measurement systems:
-        - ppm (parts per million) to kg/ha.
-        - Temperature remains in Celsius.
-        - Rainfall remains in mm/month.
+        Generate a growing schedule for {crop_type} (variety: {variety}) in {location}. Format each task exactly as follows:
 
-    "Please provide the description and title of each task in the {crop} of varirty {variety} cultivation schedule. For each task, include:
+        [Task Title] | [Brief Task Description]
+        Start Date: YYYY-MM-DD
+        End Date: YYYY-MM-DD
+        Description: [Detailed description]
+        Sustainable resources that can be used: [Resources]
+        
+        - The title of the task
+        - The description of the task
+        - The starting date for that task in relation to {current_date} (e.g., 20-02-2025 need exact dates )
+        - The ending date for that task, calculated based on {current_date} and the starting date.
+        - Sustainable resources which can maximize the yield and at the same time will not harm environment
+        - There should be no   extra info for that particular activity
+        - task description can be a bit longer
+        - if it is not possible to grow the crop in the current season then  display the dates for upcoming season, but data should be precise 
+        the output should contain no other information except for the given data no other information should be provided
+        results can be in years also if needed,provide precise information
+        Dont give any extra info or note
+        The output should be in the following format:
+        """
 
-    - The title of the task
-    - The description of the task
-    - The starting date for that task in relation to {current_date} (e.g., 20-02-2025 need exact dates )
-    - The ending date for that task, calculated based on {current_date} and the starting date.
-    - There should be some extra info if any for that particular activity
-    - if it is not possible to grow the crop in the current season then suggest the dates for upcoming season or year, but data should be precise 
-    the output should contain no other information except for the given data no other information should be provided
-    results can be in years also if needed,provide precise information
-    The output should be in the following format:
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(input_prompt)
 
-    Land Preparation | Soil tillage and leveling
-    Start Date: 2025-02-15
-    End Date: 2025-02-20
-    Description: Prepare the land by plowing, harrowing, and leveling to create a suitable seedbed. Ensure proper drainage.
-    Additional info: Consider using a precision planter to maintain consistent depth and spacing.
+        pattern = r"(.*?) \| (.*?)\nStart Date: (\d{4}-\d{2}-\d{2})\nEnd Date: (\d{4}-\d{2}-\d{2})\nDescription: (.*?)\nSustainable resources that can be used: (.*?)(?=\n\n|\Z)"
+        
+        matches = re.finditer(pattern, response.text, re.DOTALL)
+        structured_data = []
+        
+        for match in matches:
+            structured_data.append({
+                "title": match.group(1).strip(),
+                "task_description": match.group(2).strip(),
+                "start_date": match.group(3),
+                "end_date": match.group(4),
+                "description": match.group(5).strip(),
+                "sustainable_resource": match.group(6).strip()
+            })
 
-    Planting | Setting sugarcane setts
-    Start Date: 2025-02-25
-    End Date: 2025-03-05
-    Description: Plant Co 0238 sugarcane setts at the recommended spacing. Ensure proper depth and firmness.
-    Additional info: Ensure proper soil texture and avoid compacting soil during tillage.
-    """
-
-    # Use Gemini AI to generate schedule
-    model = genai.GenerativeModel("gemini-1.5-flash")
-    response = model.generate_content(input_prompt)
-    print("Raw response from Gemini API:", response.text)
-    pattern = r"(?P<title>.*?) \| (?P<description>.*?)\nStart Date: (?P<start_date>\S+)\nEnd Date: (?P<end_date>\S+)\nDescription: (?P<desc>.*?)\nAdditional info: (?P<additional_info>.*?)\n"
-
-    # Parse the text using regular expression
-    matches = re.findall(pattern,response.text)
-    structured_data = []
-    for match in matches:
-        structured_data.append({
-            "title": match[0],
-            "description": match[1],
-            "start_date": match[2],
-            "end_date": match[3],
-            "desc": match[4],
-            "additional_info": match[5]
-        })
-    json_data = json.dumps(structured_data, indent=2)
-    return json_data
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
+        return jsonify(structured_data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
