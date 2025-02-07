@@ -3,9 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./Context/LanguageContext";  
 import { UserProvider } from "./Context/UserContext";
 import Dashboard from "./home/Dashboard";
-import Rent from "./rental/rent";
-import RentProduct from "./rental/receiveRent";
-import Description from "./rental/description";
 import Login from "./authentication/Login";
 import Signup from "./authentication/Signup";
 import SoilTestReportUploader from "./information/SoilAnalysis";
@@ -21,6 +18,7 @@ import YourFarms from "./Farmers/YourFarms";
 import Home from "./Farmers/Home";
 import CropPrediction from "./information/CropPrediction";
 import WeatherForecast from "./Farmers/WeatherForcast";
+import DescriptionPage from "./Farmers/description"
 
 
 
@@ -33,9 +31,6 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/rent" element={<Rent />} />
-          <Route path="/receive" element={<RentProduct />} />
-          <Route path="/description" element={<Description />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/chatbot" element={<Chatbot />} />
@@ -48,6 +43,7 @@ function App() {
             <Route path="rent-out-tools" element={<RentOutTools />} />
             <Route path="borrow-tools" element={<BorrowTools />} />
             <Route path="weather-forecast" element={<WeatherForecast />} />
+            <Route path="description" element={<DescriptionPage />} />
           </Route>
 
           <Route path="/farmer-Information" element={<InfoDashboard />}>
