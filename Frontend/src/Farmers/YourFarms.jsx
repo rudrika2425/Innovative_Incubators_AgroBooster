@@ -68,7 +68,7 @@ const YourFarms = () => {
       <FloatingElements />
 
       <div className="relative z-10">
-        <div className="bg-gradient-to-b from-yellow-100 to-yellow-200 backdrop-blur-sm shadow-md fix">
+        <div className="bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm shadow-md fix">
           <div className="max-w-7xl mx-auto py-4 px-6 flex justify-between items-center">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-yellow-100 rounded-full shadow-lg">

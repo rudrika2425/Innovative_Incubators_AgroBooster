@@ -10,7 +10,7 @@ const BorrowTools = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/tools")
+      .get("http://127.0.0.1:4000/tools/gettools") // Replace with the actual backend URL
       .then((response) => {
         setProducts(response.data);
       })
