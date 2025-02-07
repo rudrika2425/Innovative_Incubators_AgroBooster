@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {useUser} from "../Context/UserContext";
+import {useNavigate} from "react-router-dom"
 
 const SoilTestReportUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -9,7 +10,7 @@ const SoilTestReportUploader = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [farmerInput, setFarmerInput] = useState(null);
-
+  const nevigate = useNavigate();
   const {user} = useUser();
 
   useEffect(() => {
@@ -141,6 +142,10 @@ const SoilTestReportUploader = () => {
   
       const responseData = await response.json();
       console.log("Data stored successfully:", responseData);
+      localStorage.setItem("farmId", responseData.id);
+      localStorage.setItem("farmerData", JSON.stringify(farmerData));
+      nevigate("/crop");
+
     } catch (error) {
       setErrorMessage("Failed to collect all required data. Please try again.");
       console.error("Error in submit:", error);
