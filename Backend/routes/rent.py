@@ -3,7 +3,7 @@ from models.rent_model import ToolRental
 from werkzeug.utils import secure_filename
 import os
 
-tool_rental_bp = Blueprint('tool_rental', _name_)
+tool_rental_bp = Blueprint('tool_rental', __name__)
 
 # Route to create a new tool rental listing
 @tool_rental_bp.route('/addtools', methods=['POST'])
