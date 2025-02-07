@@ -4,7 +4,6 @@ from bson import ObjectId
 import cloudinary.uploader
 from werkzeug.datastructures import FileStorage
 
-
 class ToolRental:
     @staticmethod
     def create_tool_rental(data):
@@ -90,7 +89,7 @@ class ToolRental:
         mongo = current_app.db
         
         try:
-            
+            # First, get the tool to retrieve image URLs
             tool = mongo["rentalTools"].find_one({"_id": ObjectId(tool_id)})
             
             if not tool:
