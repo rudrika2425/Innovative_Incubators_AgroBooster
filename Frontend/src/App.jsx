@@ -1,8 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
 import { LanguageProvider } from "./Context/LanguageContext";  
 import { UserProvider } from "./Context/UserContext";
-import Dashboard from "./home/Dashboard";
 import Rent from "./rental/rent";
 import RentProduct from "./rental/receiveRent";
 import Description from "./rental/description";
@@ -21,9 +20,24 @@ import YourFarms from "./Farmers/YourFarms";
 import Home from "./Farmers/Home";
 import CropPrediction from "./information/CropPrediction";
 import WeatherForecast from "./Farmers/WeatherForcast";
+import About from "./home/About";
+import Service from "./home/Service";
+import Contact from "./home/Contact";
+import Navbar from "./home/Navbar";
+import Hero from "./home/Hero";
+import Footer from "./home/Footer";
 
 
 
+function LayoutWithNavbar() {
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+      <Footer/>
+    </>
+  );
+}
 
 function App() {
   return (
@@ -32,7 +46,12 @@ function App() {
        <UserProvider>   
       <Router>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+        <Route element={<LayoutWithNavbar />}>
+              <Route path="/" element={<Hero />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<Service />} />
+              <Route path="/contact" element={<Contact />} />
+            </Route>
           <Route path="/rent" element={<Rent />} />
           <Route path="/receive" element={<RentProduct />} />
           <Route path="/description" element={<Description />} />
