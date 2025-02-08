@@ -129,7 +129,7 @@ const Hero = ({ id }) => {
   );
 
   return (
-    <div id={id} className="bg-gradient-to-b from-yellow-50 to-yellow-100 relative">
+    <div id={id} className="bg-gradient-to-b from-yellow-100 to-yellow-200 relative">
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0) rotate(0deg); }
