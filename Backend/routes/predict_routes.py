@@ -25,6 +25,8 @@ Using the provided Soil and Environmental Analysis Report, predict suitable crop
 - Land Area: {farm_input.get('landArea')} acres
 - Farming Tools: {', '.join(farm_input.get('farmingTools', []))}
 - Irrigation System: {farm_input.get('irrigationSystem')}
+- Soil Type: {farm_input.get('soilType')}
+- Crop Season: {farm_input.get('cropSeason')}
 - Location: {location.get('city')}, {location.get('region')}, {location.get('country')}
 - Altitude: {location.get('altitude')} meters
 - Latitude: {location.get('latitude')}° N
@@ -45,11 +47,7 @@ Using the provided Soil and Environmental Analysis Report, predict suitable crop
 - Feels Like: {weather.get('feels_like')} K
 - Pressure: {weather.get('pressure')} hPa
 
-**Time Information:**
-- Month: June
-- Date: 25
-- Season: Monsoon
-- Region: Upper Gangetic Plain Region
+
 
 **Instructions for Crop Prediction:**
 1. Convert all soil and environmental parameters into appropriate agricultural measurement units internally.

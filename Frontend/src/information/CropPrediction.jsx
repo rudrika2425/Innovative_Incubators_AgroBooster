@@ -2,34 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Leaf, Droplet, Sun, CloudRain, Sprout, Cloud, Tractor } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 
-const FloatingElements = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {[...Array(20)].map((_, i) => (
-      <div
-        key={i}
-        className="absolute animate-float opacity-40"
-        style={{
-          top: `${Math.random() * 100}%`,
-          left: `${Math.random() * 100}%`,
-          animation: `float ${8 + Math.random() * 4}s infinite ${Math.random() * 20}s`,
-          zIndex: 0
-        }}
-      >
-        {i % 5 === 0 ? (
-          <Leaf className="w-8 h-8 text-emerald-600" />
-        ) : i % 5 === 1 ? (
-          <Sprout className="w-9 h-9 text-lime-600" />
-        ) : i % 5 === 2 ? (
-          <Sun className="w-10 h-10 text-yellow-600" />
-        ) : i % 5 === 3 ? (
-          <Tractor className="w-11 h-11 text-green-600" />
-        ) : (
-          <Cloud className="w-10 h-10 text-gray-600" />
-        )}
-      </div>
-    ))}
-  </div>
-);
 
 const gradientClasses = [
   'bg-gradient-to-br from-emerald-100 to-emerald-200',
@@ -252,6 +224,8 @@ const CropPrediction = () => {
               landArea: farmData.farmerInput?.landArea || "0",
               farmingTools: farmData.farmerInput?.farmingTools || [],
               irrigationSystem: farmData.farmerInput?.irrigationSystem || "Unknown",
+              soilType: farmData.farmerInput?.soilType || "Unknown",
+              cropSeason: farmData.farmerInput?.cropSeason || "Unknown",
               location: {
                 altitude: farmData.farmerInput?.location?.altitude || 0,
                 city: farmData.farmerInput?.location?.city || "Unknown",
@@ -293,15 +267,18 @@ const CropPrediction = () => {
           if (data.status === "success") {
             const parsedPredictions = parsePredictions(data.predictions);
             console.log(parsedPredictions);
-            setPredictions(parsedPredictions);
+            if (parsedPredictions && parsedPredictions.length > 0) {
+              setPredictions(parsedPredictions);
+              setLoading(false);
+            }
           } else {
             throw new Error(data.message || "Failed to get predictions");
           }
         } catch (error) {
           console.error("Fetch error:", error);
           setError(`Failed to fetch crop predictions: ${error.message}`);
-        } finally {
           setLoading(false);
+        } finally {
           setDataFetched(true);
           localStorage.removeItem("farmData");
         }
@@ -311,7 +288,7 @@ const CropPrediction = () => {
     }
   }, [dataFetched]);
 
-  if (loading) return (
+  const LoadingScreen = () => (
     <div className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
       <style>{`
         @keyframes float {
@@ -324,7 +301,7 @@ const CropPrediction = () => {
         }
       `}</style>
       
-      <FloatingElements />
+      
       
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4">
         <div className="space-y-6">
@@ -346,16 +323,20 @@ const CropPrediction = () => {
 
   if (error) return (
     <div className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
-      <FloatingElements />
+     
       <div className="relative z-10 w-full max-w-4xl mx-auto mt-8 bg-red-50 border border-red-200 text-red-800 rounded-lg p-6 text-center">
         {error}
       </div>
     </div>
   );
 
+  if (loading || !predictions || predictions.length === 0) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
-      <FloatingElements />
+      
       <div className="relative z-10 w-full max-w-5xl mx-auto pt-8 px-4 pb-12">
         <h2 className="text-5xl font-extrabold text-emerald-900 mb-8 text-center">
           Crop Predictions for Your Farm
@@ -375,7 +356,7 @@ const CropPrediction = () => {
           )}
         </div>
       </div>
-      <div className="crop-form">
+      <div className="crop-form ">
       <div className="input">
         <label>Crop:</label>
         <input
