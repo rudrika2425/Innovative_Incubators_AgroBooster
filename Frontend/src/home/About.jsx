@@ -4,51 +4,21 @@ import {
   Target, Database, Shield, Brain, Mic, Calendar, Share2, 
   Globe, ChevronRight, ArrowUpRight, Cpu, Radio, Satellite, Lock 
 } from "lucide-react";
+import FloatingElements from "../FlotingElement/FloatingElements";
 
 const AgricultureInnovationPage = ({ id }) => {
-  const FloatingElements = () => (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(50)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute animate-float opacity-40"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            animation: `float ${8 + Math.random() * 4}s infinite ${Math.random() * 2}s`,
-            zIndex: 0
-          }}
-        >
-          {i % 3 === 0 ? (
-            <Leaf className="w-8 h-8 text-emerald-600" />
-          ) : i % 3 === 1 ? (
-            <Sprout className="w-9 h-9 text-lime-600" />
-          ) : (
-            <Sun className="w-10 h-10 text-yellow-600" />
-          )}
-        </div>
-      ))}
-    </div>
-  );
+  
     
 
   return (
-    <div className="relative bg-gradient-to-b from-yellow-100 to-yellow-200 text-emerald-900">
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-30px) rotate(5deg); }
-        }
-      `}</style>
+    <div className="bg-gradient-to-b from-yellow-100 to-yellow-200 relative text-emerald-900">
 
       <FloatingElements />
    
 
-    <div className="bg-gradient-to-b from-yellow-50 to-yellow-100 relative text-emerald-900">
+   
 
-    
-
-      
+  
       {/* About Agriculture Section */}
       <section className="container  px-6 pt-24 pb-5">
         <div className="max-w ">
@@ -286,11 +256,9 @@ const AgricultureInnovationPage = ({ id }) => {
           </div>
         </div>
       </section>
-
-      
-
     </div>
-    </div>
+    
+   
   );
 };
 

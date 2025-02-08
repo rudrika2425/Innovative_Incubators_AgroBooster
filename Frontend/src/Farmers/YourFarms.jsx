@@ -3,35 +3,14 @@ import axios from 'axios';
 import { MapPin, ExternalLink, Plus, Sprout, Leaf, Home } from 'lucide-react';
 import { useUser } from '../Context/UserContext';
 import { useNavigate } from 'react-router-dom';
-
+import FloatingElements from "../FlotingElement/FloatingElements";
 const YourFarms = () => {
   const [farms, setFarms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useUser();
   const navigate = useNavigate();
 
-  const FloatingElements = () => (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(20)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute animate-float opacity-40"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            animation: `float ${8 + Math.random() * 4}s infinite ${Math.random() * 2}s`,
-            zIndex: 0
-          }}
-        >
-          {i % 2 === 0 ? (
-            <Leaf className="w-8 h-8 text-emerald-600" />
-          ) : (
-            <Sprout className="w-9 h-9 text-lime-600" />
-          )}
-        </div>
-      ))}
-    </div>
-  );
+ 
 
   useEffect(() => {
     const fetchFarms = async () => {

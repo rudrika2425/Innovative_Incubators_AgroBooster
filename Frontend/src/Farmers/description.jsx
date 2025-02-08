@@ -2,40 +2,13 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Sprout, Leaf, Sun, Cloud, Tractor } from "lucide-react";
-
+import FloatingElements from "../FlotingElement/FloatingElements";
 const DescriptionPage = () => {
   const { state } = useLocation();
   const { product } = state;
   const [mainImage, setMainImage] = useState(product.images[0]);
 
-  const FloatingElements = () => (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(20)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute opacity-30 animate-float"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            animation: `float ${8 + Math.random() * 4}s infinite ${Math.random() * 2}s`,
-            zIndex: 0
-          }}
-        >
-          {i % 5 === 0 ? (
-            <Leaf className="w-8 h-8 text-emerald-600" />
-          ) : i % 5 === 1 ? (
-            <Sprout className="w-9 h-9 text-lime-600" />
-          ) : i % 5 === 2 ? (
-            <Sun className="w-10 h-10 text-yellow-600" />
-          ) : i % 5 === 3 ? (
-            <Tractor className="w-11 h-11 text-green-600" />
-          ) : (
-            <Cloud className="w-10 h-10 text-gray-600" />
-          )}
-        </div>
-      ))}
-    </div>
-  );
+
 
   return (
     <div className="relative h-screen flex justify-center items-center bg-gradient-to-b from-yellow-50 to-yellow-100 overflow-hidden px-4">

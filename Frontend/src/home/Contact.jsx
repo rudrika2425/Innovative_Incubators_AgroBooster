@@ -5,6 +5,7 @@ import {
   CheckCircle, AlertCircle
 } from "lucide-react";
 import axios from 'axios';
+import FloatingElements from "../FlotingElement/FloatingElements";
 
 const Contact = ({ id }) => {
   const [formData, setFormData] = useState({
@@ -51,32 +52,7 @@ const Contact = ({ id }) => {
     }
   };
 
-  const FloatingElements = () => (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      {[...Array(20)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute animate-float opacity-20"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            animationDuration: `${8 + Math.random() * 4}s`,
-            animationDelay: `${Math.random() * 2}s`,
-            zIndex: 1
-          }}
-        >
-          {[
-            <Leaf className="w-8 h-8 text-emerald-800" />,
-            <Sprout className="w-9 h-9 text-yellow-600" />,
-            <Sun className="w-10 h-10 text-yellow-500" />,
-            <Tractor className="w-11 h-11 text-emerald-800" />,
-            <Droplet className="w-9 h-9 text-yellow-600" />,
-            <Cloud className="w-10 h-10 text-yellow-400" />
-          ][i % 6]}
-        </div>
-      ))}
-    </div>
-  );
+ 
 
   const supportCategories = [
     {
@@ -125,21 +101,7 @@ const Contact = ({ id }) => {
           </p>
         </header>
 
-        <section className="grid md:grid-cols-1 gap-8 mb-16 max-w-xl ml-110" aria-label="Support Categories">
-          {supportCategories.map((category, index) => (
-            <div key={index} className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-emerald-800/10">
-              <div className="text-emerald-800 mb-4" aria-hidden="true">
-                {category.icon}
-              </div>
-              <h2 className="text-xl font-semibold text-emerald-800 mb-2">
-                {category.title}
-              </h2>
-              <p className="text-yellow-700">
-                {category.description}
-              </p>
-            </div>
-          ))}
-        </section>
+       
 
         <section className="bg-white/90 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden max-w-4xl mx-auto border border-emerald-800/10">
           <div className="flex flex-col md:flex-row">
