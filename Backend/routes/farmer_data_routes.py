@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify, current_app
+from bson import ObjectId, errors
 
 # Create a blueprint for farmer data routes
 farmer_data_bp = Blueprint('farmer_data_bp', __name__)
@@ -65,3 +66,20 @@ def get_all_farmer_data(farmer_id):
             "details": str(e)
         }), 500
 
+
+@farmer_data_bp.route('/farm/<farmId>', methods=['GET'])
+def get_farm_by_id(farmId):
+    print(farmId)
+    try:
+        # Query the farmers collection using current_app.db
+        farm = current_app.db.farmers.find_one({"_id": ObjectId(farmId)})  # Ensure farmId is a string
+        print(farm)
+        if not farm:
+            return jsonify({"error": "Farm not found"}), 404
+
+        # Convert ObjectId to string for JSON serialization if necessary
+        farm["_id"] = str(farm["_id"])
+        
+        return jsonify(farm), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
