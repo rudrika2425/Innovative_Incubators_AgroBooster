@@ -18,20 +18,20 @@ const InfoDashboard = () => {
     <div
     >
       {/* Professional Navbar */}
-      <nav className="bg-green-600 shadow-md">
+      <nav className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Left side - Logo */}
             <Link to="/" className="flex items-center">
-              <h1 className="text-3xl font-bold text-white hover:text-yellow-500 transition-colors">
-                AgroBooster
+              <h1 className="text-4xl font-bold text-emerald-600 hover:text-yellow-500 transition-colors">
+                Agro<span className="text-amber-600">Booster</span>
               </h1>
             </Link>
 
             {/* Right side - User Info */}
             <div className="flex items-center space-x-4">
-              <span className="text-gray-600">
-                Welcome, <span className="font-medium text-white">{user.fullname}</span>
+              <span className="text-emerald-600">
+                Welcome, <span className="font-medium text-amber-600">{user.fullname}</span>
               </span>
               <div className="relative group">
                 <UserCircle 
@@ -62,10 +62,13 @@ const InfoDashboard = () => {
       <div className="relative flex-1">
         <div className="absolute inset-0  bg-gradient-to-b from-yellow-50 to-yellow-100"></div>
         <div className="relative z-10">
-          <main className="max-w-7xl mx-auto p-6">
-            <div>
+
+          
+          <main className="mx-auto ">
+            
+
               <Outlet />
-            </div>
+            
           </main>
         </div>
       </div>

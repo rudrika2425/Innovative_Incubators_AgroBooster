@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { 
-  ChevronRight, Map, Calendar, Mic, Beaker, Tractor, Bot, 
+import {
+  ChevronRight, Map, Calendar, Mic, Beaker, Tractor, Bot,
   ArrowRight, CheckCircle, Leaf, Sun, Cloud, Droplets,
   ThermometerSun, Sprout, Wheat
 } from 'lucide-react';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 
 const OnboardingGuide = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -90,12 +90,11 @@ const OnboardingGuide = () => {
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-15">
         {[...Array(16)].map((_, i) => (
           <React.Fragment key={i}>
-            <Wheat 
-              className={`absolute w-16 h-16 ${
-                i % 3 === 0 ? 'text-amber-800' : 
-                i % 3 === 1 ? 'text-yellow-800' : 
-                'text-lime-800'
-              } transform transition-all duration-1000 ease-in-out`}
+            <Wheat
+              className={`absolute w-16 h-16 ${i % 3 === 0 ? 'text-amber-800' :
+                i % 3 === 1 ? 'text-yellow-800' :
+                  'text-lime-800'
+                } transform transition-all duration-1000 ease-in-out`}
               style={{
                 top: `${Math.random() * 100}%`,
                 left: `${Math.random() * 100}%`,
@@ -108,7 +107,7 @@ const OnboardingGuide = () => {
       </div>
     );
   };
-  
+
 
   return (
     <div className="min-h-screen bg-[#f4f1de] p-6 relative overflow-hidden">
@@ -136,9 +135,9 @@ const OnboardingGuide = () => {
           animation: bounce-slow 3s ease-in-out infinite;
         }
       `}</style>
-      
+
       <CropPattern />
-      
+
       <div className="max-w-5xl mx-auto space-y-12 relative">
         <div className="text-center space-y-6 mb-16">
           <div className="inline-block relative mb-8 group">
@@ -147,15 +146,15 @@ const OnboardingGuide = () => {
               <Wheat className="w-20 h-20 text-amber-700 animate-bounce" />
             </div>
           </div>
-          
+
           <h1 className="text-5xl font-bold text-stone-800 mb-6">
             Welcome to Agro Booster
           </h1>
-          
+
           <p className="text-xl text-stone-700 max-w-2xl mx-auto leading-relaxed">
             Combining generations of farming wisdom with modern technology for sustainable agriculture.
           </p>
-          
+
           <div className="flex flex-wrap justify-center gap-4 mt-8">
             <div className="flex items-center gap-2 bg-white/90 backdrop-blur px-6 py-3 rounded-full shadow-lg border border-emerald-200 hover:scale-105 transition-transform duration-300">
               <Sprout className="w-5 h-5 text-emerald-600" />
@@ -174,7 +173,7 @@ const OnboardingGuide = () => {
 
         <div className="grid gap-8">
           {steps.map((step, index) => (
-            <div 
+            <div
               key={index}
               onMouseEnter={() => {
                 setActiveStep(index);
@@ -197,15 +196,15 @@ const OnboardingGuide = () => {
               <div className="pt-4 pb-6 px-6">
                 <p className="text-lg text-stone-700 mb-6 leading-relaxed">{step.description}</p>
                 <div className="grid md:grid-cols-2 gap-4">
-                {step.details.map((detail, idx) => (
-  <div 
-    key={idx} 
-    className="flex items-center gap-3 bg-white/95 backdrop-blur p-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-stone-200/50 hover:scale-105"
-  >
-    <CheckCircle className={`w-5 h-5 text-${step.accent}-600 flex-shrink-0`} />
-    <span className="text-stone-700">{detail}</span>
-  </div>
-))}
+                  {step.details.map((detail, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center gap-3 bg-white/95 backdrop-blur p-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-stone-200/50 hover:scale-105"
+                    >
+                      <CheckCircle className={`w-5 h-5 text-${step.accent}-600 flex-shrink-0`} />
+                      <span className="text-stone-700">{detail}</span>
+                    </div>
+                  ))}
 
                 </div>
               </div>
@@ -215,19 +214,22 @@ const OnboardingGuide = () => {
 
         <div className="text-center pt-12 pb-16 space-y-4">
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Link to="/farmer-Information" className="block w-full sm:w-auto">
-  <button className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-emerald-700 to-lime-600 text-white px-8 py-4 rounded-full hover:from-emerald-600 hover:to-lime-500 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl w-full sm:w-auto">
-    <span className="relative z-10">Start Your Journey</span>
-    <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-lime-400 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
-  </button>
-</Link>
+            <Link to="/farmer-Information" className="block w-full sm:w-auto">
+              <button className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-emerald-700 to-lime-600 text-white px-8 py-4 rounded-full hover:from-emerald-600 hover:to-lime-500 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl w-full sm:w-auto">
+                <span className="relative z-10">Start Your Journey</span>
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-lime-400 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
+              </button>
+            </Link>
+            <Link to="/farmerdashboard" className="block w-full sm:w-auto">
+              <button className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-amber-700 to-yellow-600 text-white px-8 py-4 rounded-full hover:from-amber-600 hover:to-yellow-500 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl w-full sm:w-auto">
+                <span className="relative z-10">Browse Equipment</span>
+                <Tractor className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
+              </button>
+            </Link>
 
-            <button className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-amber-700 to-yellow-600 text-white px-8 py-4 rounded-full hover:from-amber-600 hover:to-yellow-500 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl w-full sm:w-auto">
-              <span className="relative z-10">Browse Equipment</span>
-              <Tractor className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
-            </button>
+
           </div>
           <p className="text-sm text-stone-600">Begin your sustainable farming journey today</p>
         </div>
