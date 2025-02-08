@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
-import { LanguageProvider } from "./Context/LanguageContext";
+import { LanguageProvider } from "./languageTranslation/LanguageContext";
 import { UserProvider } from "./Context/UserContext";
 import { ProtectedRoute } from "./Context/ProtectedRoutes";
 import Login from "./authentication/Login";
@@ -27,6 +27,7 @@ import Hero from "./home/Hero";
 import Footer from "./home/Footer";
 import FarmDetails from "./Farmers/FarmDetails"
 import Calendar from "./calendar/calendar"
+
 
 
 
