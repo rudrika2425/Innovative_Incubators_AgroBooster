@@ -14,7 +14,11 @@ const FarmDetails = () => {
 
  const handleCalendar=()=>{
         navigate(`/farmerdashboard/farm-details/${farmId}/calendar`)
-  }
+ }
+
+ const handleWeather = () => {
+  navigate("/farmerdashboard/weather-forecast");
+ }
 
   useEffect(() => {
     const fetchFarmDetails = async () => {
@@ -38,7 +42,7 @@ const FarmDetails = () => {
       <nav className="bg-green-700 text-white p-4 flex justify-between items-center shadow-lg">
         <h1 className="text-xl font-bold">Farm Dashboard</h1>
         <div className="flex space-x-6 text-2xl">
-          <WiDaySunny className="cursor-pointer" title="Weather Info" />
+          <WiDaySunny className="cursor-pointer" title="Weather Info" onClick={handleWeather} />
           <BsCalendar className="cursor-pointer" title="Calendar"  onClick={handleCalendar}/>
         </div>
       </nav>
