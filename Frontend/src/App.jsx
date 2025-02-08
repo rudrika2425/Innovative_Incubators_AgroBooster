@@ -25,6 +25,7 @@ import Contact from "./home/Contact";
 import Navbar from "./home/Navbar";
 import Hero from "./home/Hero";
 import Footer from "./home/Footer";
+import FarmDetails from "./Farmers/FarmDetails"
 
 
 
@@ -86,6 +87,7 @@ function App() {
               <Route path="borrow-tools" element={<BorrowTools />} />
               <Route path="weather-forecast" element={<WeatherForecast />} />
               <Route path="description" element={<DescriptionPage />} />
+              <Route path="farm-details/:farmId" element={<FarmDetails />} />
             </Route>
 
             <Route path="/farmer-Information" element={

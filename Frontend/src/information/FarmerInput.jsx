@@ -1,6 +1,19 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMicrophone, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMicrophone, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import {
+  Wheat,
+  Sprout,
+  Leaf,
+  Sun,
+  Cloud,
+  Droplet,
+  Tractor,
+  Target,
+  Globe,
+  ArrowUpRight,
+  Brain,
+} from "lucide-react";
 
 const FarmerInput = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +21,8 @@ const FarmerInput = () => {
     landArea: "",
     farmingTools: [],
     irrigationSystem: "",
+    soilType: "",
+    cropSeason: "",
   });
 
   const [isListening, setIsListening] = useState(false);
@@ -15,16 +30,50 @@ const FarmerInput = () => {
   const [language, setLanguage] = useState("en-US");
   const [isLanguageLocked, setIsLanguageLocked] = useState(false);
 
+  const soilTypes = [
+    "Khadar (New Alluvium)",
+    "Bhangar (Old Alluvium)",
+    "Shallow Black Soil",
+    "Deep Black Soil",
+    "Yellowish-Red Soil",
+    "Reddish-Brown Soil",
+    "Upland Laterite",
+    "Lowland Laterite",
+    "Sandy Soil",
+    "Loamy Desert Soil",
+    "Usara Soil",
+    "Kallar Soil",
+    "Kari Soil (Kerala)",
+    "Jalki Soil",
+    "Podzolic Soil",
+    "Humus-Rich Soil",
+  ];
+
+  const cropSeasons = [
+    { name: "Kharif", period: "Rainy Season (June-October)" },
+    { name: "Rabi", period: "Winter Season (October-March)" },
+    { name: "Zaid", period: "Summer Season (March-June)" },
+  ];
+
   const farmingToolsList = [
-    "Tractor", "Plough", "Harvester", "Sprayer",
-    "Cultivator", "Seeder", "Water Pump", "Plow",
-    "Rake", "Hoe"
+    "Tractor",
+    "Plough",
+    "Harvester",
+    "Sprayer",
+    "Cultivator",
+    "Seeder",
+    "Water Pump",
+    "Plow",
+    "Rake",
+    "Hoe",
   ];
 
   const irrigationSystems = [
-    "Drip Irrigation", "Sprinkler Irrigation",
-    "Flood Irrigation", "Surface Irrigation",
-    "Subsurface Irrigation"
+    "Drip Irrigation",
+    "Sprinkler Irrigation",
+    "Flood Irrigation",
+    "Surface Irrigation",
+    "Subsurface Irrigation",
   ];
 
   const SpeechRecognition =
@@ -99,7 +148,14 @@ const FarmerInput = () => {
   const handleNext = (e) => {
     e.preventDefault();
 
-    if (!formData.farmName || !formData.landArea || !formData.irrigationSystem || formData.farmingTools.length === 0) {
+    if (
+      !formData.farmName ||
+      !formData.landArea ||
+      !formData.irrigationSystem ||
+      formData.farmingTools.length === 0 ||
+      !formData.soilType ||
+      !formData.cropSeason
+    ) {
       alert("Please fill in all fields before proceeding.");
       return;
     }
@@ -107,101 +163,237 @@ const FarmerInput = () => {
     localStorage.setItem("farmerInput", JSON.stringify(formData));
     window.location.href = "/farmer-information/soilTesting";
   };
-
-  return (
-    <form className="max-w-8xl mx-auto space-y-6 bg-white p-6 rounded-xl shadow-2xl md:p-8 lg:p-10">
-      <div className="flex flex-col md:flex-row md:justify-between items-center">
-        <h2 className="text-3xl md:text-4xl font-semibold  text-green-600 mb-4 md:mb-0">Basic Information</h2>
-        <div>
-          <label className="block font-semibold mb-1 text-gray-700">Select Language</label>
-          <select
-            value={language}
-            onChange={(e) => !isLanguageLocked && setLanguage(e.target.value)}
-            className="w-full md:w-48 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            disabled={isLanguageLocked}
-          >
-            <option value="en-US">English</option>
-            <option value="hi-IN">Hindi</option>
-          </select>
-        </div>
-      </div>
-
-      {['farmName', 'landArea'].map((field, index) => (
-        <div key={index}>
-          <label htmlFor={field} className="block font-semibold mb-2 capitalize text-gray-800">
-            {field === 'farmName' ? 'Farm Name' : 'Area of Land (in acres)'}
-          </label>
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              id={field}
-              name={field}
-              value={formData[field]}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder={`Enter ${field === 'farmName' ? 'farm name' : 'area of land'}`}
-            />
-            <button
-              type="button"
-              onClick={() => startListening(field)}
-              className="p-3 bg-green-600 text-white rounded-full hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-            >
-              <FontAwesomeIcon icon={faMicrophone} />
-            </button>
-          </div>
+  const FloatingElements = () => (
+    <div
+      className="absolute inset-0 overflow-hidden pointer-events-none"
+      aria-hidden="true"
+    >
+      {[...Array(30)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute animate-float opacity-20"
+          style={{
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            animationDuration: `${8 + Math.random() * 4}s`,
+            animationDelay: `${Math.random() * 2}s`,
+            zIndex: 1,
+          }}
+        >
+          {
+            [
+              <Leaf className="w-8 h-8 text-emerald-800" />,
+              <Sprout className="w-9 h-9 text-yellow-600" />,
+              <Sun className="w-10 h-10 text-yellow-500" />,
+              <Tractor className="w-11 h-11 text-emerald-800" />,
+              <Droplet className="w-9 h-9 text-blue-600" />,
+              <Cloud className="w-10 h-10 text-gray-400" />,
+              <Globe className="w-8 h-8 text-indigo-600" />,
+              <Target className="w-9 h-9 text-red-600" />,
+              <Brain className="w-10 h-10 text-purple-600" />,
+              <Wheat className="w-11 h-11 text-amber-600" />,
+            ][i % 10]
+          }
         </div>
       ))}
+    </div>
+  );
 
-      <div>
-        <label className="block font-semibold mb-2 text-gray-800">Farming Tools</label>
-        <select
-          className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-          onChange={(e) => handleToolSelect(e.target.value)}
-        >
-          <option value="">Select a Tool</option>
-          {farmingToolsList.map((tool, index) => (
-            <option key={index} value={tool}>{tool}</option>
-          ))}
-        </select>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {formData.farmingTools.map((tool, index) => (
+  return (
+    <div className="relative  bg-gradient-to-b from-yellow-50 to-yellow-100 py-10">
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+      `}</style>
+
+      <FloatingElements />
+
+      <div className="relative z-10 max-w-4xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden">
+        <form className="space-y-8 p-8">
+          <div className="text-center mb-8">
+            <h2 className="text-4xl font-bold text-emerald-800 mb-4">
+              Basic Information
+            </h2>
+            <p className="text-lg text-emerald-700">
+              Please provide your farming details to help us serve you better
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex items-center justify-between col-span-2">
+              <div className="flex items-center gap-2">
+                <Wheat className="w-8 h-8 text-emerald-600" />
+                <span className="text-xl font-semibold text-emerald-800">
+                  Farm Details
+                </span>
+              </div>
+              <div>
+                <label className="block font-semibold mb-1 text-emerald-800">
+                  Select Language
+                </label>
+                <select
+                  value={language}
+                  onChange={(e) =>
+                    !isLanguageLocked && setLanguage(e.target.value)
+                  }
+                  className="w-48 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  disabled={isLanguageLocked}
+                >
+                  <option value="en-US">English</option>
+                  <option value="hi-IN">Hindi</option>
+                </select>
+              </div>
+            </div>
+
+            {["farmName", "landArea"].map((field, index) => (
+              <div key={index} className="col-span-2 md:col-span-1">
+                <label
+                  htmlFor={field}
+                  className="block font-semibold mb-2 text-emerald-800"
+                >
+                  {field === "farmName"
+                    ? "Farm Name"
+                    : "Area of Land (in acres)"}
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    id={field}
+                    name={field}
+                    value={formData[field]}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    placeholder={`Enter ${
+                      field === "farmName" ? "farm name" : "area of land"
+                    }`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => startListening(field)}
+                    className="p-3 bg-emerald-600 text-white rounded-4xl h-12 flex items-center gap-2 w-30 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors duration-300"
+                  >
+                    Voice
+                    <FontAwesomeIcon icon={faMicrophone} />
+                  </button>
+                </div>
+              </div>
+            ))}
+
+            <div className="col-span-2 md:col-span-1">
+              <label className="block font-semibold mb-2 text-emerald-800">
+                Soil Type
+              </label>
+              <select
+                name="soilType"
+                value={formData.soilType}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              >
+                <option value="">Select Soil Type</option>
+                {soilTypes.map((soil, index) => (
+                  <option key={index} value={soil}>
+                    {soil}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="col-span-2 md:col-span-1">
+              <label className="block font-semibold mb-2 text-emerald-800">
+                Crop Season
+              </label>
+              <select
+                name="cropSeason"
+                value={formData.cropSeason}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              >
+                <option value="">Select Crop Season</option>
+                {cropSeasons.map((season, index) => (
+                  <option key={index} value={season.name}>
+                    {season.name} - {season.period}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="col-span-2">
+              <label className="block font-semibold mb-2 text-emerald-800">
+                Farming Tools
+              </label>
+              <select
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                onChange={(e) => handleToolSelect(e.target.value)}
+              >
+                <option value="">Select a Tool</option>
+                {farmingToolsList.map((tool, index) => (
+                  <option key={index} value={tool}>
+                    {tool}
+                  </option>
+                ))}
+              </select>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {formData.farmingTools.map((tool, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    className="flex items-center bg-emerald-600 text-white py-2 px-4 rounded-full shadow-md hover:bg-emerald-700 transition-colors duration-300"
+                    onClick={() => handleToolRemove(tool)}
+                  >
+                    {tool}
+                    <FontAwesomeIcon icon={faXmark} className="ml-2" />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="col-span-2">
+              <label className="block font-semibold mb-2 text-emerald-800">
+                Irrigation System
+              </label>
+              <select
+                id="irrigationSystem"
+                name="irrigationSystem"
+                value={formData.irrigationSystem}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              >
+                <option value="">Select Irrigation System</option>
+                {irrigationSystems.map((system, index) => (
+                  <option key={index} value={system}>
+                    {system}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="pt-6">
             <button
-              key={index}
               type="button"
-              className="flex items-center bg-green-400 text-white py-1 px-3 rounded-full shadow-md hover:bg-green-500"
-              onClick={() => handleToolRemove(tool)}
+              onClick={handleNext}
+              className={`w-full px-6 py-4 rounded-lg text-lg font-semibold transition-all duration-300 ${
+                formData.farmName &&
+                formData.landArea &&
+                formData.farmingTools.length > 0 &&
+                formData.irrigationSystem &&
+                formData.soilType &&
+                formData.cropSeason
+                  ? "bg-emerald-800 text-white hover:bg-emerald-900 shadow-lg hover:shadow-xl"
+                  : "bg-gray-300 text-gray-600 cursor-not-allowed"
+              }`}
             >
-              {tool}
-              <FontAwesomeIcon icon={faXmark} className="ml-2" />
+              Next
             </button>
-          ))}
-        </div>
+          </div>
+        </form>
       </div>
-
-      <div>
-        <label className="block font-semibold mb-2 text-gray-700">Irrigation System</label>
-        <select
-          id="irrigationSystem"
-          name="irrigationSystem"
-          value={formData.irrigationSystem}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-        >
-          <option value="">Select Irrigation System</option>
-          {irrigationSystems.map((system, index) => (
-            <option key={index} value={system}>{system}</option>
-          ))}
-        </select>
-      </div>
-
-      <button
-        type="button"
-        onClick={handleNext}
-        className={`  px-5 py-2 rounded-md text-lg font-semibold transition-all duration-300 ${formData.farmName && formData.landArea && formData.farmingTools.length > 0 && formData.irrigationSystem ? "bg-green-600 text-white hover:bg-green-700" : "bg-gray-300 text-gray-600 cursor-not-allowed"}`}
-      >
-        Next
-      </button>
-    </form>
+    </div>
   );
 };
 

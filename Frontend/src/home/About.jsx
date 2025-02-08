@@ -43,7 +43,11 @@ const AgricultureInnovationPage = ({ id }) => {
 
       <FloatingElements />
    
-    <div className="bg-gradient-to-b from-yellow-100 to-yellow-200 text-emerald-900">
+
+    <div className="bg-gradient-to-b from-yellow-50 to-yellow-100 relative text-emerald-900">
+
+    
+
       
       {/* About Agriculture Section */}
       <section className="container  px-6 pt-24 pb-5">

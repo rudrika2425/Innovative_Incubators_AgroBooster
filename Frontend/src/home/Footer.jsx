@@ -43,21 +43,10 @@ const Footer = () => {
         <h2 className="text-5xl font-bold mb-8">
           Cultivating a Sustainable Agricultural Future
         </h2>
-        <p className="text-2xl max-w-4xl mx-auto mb-12">
+        <p className="text-2xl max-w-4xl mx-auto mb-5">
           Our mission transcends technological innovation – we are building a comprehensive ecosystem that empowers farmers, optimizes agricultural practices, and contributes to global food security through intelligent, data-driven solutions.
         </p>
-        <div className="flex justify-center space-x-8">
-          <Link to="/">
-          <button className="bg-yellow-500 text-emerald-900 px-12 py-4 rounded-full font-bold text-xl hover:bg-yellow-600 transition-colors">
-            Explore Solutions
-          </button>
-          </Link>
-          <Link to="/contact">
-          <button className="border-2 border-white text-white px-12 py-4 rounded-full font-bold text-xl hover:bg-white hover:text-emerald-900 transition-colors">
-            Contact Us
-          </button>
-          </Link>
-        </div>
+        <h4 className="text-lg text-yellow-600">All Rights Reserved under @AgroBooster</h4>
       </div>
     </section>
   );

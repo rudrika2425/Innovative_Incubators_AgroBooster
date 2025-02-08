@@ -56,7 +56,7 @@ const Login = () => {
     }
     setError("");
     setIsSubmitting(true);
-
+  
     try {
       const response = await fetch("http://localhost:4000/user/login", {
         method: "POST",
@@ -68,28 +68,43 @@ const Login = () => {
           password: formData.password,
         }),
       });
-
+  
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data.error || "Login failed");
       }
-
+  
+      console.log("Login response data:", data); // Debugging log
+  
       const userData = {
         fullname: data.user.fullname,
         id: data.user.id,
         phone_number: data.user.phone_number,
+        isFirstLogin: data.user.isFirstLogin ?? true, // Ensure default value
       };
+  
       setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
 
+  
+      // Check isFirstLogin properly
+      if (userData.isFirstLogin === true) {
+        window.location.href = "/guide";
+      } else {
+        window.location.href = "/farmerdashboard";
+      }
+
+
       const from = location.state?.from?.pathname || "/guide";
       navigate(from, { replace: true });
+
     } catch (err) {
       setError(err.message);
     } finally {
       setIsSubmitting(false);
     }
   };
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100 relative">

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Leaf, Droplet, Sun, CloudRain, Sprout, Cloud, Tractor } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
 
 const FloatingElements = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -78,8 +79,8 @@ const CropCard = ({ cropData = {}, index }) => {
   const gradientClass = gradientClasses[index % gradientClasses.length];
 
   return (
-    <div className={`w-full max-w-3xl mx-auto ${gradientClass} rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.02] mb-8`}>
-      <div className="relative p-8">
+    <div   className={`w-full max-w-3xl mx-auto ${gradientClass} rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.02] mb-8`}>
+      <div className="relative p-8" >
         <div className="absolute top-0 right-0 w-32 h-32 opacity-10">
           <Sprout className="w-full h-full text-emerald-900" />
         </div>
@@ -140,6 +141,45 @@ const CropPrediction = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [dataFetched, setDataFetched] = useState(false);
+  const [crop, setCrop] = useState("");
+  const [variety, setVariety] = useState("");
+ 
+  const navigate = useNavigate();
+  
+  const handleCrop = async () => {
+    const farmId = localStorage.getItem("farmId");
+    console.log("Farm ID:", farmId);
+    console.log(crop);
+    console.log(variety);
+    if (!farmId) {
+      console.error("Farm ID is missing.");
+      return;
+    } 
+    try {
+      const response = await fetch("http://127.0.0.1:4000/calendar/update-farm", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          crop,
+          variety,
+          farmId,
+        }),
+      });
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Crop saved successfully:", result);
+        navigate("/farmerdashboard", {
+          state: { farmId, crop, variety },
+        });
+      } else {
+        console.error("Failed to save crop data.");
+      }
+    } catch (error) {
+      console.error("Error saving crop data:", error);
+    }
+  };
 
   const parsePredictions = (predictionText) => {
     try {
@@ -252,6 +292,7 @@ const CropPrediction = () => {
           
           if (data.status === "success") {
             const parsedPredictions = parsePredictions(data.predictions);
+            console.log(parsedPredictions);
             setPredictions(parsedPredictions);
           } else {
             throw new Error(data.message || "Failed to get predictions");
@@ -325,7 +366,7 @@ const CropPrediction = () => {
         <div className="flex flex-col items-center">
           {predictions && predictions.length > 0 ? (
             predictions.map((crop, index) => (
-              <CropCard key={index} cropData={crop} index={index} />
+              <CropCard key={index} cropData={crop} index={index}/>
             ))
           ) : (
             <div className="text-center text-gray-500">
@@ -334,6 +375,27 @@ const CropPrediction = () => {
           )}
         </div>
       </div>
+      <div className="crop-form">
+      <div className="input">
+        <label>Crop:</label>
+        <input
+          type="text"
+          value={crop}
+          onChange={(e) => setCrop(e.target.value)}
+          placeholder="Enter crop name"
+        />
+      </div>
+      <div className="input">
+        <label>Variety:</label>
+        <input
+          type="text"
+          value={variety}
+          onChange={(e) => setVariety(e.target.value)}
+          placeholder="Enter variety name"
+        />
+      </div>
+      <button onClick={handleCrop}>Save Crop</button>
+    </div>
       
     </div>
     

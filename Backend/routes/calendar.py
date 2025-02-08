@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify,request
 from flask_cors import CORS
 import google.generativeai as genai
 import json
@@ -6,6 +6,7 @@ from datetime import datetime
 from bson import ObjectId
 from flask import Blueprint
 import re
+from bson import ObjectId, errors
 from pymongo import MongoClient
  
 
@@ -16,6 +17,38 @@ CORS(calendar_bp)
 client = MongoClient('mongodb://localhost:27017/')
 db = client['agrobooster']
 farms_collection = db['farmers']
+
+@calendar_bp.route('/update-farm', methods=['POST'])
+def update_farm():
+    data = request.json  # Get data from the request
+    farm_id = data.get('farmId')
+    crop = data.get('crop')
+    variety = data.get('variety')
+    print(farm_id," ",crop," ",variety)
+
+    if not farm_id or not crop or not variety:
+        return jsonify({"error": "farmId, crop, and variety are required"}), 400
+
+    try:
+        # Find the farmer by _id (convert it to ObjectId)
+        result = farms_collection.update_one(
+            {"_id": ObjectId(farm_id)},
+            {
+                "$set": {
+                    "crop": crop,
+                    "variety": variety
+                }
+            }
+        )
+
+        if result.modified_count > 0:
+            return jsonify({"message": "Farm updated successfully"}), 200
+
+        else:
+            return jsonify({"error": "No farm found or no changes made"}), 404
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 genai.configure(api_key="AIzaSyDfNKh9DapTzLwXRO1kFsmTkPtTighZDJs")
 
@@ -35,10 +68,9 @@ def get_farmer_info(farm_id):
             "location": farmer_data.get("location"),
             "weather": farmer_data.get("weather"),
             "soilAnalysisReport": farmer_data.get("soilAnalysisReport"),
-            "crop_type":"rice",
-            "variety":"IR 64 Parboil Rice",
+            "crop_type":farmer_data.get("crop"),
+            "variety":farmer_data.get("variety"),
             "current_date" : datetime.today().date()
-
         }
         crop_type = response["crop_type"]
         variety = response["variety"]

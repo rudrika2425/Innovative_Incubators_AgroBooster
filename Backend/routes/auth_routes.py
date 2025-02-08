@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify,current_app
 from models.user_model import User
 import logging
 
@@ -52,13 +52,21 @@ def login():
         
         if not user or not User.verify_password(user["password"], data["password"]):
             return jsonify({"error": "Invalid phone number or password"}), 401
+        isFirstLogin = user.get("isFirstLogin", True)
+        if isFirstLogin:
+            # Update first_time_login to False after first successful login
+            current_app.db["users"].update_one(
+                {"phone_number": data['phone_number']},
+                {"$set": {"isFirstLogin": False}}
+            )
         
         return jsonify({
             "message": "Login successful",
             "user": {
                 "id": str(user["_id"]),  # Convert ObjectId to string
                 "phone_number": user["phone_number"],
-                "fullname": user["fullname"]
+                "fullname": user["fullname"],
+                "isFirstLogin": user.get("isFirstLogin", True) 
             }
         }), 200
         

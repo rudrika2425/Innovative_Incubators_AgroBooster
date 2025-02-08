@@ -129,7 +129,7 @@ const Hero = ({ id }) => {
   );
 
   return (
-    <div id={id} className="bg-gradient-to-b from-yellow-100 to-yellow-200 relative">
+    <div id={id} className="bg-gradient-to-b from-yellow-50 to-yellow-100 relative">
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -142,7 +142,7 @@ const Hero = ({ id }) => {
       {/* Main Hero Section */}
       <div className="relative min-h-screen">
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4">
-          <div className="space-y-6 max-w-5xl">
+          <div className="space-y-6 max-w-5xl -mt-20">
             <div className="flex justify-center gap-4 mb-4">
               <div className="p-4 bg-emerald-100 rounded-full shadow-lg animate-bounce-slow">
                 <Sprout className="w-12 h-12 text-emerald-600" />
