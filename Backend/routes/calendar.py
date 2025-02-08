@@ -65,6 +65,8 @@ def get_farmer_info(farm_id):
             "landArea": farmer_data.get("farmerInput", {}).get("landArea"),
             "farmingTools": farmer_data.get("farmerInput", {}).get("farmingTools", []),
             "irrigationSystem": farmer_data.get("farmerInput", {}).get("irrigationSystem"),
+            "cropSeason":farmer_data.get("farmerInput",{}).get("cropSeason"),
+            "soilType":farmer_data.get("farmerInput",{}).get("soilType"),
             "location": farmer_data.get("location"),
             "weather": farmer_data.get("weather"),
             "soilAnalysisReport": farmer_data.get("soilAnalysisReport"),
@@ -77,9 +79,13 @@ def get_farmer_info(farm_id):
         location = response["location"]
         soil_analysis_report = response["soilAnalysisReport"]
         land_area = response["landArea"]
+        farmingTools=response["farmingTools"]
+        cropSeason=response["cropSeason"]
+        soilType=response["soilType"]
         irrigation_system = response["irrigationSystem"]
         weather = response["weather"]
         current_date = response["current_date"]
+
 
         input_prompt = f"""
         Based on the provided agricultural parameters, generate a detailed and precise growing schedule for {crop_type} and variety {variety}, cultivation in {location} , including:
@@ -91,14 +97,13 @@ def get_farmer_info(farm_id):
         - Land Area: {land_area} hectares
         - Crop Type: {crop_type}
         - Irrigation System: {irrigation_system}
+        - soilType:{soilType}
+        - FarmingTools:{farmingTools}
+        - cropSeason:{cropSeason}
 
         Environmental Conditions:
-        - Humidity: {weather.get('humidity')}%
-        - Temperature: {weather.get('temperature')}°C
-        - Pressure: {weather.get('pressure')} hPa
-        - Cloud Coverage: {weather.get('cloud_coverage')}%
-        - Wind Speed: {weather.get('wind_speed')} m/s
-        - Weather Description: {weather.get('weather_description')}
+         - weather:{weather}
+         - location:{location}
 
         Growing Conditions:
         - Altitude: {location.get('altitude')} meters
@@ -116,30 +121,28 @@ def get_farmer_info(farm_id):
 
         Generate a growing schedule for {crop_type} (variety: {variety}) in {location}. Format each task exactly as follows:
 
-        [Task Title] | [Brief Task Description]
-        Start Date: YYYY-MM-DD
-        End Date: YYYY-MM-DD
+        The title of the task | The description of the task
+        Start Date:The starting date for that task in relation to {current_date} (e.g., 20-02-2025 need exact dates ) 
+        End Date: The ending date for that task, calculated based on {current_date} and the starting date.
         Description: [Detailed description]
-        Sustainable resources that can be used: [Resources]
+        Sustainable resources that can be used: Sustainable resources which can maximize the yield and at the same time will not harm environment
         
-        - The title of the task
-        - The description of the task
-        - The starting date for that task in relation to {current_date} (e.g., 20-02-2025 need exact dates )
-        - The ending date for that task, calculated based on {current_date} and the starting date.
-        - Sustainable resources which can maximize the yield and at the same time will not harm environment
+        - I do not want any other information like GenerateContentResponse , done=True etc. 
         - There should be no   extra info for that particular activity
-        - task description can be a bit longer
+        - Keep in mind the {cropSeason} prvided suggest date schedule according to that only
         - if it is not possible to grow the crop in the current season then  display the dates for upcoming season, but data should be precise 
         the output should contain no other information except for the given data no other information should be provided
         results can be in years also if needed,provide precise information
         Dont give any extra info or note
-        The output should be in the following format:
+        
         """
 
         model = genai.GenerativeModel("gemini-1.5-flash")
         response = model.generate_content(input_prompt)
+        print(response)
 
-        pattern = r"(.*?) \| (.*?)\nStart Date: (\d{4}-\d{2}-\d{2})\nEnd Date: (\d{4}-\d{2}-\d{2})\nDescription: (.*?)\nSustainable resources that can be used: (.*?)(?=\n\n|\Z)"
+        pattern = r"(.*?) \| (.*?)\nStart Date:(\d{4}-\d{2}-\d{2})\nEnd Date:(\d{4}-\d{2}-\d{2})\nDescription:(.*?)\nSustainable resources that can be used:(.*?)(?=\n\n|\Z)"
+
         
         matches = re.finditer(pattern, response.text, re.DOTALL)
         structured_data = []
