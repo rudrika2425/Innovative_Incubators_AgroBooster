@@ -4,7 +4,7 @@ import {
   Leaf, Wheat, Sun, Droplet, Clock, Trophy, AlertCircle, Users, Database,Star
 } from "lucide-react";
 
-import FloatingElements from "../FlotingElement/FloatingElements";
+
 
 const SectionWrapper = ({ id, title, children }) => (
 
@@ -26,7 +26,7 @@ const SectionWrapper = ({ id, title, children }) => (
       }
     `}</style>
 
-    <FloatingElements />
+   
     <div className="container mx-auto px-4 relative z-10">
       <h2 className="text-6xl font-extrabold text-emerald-900 text-center mb-16 tracking-tight">
         {title}

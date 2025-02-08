@@ -22,7 +22,7 @@ const InfoDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Left side - Logo */}
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center no-underline">
               <h1 className="text-4xl font-bold text-emerald-600 hover:text-yellow-500 transition-colors">
                 Agro<span className="text-amber-600">Booster</span>
               </h1>

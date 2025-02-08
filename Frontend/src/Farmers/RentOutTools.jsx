@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useUser } from "../Context/UserContext";
 import { Sprout, Leaf, Tractor, Cloud, Sun } from "lucide-react";
-import FloatingElements from "../FlotingElement/FloatingElements";
+
 function RentOutTools() {
   const { user } = useUser();
   const [formData, setFormData] = useState({
@@ -118,7 +118,7 @@ function RentOutTools() {
         </div>
       </nav>
 
-      <FloatingElements />
+      
 
       <div className="relative z-10 flex justify-center items-center py-8 px-4">
         <div className="w-full max-w-4xl bg-white/80 backdrop-blur-sm shadow-2xl rounded-lg p-8 border border-emerald-200">

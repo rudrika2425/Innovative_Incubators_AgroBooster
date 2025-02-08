@@ -77,9 +77,9 @@ const Hero = ({ id }) => {
 
   const FloatingElements = ({ density = 7, additionalClasses = "" }) => {
     const allFloatingIcons = [
-      { icon: <Leaf className="w-8 h-8 text-emerald-600" />, className: "top-1/4 left-1/4" },
-      { icon: <Sprout className="w-9 h-9 text-lime-600" />, className: "top-1/2 right-1/3" },
-      { icon: <Sun className="w-10 h-10 text-yellow-600" />, className: "bottom-1/4 left-1/2" },
+      { icon: <Leaf className="w-6 h-6 text-emerald-600" />, className: "top-1/4 left-1/4" },
+      { icon: <Sprout className="w-7 h-7 text-lime-600" />, className: "top-1/2 right-1/3" },
+      { icon: <Sun className="w-8 h-8 text-yellow-600" />, className: "bottom-1/4 left-1/2" },
       { icon: <Tractor className="w-11 h-11 text-green-600" />, className: "top-1/3 right-1/4" },
       { icon: <Cloud className="w-10 h-10 text-gray-600" />, className: "bottom-1/3 left-1/3" },
       { icon: <Droplet className="w-8 h-8 text-blue-600" />, className: "top-2/3 right-1/2" },
@@ -145,10 +145,10 @@ const Hero = ({ id }) => {
           <div className="space-y-6 max-w-5xl -mt-20">
             <div className="flex justify-center gap-4 mb-4">
               <div className="p-4 bg-emerald-100 rounded-full shadow-lg animate-bounce-slow">
-                <Sprout className="w-12 h-12 text-emerald-600" />
+                <Sprout className="w-6 h-6 text-emerald-600" />
               </div>
               <div className="p-4 bg-lime-100 rounded-full shadow-lg animate-bounce-slow delay-100">
-                <Leaf className="w-12 h-12 text-lime-600" />
+                <Leaf className="w-6 h-6 text-lime-600" />
               </div>
             </div>
 
@@ -179,14 +179,14 @@ const Hero = ({ id }) => {
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <a
                 href="/chatbot"
-                className="group relative inline-flex items-center gap-3 bg-emerald-600 text-white px-8 py-4 rounded-full hover:bg-emerald-500 transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl"
+                className="group relative inline-flex items-center gap-3 bg-emerald-600 text-white px-8 py-4 rounded-full hover:bg-emerald-500 transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl no-underline"
               >
                 <Sprout className="w-6 h-6" />
                 <span>Plant Bot</span>
               </a>
               <a
                 href="/login"
-                className="group relative inline-flex items-center gap-3 bg-amber-600 text-white px-8 py-4 rounded-full hover:bg-amber-500 transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl"
+                className=" no-underline group relative inline-flex items-center gap-3 bg-amber-600 text-white px-8 py-4 rounded-full hover:bg-amber-500 transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl"
               >
                 <Sprout className="w-6 h-6" />
                 <span>Grow Crop</span>

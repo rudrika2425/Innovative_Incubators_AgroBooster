@@ -3,7 +3,6 @@ import axios from "axios";
 import { Leaf, Phone, Lock, User, CheckCircle, Sprout, Sun, Cloud, Tractor } from 'lucide-react';
 import signupImage from '../assets/signup.jpg';
 
-import FloatingElements from "../FlotingElement/FloatingElements";
 
 const Signup = () => {
   const [fullname, setFullname] = useState("");
@@ -95,7 +94,7 @@ const Signup = () => {
         }
       `}</style>
 
-      <FloatingElements />
+      
 
       <div className="container mx-auto px-4 h-screen flex items-center justify-center relative z-10">
         <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden w-full max-w-6xl flex">

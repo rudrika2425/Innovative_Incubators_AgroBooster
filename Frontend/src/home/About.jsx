@@ -4,7 +4,7 @@ import {
   Target, Database, Shield, Brain, Mic, Calendar, Share2, 
   Globe, ChevronRight, ArrowUpRight, Cpu, Radio, Satellite, Lock 
 } from "lucide-react";
-import FloatingElements from "../FlotingElement/FloatingElements";
+
 
 const AgricultureInnovationPage = ({ id }) => {
   
@@ -13,7 +13,7 @@ const AgricultureInnovationPage = ({ id }) => {
   return (
     <div className="bg-gradient-to-b from-yellow-100 to-yellow-200 relative text-emerald-900">
 
-      <FloatingElements />
+      
    
 
    

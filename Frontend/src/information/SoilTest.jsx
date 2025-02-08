@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone, faXmark, faLocationCrosshairs, faMap, faDirections } from '@fortawesome/free-solid-svg-icons';
 import Test from './SoilAnalysis.jsx';
-import FloatingElements from "../FlotingElement/FloatingElements";
+
 const SoilTest = () => {
   const [selectedState, setSelectedState] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
@@ -365,7 +365,7 @@ const SoilTest = () => {
 
   return (
     <div className="bg-gradient-to-b from-emerald-50 to-emerald-100  p-4 md:p-6 rounded-lg shadow-lg">
-      <FloatingElements/>
+     
       {/* Header Section */}
       <div className="space-y-4 md:space-y-6">
         <h2 className="text-2xl md:text-4xl font-bold text-green-600">

@@ -5,7 +5,7 @@ import {
   CheckCircle, AlertCircle
 } from "lucide-react";
 import axios from 'axios';
-import FloatingElements from "../FlotingElement/FloatingElements";
+
 
 const Contact = ({ id }) => {
   const [formData, setFormData] = useState({
@@ -88,8 +88,7 @@ const Contact = ({ id }) => {
         }
       `}</style>
 
-      <FloatingElements />
-
+      
       <div className="relative z-10 container mx-auto px-4 flex flex-col justify-center">
         <header className="text-center mb-16">
           <h1 className="text-5xl font-bold text-emerald-800 mb-4">

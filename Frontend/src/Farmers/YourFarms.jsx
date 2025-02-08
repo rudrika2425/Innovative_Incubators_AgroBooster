@@ -3,7 +3,7 @@ import axios from 'axios';
 import { MapPin, ExternalLink, Plus, Sprout, Leaf, Home } from 'lucide-react';
 import { useUser } from '../Context/UserContext';
 import { useNavigate } from 'react-router-dom';
-import FloatingElements from "../FlotingElement/FloatingElements";
+
 const YourFarms = () => {
   const [farms, setFarms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -44,7 +44,7 @@ const YourFarms = () => {
         }
       `}</style>
 
-      <FloatingElements />
+    
 
       <div className="relative z-10">
         <div className="sticky bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm shadow-md fix">
