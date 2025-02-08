@@ -3,7 +3,7 @@ from flask import current_app
 
 class User:
     @staticmethod
-    def create_user(fullname, phone_number, password):
+    def create_user(fullname, phone_number, password,islogin=False):
         mongo = current_app.db  # ✅ Correct way to access PyMongo in Flask
 
         if mongo["users"].find_one({"phone_number": phone_number}):
@@ -13,7 +13,8 @@ class User:
         user_id = mongo["users"].insert_one({
             "fullname": fullname,
             "phone_number": phone_number,
-            "password": hashed_password
+            "password": hashed_password,
+            "isFirstLogin": True 
         }).inserted_id
 
         return {"message": "User signed up successfully!", "user_id": str(user_id)}
