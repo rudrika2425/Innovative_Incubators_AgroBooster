@@ -75,7 +75,8 @@ def create_app():
             for place in response_data.get("results", []):
                 place_id = place.get("place_id")
                 if place_id:
-                    details_url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,formatted_address,formatted_phone_number,address_components&key={GOOGLE_PLACES_API_KEY}"
+                    # Include 'geometry' in the fields requested
+                    details_url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,formatted_address,formatted_phone_number,address_components,geometry&key={GOOGLE_PLACES_API_KEY}"
                     details_response = requests.get(details_url)
                     detailed_results.append(details_response.json().get("result", {}))
 
@@ -105,7 +106,8 @@ def create_app():
             for place in response_data.get("results", []):
                 place_id = place.get("place_id")
                 if place_id:
-                    details_url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,formatted_address,formatted_phone_number,address_components&key={GOOGLE_PLACES_API_KEY}"
+                    # Include 'geometry' in the fields requested
+                    details_url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,formatted_address,formatted_phone_number,address_components,geometry&key={GOOGLE_PLACES_API_KEY}"
                     details_response = requests.get(details_url)
                     detailed_results.append(details_response.json().get("result", {}))
 
