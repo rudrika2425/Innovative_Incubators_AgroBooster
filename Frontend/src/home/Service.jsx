@@ -4,31 +4,7 @@ import {
   Leaf, Wheat, Sun, Droplet, Clock, Trophy, AlertCircle, Users, Database,Star
 } from "lucide-react";
 
-const FloatingElements = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-    {[...Array(25)].map((_, i) => (
-      <div
-        key={i}
-        className="absolute animate-float opacity-20"
-        style={{
-          top: `${Math.random() * 100}%`,
-          left: `${Math.random() * 100}%`,
-          animation: `float ${8 + Math.random() * 4}s infinite ${Math.random() * 2}s`,
-        }}
-      >
-        {i % 4 === 0 ? (
-          <Leaf className="w-12 h-12 text-emerald-600" />
-        ) : i % 4 === 1 ? (
-          <Wheat className="w-12 h-12 text-amber-600" />
-        ) : i % 4 === 2 ? (
-          <Sun className="w-12 h-12 text-yellow-600" />
-        ) : (
-          <Droplet className="w-12 h-12 text-blue-600" />
-        )}
-      </div>
-    ))}
-  </div>
-);
+import FloatingElements from "../FlotingElement/FloatingElements";
 
 const SectionWrapper = ({ id, title, children }) => (
 

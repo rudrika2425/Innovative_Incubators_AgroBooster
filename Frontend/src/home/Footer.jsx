@@ -1,32 +1,9 @@
 import React from 'react';
 import { Leaf, Sprout, Sun } from "lucide-react";
 import { Link } from 'react-router-dom';
-
+import FloatingElements from "../FlotingElement/FloatingElements";
 const Footer = () => {
-  const FloatingElements = () => (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(50)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute animate-float opacity-40"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            animation: `float ${8 + Math.random() * 4}s infinite ${Math.random() * 2}s`,
-            zIndex: 0
-          }}
-        >
-          {i % 3 === 0 ? (
-            <Leaf className="w-8 h-8 text-emerald-600" />
-          ) : i % 3 === 1 ? (
-            <Sprout className="w-9 h-9 text-lime-600" />
-          ) : (
-            <Sun className="w-10 h-10 text-yellow-600" />
-          )}
-        </div>
-      ))}
-    </div>
-  );
+  
 
   return (
     <section className="relative bg-emerald-700 text-white py-5  overflow-hidden">

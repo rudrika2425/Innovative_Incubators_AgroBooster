@@ -59,11 +59,11 @@ const InfoDashboard = () => {
       </nav>
 
       {/* Main Content */}
-      <div className="relative flex-1">
-        <div className="absolute inset-0 bg-white bg-opacity-70"></div>
-        <div className="relative z-10">
-          <main className="mx-auto ">
-            
+      <div className="relative flex-1 min-h-screen">
+        <div className="absolute inset-0 bg-gradient-to-b from-yellow-50 to-yellow-100"></div>
+        <div className="relative z-10 flex justify-center items-center min-h-screen">
+          <main className="w-full max-w-6xl ">
+              
               <Outlet />
             
           </main>

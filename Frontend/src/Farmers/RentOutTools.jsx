@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useUser } from "../Context/UserContext";
 import { Sprout, Leaf, Tractor, Cloud, Sun } from "lucide-react";
-
+import FloatingElements from "../FlotingElement/FloatingElements";
 function RentOutTools() {
   const { user } = useUser();
   const [formData, setFormData] = useState({
@@ -26,34 +26,7 @@ function RentOutTools() {
     images: [],
   });
 
-  const FloatingElements = () => (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(20)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute animate-float opacity-30"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            animation: `float ${8 + Math.random() * 4}s infinite ${Math.random() * 2}s`,
-            zIndex: 0
-          }}
-        >
-          {i % 5 === 0 ? (
-            <Leaf className="w-6 h-6 text-emerald-600" />
-          ) : i % 5 === 1 ? (
-            <Sprout className="w-7 h-7 text-lime-600" />
-          ) : i % 5 === 2 ? (
-            <Sun className="w-8 h-8 text-yellow-600" />
-          ) : i % 5 === 3 ? (
-            <Tractor className="w-9 h-9 text-green-600" />
-          ) : (
-            <Cloud className="w-8 h-8 text-gray-600" />
-          )}
-        </div>
-      ))}
-    </div>
-  );
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -136,7 +109,7 @@ function RentOutTools() {
       `}</style>
 
       {/* Navigation Bar */}
-      <nav className="sticky top-0 z-20 w-full bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm shadow-md px-4 py-3">
+      <nav className="sticky top-0 z-20 w-full bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm shadow-md px-4 py-4">
         <div className="flex items-center gap-4">
           <div className="p-3 bg-yellow-100 rounded-full shadow-lg">
             <Tractor className="w-8 h-8 text-yellow-600" />

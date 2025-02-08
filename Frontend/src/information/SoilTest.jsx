@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMicrophone, faXmark, faLocationCrosshairs } from '@fortawesome/free-solid-svg-icons';
+import { faMicrophone, faXmark, faLocationCrosshairs, faMap, faDirections } from '@fortawesome/free-solid-svg-icons';
 import Test from './SoilAnalysis.jsx';
-
+import FloatingElements from "../FlotingElement/FloatingElements";
 const SoilTest = () => {
   const [selectedState, setSelectedState] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
@@ -13,46 +13,76 @@ const SoilTest = () => {
   const [isListeningDistrict, setIsListeningDistrict] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showMap, setShowMap] = useState(false);
+  const [selectedLab, setSelectedLab] = useState(null);
+  const YOUR_GOOGLE_MAPS_API_KEY = "AIzaSyAF5JeH_iVKoIf_eLWiSeVkANZsDO4Ertk";
 
-  // Function to get user's current location
   const getCurrentLocation = () => {
     setIsLoading(true);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          setUserLocation({ lat: latitude, lng: longitude });
-          await searchNearbyLabs(latitude, longitude);
+          const userLoc = { lat: latitude, lng: longitude };
+          console.log("User location set:", userLoc);
+          setUserLocation(userLoc);
+          try {
+            await searchNearbyLabs(latitude, longitude);
+          } catch (error) {
+            console.error("Error searching nearby labs:", error);
+            alert("Error finding nearby labs. Please try again.");
+          }
           setIsLoading(false);
         },
         (error) => {
-          console.error("Error getting location:", error);
+          console.error("Geolocation error:", error);
           setIsLoading(false);
-          alert("Unable to get your location. Please try entering your state and district manually.");
-        }
+          const defaultLocation = { lat: 20.5937, lng: 78.9629 };
+          setUserLocation(defaultLocation);
+          alert("Unable to get precise location. Using default location.");
+        },
+        { timeout: 10000, maximumAge: 0, enableHighAccuracy: true }
       );
     } else {
-      alert("Geolocation is not supported by your browser");
       setIsLoading(false);
+      alert("Geolocation is not supported by your browser");
     }
   };
 
-  // Function to search for nearby labs using Google Places API
   const searchNearbyLabs = async (latitude, longitude) => {
     try {
       const response = await fetch(`http://127.0.0.1:4000/api/search-labs?lat=${latitude}&lng=${longitude}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
+      console.log("API Response:", data);
       
-      // Transform the Google Places results into our lab format
-      const labResults = data.results.map(place => ({
-        state: place.address_components.find(comp => comp.types.includes("administrative_area_level_1"))?.long_name || "",
-        district: place.address_components.find(comp => comp.types.includes("administrative_area_level_2"))?.long_name || "",
-        labName: place.name,
-        address: place.formatted_address,
-        email: place.email || "Contact for email",
-        phone: place.formatted_phone_number || "N/A"
-      }));
+      if (!data.results || data.results.length === 0) {
+        alert("No labs found in this area. Please try a different location.");
+        return;
+      }
 
+      const labResults = data.results
+        .map(place => {
+          if (!place.geometry?.location) {
+            console.log("Lab missing location:", place);
+            return null;
+          }
+          return {
+            labName: place.name,
+            address: place.formatted_address,
+            email: place.email || "Contact for email",
+            phone: place.formatted_phone_number || "N/A",
+            location: {
+              lat: place.geometry.location.lat,
+              lng: place.geometry.location.lng
+            }
+          };
+        })
+        .filter(lab => lab !== null);
+
+      console.log("Processed lab results:", labResults);
       setFilteredLabs(labResults);
     } catch (error) {
       console.error("Error searching labs:", error);
@@ -60,7 +90,6 @@ const SoilTest = () => {
     }
   };
 
-  // Function to search labs by state and district
   const handleSearch = async () => {
     if (!selectedState && !selectedDistrict) {
       alert("Please enter either state, district, or use current location");
@@ -69,21 +98,57 @@ const SoilTest = () => {
 
     setIsLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:4000/api/search-labs-location?state=${selectedState}&district=${selectedDistrict}`);
-      const data = await response.json();
+      // First, geocode the entered location
+      const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+        `${selectedDistrict} ${selectedState} India`
+      )}&key=${YOUR_GOOGLE_MAPS_API_KEY}`;
       
-      const labResults = data.results.map(place => ({
-        state: place.address_components.find(comp => comp.types.includes("administrative_area_level_1"))?.long_name || "",
-        district: place.address_components.find(comp => comp.types.includes("administrative_area_level_2"))?.long_name || "",
-        labName: place.name,
-        address: place.formatted_address,
-        email: place.email || "Contact for email",
-        phone: place.formatted_phone_number || "N/A"
-      }));
+      const geocodingResponse = await fetch(geocodeUrl);
+      const geocodingData = await geocodingResponse.json();
+      
+      if (geocodingData.results && geocodingData.results[0]) {
+        const location = geocodingData.results[0].geometry.location;
+        console.log("Geocoded location:", location);
+        setUserLocation({ lat: location.lat, lng: location.lng });
+        
+        // Search for labs using the geocoded coordinates
+        const response = await fetch(
+          `http://127.0.0.1:4000/api/search-labs-location?state=${selectedState}&district=${selectedDistrict}`
+        );
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log("Lab search response:", data);
 
-      setFilteredLabs(labResults);
+        const labResults = data.results
+          .map(place => {
+            if (!place.geometry?.location) {
+              console.log("Lab missing location:", place);
+              return null;
+            }
+            return {
+              labName: place.name,
+              address: place.formatted_address,
+              email: place.email || "Contact for email",
+              phone: place.formatted_phone_number || "N/A",
+              location: {
+                lat: place.geometry.location.lat,
+                lng: place.geometry.location.lng
+              }
+            };
+          })
+          .filter(lab => lab !== null);
+
+        console.log("Processed lab results:", labResults);
+        setFilteredLabs(labResults);
+      } else {
+        alert("Location not found. Please check the entered state and district.");
+      }
     } catch (error) {
-      console.error("Error searching labs:", error);
+      console.error("Error during search:", error);
       alert("Error searching for labs. Please try again.");
     } finally {
       setIsLoading(false);
@@ -91,37 +156,216 @@ const SoilTest = () => {
   };
 
   const handleVoiceInput = (field) => {
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = selectedLanguage;
-    recognition.start();
-    
-    if (field === "state") {
-      setIsListeningState(true);
-      recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        setSelectedState(transcript);
-      };
-    } else if (field === "district") {
-      setIsListeningDistrict(true);
-      recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        setSelectedDistrict(transcript);
-      };
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      alert("Speech recognition is not supported in your browser");
+      return;
     }
 
-    setLanguageLocked(true);
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = selectedLanguage;
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+      if (field === "state") {
+        setIsListeningState(true);
+      } else {
+        setIsListeningDistrict(true);
+      }
+    };
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      if (field === "state") {
+        setSelectedState(transcript);
+      } else {
+        setSelectedDistrict(transcript);
+      }
+    };
+
+    recognition.onerror = (event) => {
+      console.error("Speech recognition error:", event.error);
+      alert("Error with voice input. Please try again or type manually.");
+    };
 
     recognition.onend = () => {
       if (field === "state") {
         setIsListeningState(false);
-      } else if (field === "district") {
+      } else {
         setIsListeningDistrict(false);
       }
     };
+
+    recognition.start();
+    setLanguageLocked(true);
+  };
+
+  const handleMapView = (lab) => {
+    console.log("handleMapView called with lab:", lab);
+    if (!lab.location) {
+      alert("Location information for this lab is not available.");
+      return;
+    }
+
+    if (!userLocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const newUserLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          console.log("Setting user location:", newUserLocation);
+          setUserLocation(newUserLocation);
+          setSelectedLab(lab);
+          setShowMap(true);
+        },
+        (error) => {
+          console.error("Error getting user location:", error);
+          setSelectedLab(lab);
+          setShowMap(true);
+        }
+      );
+    } else {
+      console.log("Using existing user location:", userLocation);
+      setSelectedLab(lab);
+      setShowMap(true);
+    }
+  };
+
+  const MapView = ({ userLocation, labLocation, onClose }) => {
+    useEffect(() => {
+      let map, directionsService, directionsRenderer;
+      console.log("MapView mounted with:", { userLocation, labLocation });
+
+      const loadMap = async () => {
+        try {
+          // Load Google Maps script
+          await new Promise((resolve, reject) => {
+            if (window.google && window.google.maps) {
+              resolve();
+              return;
+            }
+
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${YOUR_GOOGLE_MAPS_API_KEY}`;
+            script.async = true;
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+          });
+
+          const mapElement = document.getElementById('map');
+          if (!mapElement) {
+            console.error("Map element not found");
+            return;
+          }
+
+          // Initialize map
+          map = new google.maps.Map(mapElement, {
+            zoom: 12,
+            center: userLocation || labLocation,
+            mapTypeControl: true,
+            fullscreenControl: true,
+            streetViewControl: true,
+            zoomControl: true
+          });
+
+          // Initialize directions service and renderer
+          directionsService = new google.maps.DirectionsService();
+          directionsRenderer = new google.maps.DirectionsRenderer({
+            map: map,
+            suppressMarkers: false,
+            preserveViewport: false
+          });
+
+          if (!userLocation) {
+            // Show only lab location if user location is not available
+            console.log("Showing only lab location");
+            new google.maps.Marker({
+              position: labLocation,
+              map: map,
+              title: selectedLab?.labName,
+              animation: google.maps.Animation.DROP
+            });
+          } else {
+            // Calculate and display route
+            console.log("Calculating route");
+            const request = {
+              origin: userLocation,
+              destination: labLocation,
+              travelMode: google.maps.TravelMode.DRIVING,
+              optimizeWaypoints: true
+            };
+
+            directionsService.route(request, (result, status) => {
+              if (status === google.maps.DirectionsStatus.OK) {
+                console.log("Route calculated successfully");
+                directionsRenderer.setDirections(result);
+              } else {
+                console.error('Directions request failed:', status);
+                alert("Unable to get directions. Showing locations only.");
+                
+                // Add markers if directions fail
+                new google.maps.Marker({
+                  position: userLocation,
+                  map: map,
+                  title: "Your Location",
+                  animation: google.maps.Animation.DROP
+                });
+                new google.maps.Marker({
+                  position: labLocation,
+                  map: map,
+                  title: selectedLab?.labName,
+                  animation: google.maps.Animation.DROP
+                });
+
+                // Fit bounds to show both markers
+                const bounds = new google.maps.LatLngBounds();
+                bounds.extend(userLocation);
+                bounds.extend(labLocation);
+                map.fitBounds(bounds);
+              }
+            });
+          }
+        } catch (error) {
+          console.error("Error loading map:", error);
+          alert("Error loading map. Please try again.");
+        }
+      };
+
+      loadMap();
+
+      return () => {
+        if (directionsRenderer) {
+          directionsRenderer.setMap(null);
+        }
+      };
+    }, [userLocation, labLocation]);
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-lg w-full max-w-4xl">
+          <div className="p-4 border-b flex justify-between items-center">
+            <h3 className="text-xl font-bold">
+              {userLocation ? 'Directions to ' : 'Location of '}{selectedLab?.labName}
+            </h3>
+            <button 
+              onClick={onClose}
+              className="text-gray-500 hover:text-gray-700"
+            >
+              <FontAwesomeIcon icon={faXmark} size="lg" />
+            </button>
+          </div>
+          <div id="map" className="w-full h-[500px] rounded-b-lg"></div>
+        </div>
+      </div>
+    );
   };
 
   return (
-    <div className="bg-white p-4 md:p-6 rounded-lg shadow-lg">
+    <div className="bg-gradient-to-b from-emerald-50 to-emerald-100  p-4 md:p-6 rounded-lg shadow-lg">
+      <FloatingElements/>
       {/* Header Section */}
       <div className="space-y-4 md:space-y-6">
         <h2 className="text-2xl md:text-4xl font-bold text-green-600">
@@ -150,7 +394,7 @@ const SoilTest = () => {
 
       {/* Search Section */}
       <div className="mt-6 space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* State Input */}
           <div>
             <label htmlFor="stateInput" className="block font-semibold mb-2">
@@ -220,36 +464,42 @@ const SoilTest = () => {
         </div>
       </div>
 
-      {/* Results Table */}
+      {/* Results Section */}
       {filteredLabs.length > 0 && (
-        <div className="mt-6 overflow-x-auto">
-          <table className="w-full min-w-[640px]">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 text-left bg-green-100">State</th>
-                <th className="px-4 py-2 text-left bg-green-100">District</th>
-                <th className="px-4 py-2 text-left bg-green-100">Lab Name</th>
-                <th className="px-4 py-2 text-left bg-green-100">Address</th>
-                <th className="px-4 py-2 text-left bg-green-100">Contact</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredLabs.map((lab, index) => (
-                <tr key={index} className="hover:bg-gray-100">
-                  <td className="px-4 py-2">{lab.state}</td>
-                  <td className="px-4 py-2">{lab.district}</td>
-                  <td className="px-4 py-2">{lab.labName}</td>
-                  <td className="px-4 py-2">{lab.address}</td>
-                  <td className="px-4 py-2">
-                    {lab.email}<br />
-                    {lab.phone}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredLabs.map((lab, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-green-600 mb-2">{lab.labName}</h3>
+                <div className="space-y-2 text-gray-600">
+                  <p className="text-sm">{lab.address}</p>
+                  <div className="border-t pt-2">
+                    <p className="text-sm">{lab.email}</p>
+                    <p className="text-sm">{lab.phone}</p>
+                  </div>
+                </div>
+                <div className="mt-4 flex justify-end">
+                  <button
+                    onClick={() => handleMapView(lab)}
+                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
+                  >
+                    <FontAwesomeIcon icon={faDirections} />
+                    <span>Get Directions</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       )}
+
+{showMap && selectedLab && (
+  <MapView
+    userLocation={userLocation}
+    labLocation={selectedLab.location} // Ensure this is correct
+    onClose={() => setShowMap(false)}
+  />
+)}
 
       <Test />
     </div>

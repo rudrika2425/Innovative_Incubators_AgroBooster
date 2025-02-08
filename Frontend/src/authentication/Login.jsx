@@ -1,37 +1,9 @@
 import React, { useState } from "react";
 import { useUser } from "../Context/UserContext";
-import { Phone, Lock, Sprout, Leaf, Sun, Cloud, Tractor } from "lucide-react";
+import { Phone, Lock, Sprout } from "lucide-react";
 import loginImage from "../assets/login.jpg";
 import { useNavigate } from "react-router-dom";
-
-const FloatingElements = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {[...Array(20)].map((_, i) => (
-      <div
-        key={i}
-        className="absolute animate-float opacity-40"
-        style={{
-          top: `${Math.random() * 100}%`,
-          left: `${Math.random() * 100}%`,
-          animation: `float ${8 + Math.random() * 4}s infinite ${Math.random() * 2}s`,
-          zIndex: 0
-        }}
-      >
-        {i % 5 === 0 ? (
-          <Leaf className="w-8 h-8 text-yellow-600" />
-        ) : i % 5 === 1 ? (
-          <Sprout className="w-9 h-9 text-lime-600" />
-        ) : i % 5 === 2 ? (
-          <Sun className="w-10 h-10 text-yellow-600" />
-        ) : i % 5 === 3 ? (
-          <Tractor className="w-11 h-11 text-green-600" />
-        ) : (
-          <Cloud className="w-10 h-10 text-gray-600" />
-        )}
-      </div>
-    ))}
-  </div>
-);
+import FloatingElements from "../FlotingElement/FloatingElements"; // Import here
 
 const Login = () => {
   const { setUser } = useUser();
@@ -74,16 +46,27 @@ const Login = () => {
         throw new Error(data.error || "Login failed");
       }
 
+      console.log("Login response data:", data);
+
       const userData = {
         fullname: data.user.fullname,
         id: data.user.id,
         phone_number: data.user.phone_number,
+        isFirstLogin: data.user.isFirstLogin ?? true,
       };
+
       setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
 
+      if (userData.isFirstLogin === true) {
+        window.location.href = "/guide";
+      } else {
+        window.location.href = "/farmerdashboard";
+      }
+
       const from = location.state?.from?.pathname || "/guide";
       navigate(from, { replace: true });
+
     } catch (err) {
       setError(err.message);
     } finally {
@@ -100,11 +83,10 @@ const Login = () => {
         }
       `}</style>
 
-      <FloatingElements />
+      <FloatingElements /> {/* Use the separated component here */}
 
       <div className="container mx-auto px-4 h-screen flex items-center justify-center relative z-10">
         <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden w-full max-w-6xl flex">
-          {/* Left Panel - Login Form */}
           <div className="w-full lg:w-1/2 p-8 lg:p-12">
             <div className="flex items-center gap-3 mb-5">
               <div className="inline-block p-4 bg-yellow-600 rounded-full mb-2">
@@ -173,14 +155,9 @@ const Login = () => {
             </form>
           </div>
 
-          {/* Right Panel - Decorative */}
           <div className="hidden lg:flex lg:w-1/2 relative flex-col items-center justify-start">
             <div className="absolute inset-0">
-              <img
-                src={loginImage}
-                alt="Farmer in field"
-                className="object-cover w-full h-full"
-              />
+              <img src={loginImage} alt="Farmer in field" className="object-cover w-full h-full" />
               <div className="absolute inset-0 bg-gradient-to-t from-yellow-900/90 to-transparent" />
             </div>
           </div>
