@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMicrophone, faXmark } from '@fortawesome/free-solid-svg-icons';
-import labData from "./../LabData.js";
+import { faMicrophone, faXmark, faLocationCrosshairs } from '@fortawesome/free-solid-svg-icons';
 import Test from './SoilAnalysis.jsx';
 
 const SoilTest = () => {
@@ -10,18 +9,85 @@ const SoilTest = () => {
   const [filteredLabs, setFilteredLabs] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState("en-IN");
   const [languageLocked, setLanguageLocked] = useState(false);
-  const [isListening, setIsListening] = useState(false);
   const [isListeningState, setIsListeningState] = useState(false);
   const [isListeningDistrict, setIsListeningDistrict] = useState(false);
-  
+  const [userLocation, setUserLocation] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSearch = () => {
-    const results = labData.filter(
-      (lab) =>
-        lab.state.toLowerCase().includes(selectedState.toLowerCase()) &&
-        lab.district.toLowerCase().includes(selectedDistrict.toLowerCase())
-    );
-    setFilteredLabs(results);
+  // Function to get user's current location
+  const getCurrentLocation = () => {
+    setIsLoading(true);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          setUserLocation({ lat: latitude, lng: longitude });
+          await searchNearbyLabs(latitude, longitude);
+          setIsLoading(false);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          setIsLoading(false);
+          alert("Unable to get your location. Please try entering your state and district manually.");
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by your browser");
+      setIsLoading(false);
+    }
+  };
+
+  // Function to search for nearby labs using Google Places API
+  const searchNearbyLabs = async (latitude, longitude) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:4000/api/search-labs?lat=${latitude}&lng=${longitude}`);
+      const data = await response.json();
+      
+      // Transform the Google Places results into our lab format
+      const labResults = data.results.map(place => ({
+        state: place.address_components.find(comp => comp.types.includes("administrative_area_level_1"))?.long_name || "",
+        district: place.address_components.find(comp => comp.types.includes("administrative_area_level_2"))?.long_name || "",
+        labName: place.name,
+        address: place.formatted_address,
+        email: place.email || "Contact for email",
+        phone: place.formatted_phone_number || "N/A"
+      }));
+
+      setFilteredLabs(labResults);
+    } catch (error) {
+      console.error("Error searching labs:", error);
+      alert("Error searching for nearby labs. Please try again.");
+    }
+  };
+
+  // Function to search labs by state and district
+  const handleSearch = async () => {
+    if (!selectedState && !selectedDistrict) {
+      alert("Please enter either state, district, or use current location");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await fetch(`http://127.0.0.1:4000/api/search-labs-location?state=${selectedState}&district=${selectedDistrict}`);
+      const data = await response.json();
+      
+      const labResults = data.results.map(place => ({
+        state: place.address_components.find(comp => comp.types.includes("administrative_area_level_1"))?.long_name || "",
+        district: place.address_components.find(comp => comp.types.includes("administrative_area_level_2"))?.long_name || "",
+        labName: place.name,
+        address: place.formatted_address,
+        email: place.email || "Contact for email",
+        phone: place.formatted_phone_number || "N/A"
+      }));
+
+      setFilteredLabs(labResults);
+    } catch (error) {
+      console.error("Error searching labs:", error);
+      alert("Error searching for labs. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleVoiceInput = (field) => {
@@ -133,13 +199,22 @@ const SoilTest = () => {
             </div>
           </div>
 
-          {/* Search Button */}
-          <div className="flex items-end">
+          {/* Search Buttons */}
+          <div className="flex items-end gap-2">
             <button
               onClick={handleSearch}
-              className="w-full md:w-auto bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition ml-65"
+              disabled={isLoading}
+              className="flex-1 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
             >
-              Search
+              {isLoading ? "Searching..." : "Search"}
+            </button>
+            <button
+              onClick={getCurrentLocation}
+              disabled={isLoading}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center gap-2"
+            >
+              <FontAwesomeIcon icon={faLocationCrosshairs} />
+              <span className="hidden md:inline">Use Location</span>
             </button>
           </div>
         </div>
@@ -155,7 +230,7 @@ const SoilTest = () => {
                 <th className="px-4 py-2 text-left bg-green-100">District</th>
                 <th className="px-4 py-2 text-left bg-green-100">Lab Name</th>
                 <th className="px-4 py-2 text-left bg-green-100">Address</th>
-                <th className="px-4 py-2 text-left bg-green-100">Email</th>
+                <th className="px-4 py-2 text-left bg-green-100">Contact</th>
               </tr>
             </thead>
             <tbody>
@@ -165,7 +240,10 @@ const SoilTest = () => {
                   <td className="px-4 py-2">{lab.district}</td>
                   <td className="px-4 py-2">{lab.labName}</td>
                   <td className="px-4 py-2">{lab.address}</td>
-                  <td className="px-4 py-2">{lab.email}</td>
+                  <td className="px-4 py-2">
+                    {lab.email}<br />
+                    {lab.phone}
+                  </td>
                 </tr>
               ))}
             </tbody>
