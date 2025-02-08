@@ -3,16 +3,23 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { WiDaySunny } from 'react-icons/wi';  // Weather icon
 import { BsCalendar } from 'react-icons/bs'; // Calendar icon
+import { useNavigate } from 'react-router-dom';
 
 const FarmDetails = () => {
-  const { farmId } = useParams();  // Get the farmId from the URL
+  const { farmId } = useParams();   
   const [farm, setFarm] = useState(null);
   const [error, setError] = useState(null);
+ 
+  const navigate=useNavigate();
+
+ const handleCalendar=()=>{
+        navigate(`/farmerdashboard/farm-details/${farmId}/calendar`)
+  }
 
   useEffect(() => {
     const fetchFarmDetails = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:4000/farmer_data/farm/${farmId}`);  // Call the Flask API
+        const response = await axios.get(`http://127.0.0.1:4000/farmer_data/farm/${farmId}`);   
         setFarm(response.data);
       } catch (err) {
         setError("Failed to fetch farm details.");
@@ -32,7 +39,7 @@ const FarmDetails = () => {
         <h1 className="text-xl font-bold">Farm Dashboard</h1>
         <div className="flex space-x-6 text-2xl">
           <WiDaySunny className="cursor-pointer" title="Weather Info" />
-          <BsCalendar className="cursor-pointer" title="Calendar" />
+          <BsCalendar className="cursor-pointer" title="Calendar"  onClick={handleCalendar}/>
         </div>
       </nav>
 
