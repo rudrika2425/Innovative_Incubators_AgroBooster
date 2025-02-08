@@ -4,18 +4,20 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap styles
-import "./fullcalendar.css"; // Create a custom CSS file for additional styling
+import { useParams } from "react-router-dom";
+import "./calendar.css"; // Custom CSS for additional styling
 
 const CropCalendar = () => {
   const [cropSchedule, setCropSchedule] = useState([]);
   const [modalShow, setModalShow] = useState(false);
   const [currentTask, setCurrentTask] = useState(null);
+  const { farmId } = useParams();
 
   // Fetch crop schedule data from the Flask backend
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
-        const response = await fetch("http://localhost:5000/generate_schedule"); // Flask API URL
+        const response = await fetch(`http://127.0.0.1:4000/calendar/generate_schedule/${farmId}`);
         const data = await response.json();
         console.log(data);
         setCropSchedule(data);
@@ -25,14 +27,16 @@ const CropCalendar = () => {
     };
 
     fetchSchedule();
-  }, []);
+  }, [farmId]);
 
   // Map the crop schedule to FullCalendar events
   const events = cropSchedule.map((task) => ({
-    title: `${task.title}`,
+    title: task.title,
     start: new Date(task.start_date).toISOString(),
     end: new Date(task.end_date).toISOString(),
     description: task.description,
+    sustainableResource: task.sustainable_resource,
+    taskDescription: task.task_description,
     taskDetails: task,
   }));
 
@@ -55,19 +59,7 @@ const CropCalendar = () => {
           right: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
         eventColor="#28a745" // Green color for events
-        eventContent={(eventInfo) => {
-          return (
-            <div className="event-title">
-              <strong>{eventInfo.event.title}</strong>
-            </div>
-          );
-        }}
         eventClick={handleEventClick}
-        eventRender={(info) => {
-          // Add hover effects to event blocks
-          const eventEl = info.el;
-          eventEl.classList.add("hoverable-event");
-        }}
       />
 
       {/* Modal to display task details */}
@@ -76,10 +68,11 @@ const CropCalendar = () => {
           <Modal.Title>{currentTask?.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p><strong>Description:</strong> {currentTask?.desc}</p>
+          <p><strong>Description:</strong> {currentTask?.description}</p>
+          <p><strong>Task Description:</strong> {currentTask?.task_description}</p>
           <p><strong>Start Date:</strong> {currentTask?.start_date}</p>
           <p><strong>End Date:</strong> {currentTask?.end_date}</p>
-          <p><strong>Additional Info:</strong> {currentTask?.additional_info}</p>
+          <p><strong>Sustainable Resources:</strong> {currentTask?.sustainable_resource}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setModalShow(false)}>

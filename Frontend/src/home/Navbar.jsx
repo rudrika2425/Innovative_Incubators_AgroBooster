@@ -1,10 +1,10 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import LanguageSelector from "../LanguageChange/LanguageSelector";
-import { useTranslation } from "react-i18next";
+import LanguageDropdown from "../languageTranslation/LanguageToggle";
+import { TranslatedText } from "../languageTranslation/TranslatedText";
 
 function Navbar() {
-  const { t } = useTranslation();
+  
 
   return (
     <nav className="bg-white sticky bg-opacity-100 fixed top-0 left-0 w-full z-50 shadow-md">
@@ -13,7 +13,7 @@ function Navbar() {
           to="/" 
           className="cursor-pointer font-bold text-3xl"
         >
-          {t("Agro")}<span className="text-amber-600">{t("Booster")}</span>
+          <TranslatedText text="AgroBooster"/>
         </Link>
 
         <ul className="hidden lg:flex space-x-8 mr-10">
@@ -22,7 +22,7 @@ function Navbar() {
               to="/"
               className="cursor-pointer font-semibold text-lg hover:text-amber-600"
             >
-              {t("home")}
+              <TranslatedText text="Home"/>
             </NavLink>
           </li>
           <li>
@@ -30,7 +30,7 @@ function Navbar() {
               to="/about"
               className="cursor-pointer font-semibold text-lg hover:text-amber-600"
             >
-              {t("about")}
+              <TranslatedText text="About Us"/>
             </NavLink>
           </li>
           <li>
@@ -38,7 +38,7 @@ function Navbar() {
               to="/services"
               className="cursor-pointer font-semibold text-lg hover:text-amber-600"
             >
-              {t("services")}
+              <TranslatedText text="Services"/>
             </NavLink>
           </li>
           <li>
@@ -46,12 +46,12 @@ function Navbar() {
               to="/contact"
               className="cursor-pointer font-semibold text-lg hover:text-amber-600"
             >
-              {t("contact")}
+              <TranslatedText text="Contact Us"/>
             </NavLink>
           </li>
         </ul>
 
-        <LanguageSelector />
+        <LanguageDropdown />
       </div>
     </nav>
   );
