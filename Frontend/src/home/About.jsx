@@ -33,7 +33,7 @@ const AgricultureInnovationPage = ({ id }) => {
     
 
   return (
-    <div className="relative bg-gradient-to-b from-yellow-50 to-yellow-100 text-emerald-900">
+    <div className="relative bg-gradient-to-b from-yellow-100 to-yellow-200 text-emerald-900">
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -43,7 +43,7 @@ const AgricultureInnovationPage = ({ id }) => {
 
       <FloatingElements />
    
-    <div className="bg-gradient-to-b from-yellow-50 to-yellow-100 text-emerald-900">
+    <div className="bg-gradient-to-b from-yellow-100 to-yellow-200 text-emerald-900">
       
       {/* About Agriculture Section */}
       <section className="container  px-6 pt-24 pb-5">

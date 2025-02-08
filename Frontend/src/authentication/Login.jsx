@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useUser } from "../Context/UserContext";
 import { Phone, Lock, Sprout, Leaf, Sun, Cloud, Tractor } from "lucide-react";
 import loginImage from "../assets/login.jpg";
+import { useNavigate } from "react-router-dom";
 
 const FloatingElements = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -37,6 +38,7 @@ const Login = () => {
   const [formData, setFormData] = useState({ phoneNumber: "+91", password: "" });
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     if (e.target.name === "phoneNumber") {
@@ -80,7 +82,8 @@ const Login = () => {
       setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
 
-      window.location.href = "/guide";
+      const from = location.state?.from?.pathname || "/guide";
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.message);
     } finally {

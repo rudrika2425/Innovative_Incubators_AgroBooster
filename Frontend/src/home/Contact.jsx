@@ -80,7 +80,7 @@ const handleSubmit = async (e) => {
 
 
   return (
-    <div id={id} className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100 py-20">
+    <div id={id} className="relative min-h-screen bg-gradient-to-b from-yellow-100 to-yellow-200 py-20">
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0) rotate(0deg); }
