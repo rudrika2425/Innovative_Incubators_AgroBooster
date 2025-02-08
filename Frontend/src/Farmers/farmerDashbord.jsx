@@ -1,8 +1,14 @@
 import React from 'react';
 import { Sidebar } from './Sidebar';
 import { Outlet } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const FarmerDashboard = () => {
+  const location = useLocation();
+  const cropData = location.state?.crop;
+  console.log("Received crop data:", cropData);
+
+
   return (
     <div className="min-h-screen bg-gray-100">
       <Sidebar />
