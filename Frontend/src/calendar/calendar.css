@@ -11,7 +11,6 @@
     text-align: center;
     font-size: 32px;
     font-weight: bold;
-    color: #28a745;
     margin-bottom: 20px;
   }
   
@@ -44,5 +43,25 @@
   button.close {
     font-size: 24px;
     color: #333;
+  }
+  
+  .event-aqua-pump {
+    background-color: #007bff; /* Blue */
+    color: white;
+  }
+  
+  .event-power-strength {
+    background-color: #28a745; /* Green */
+    color: white;
+  }
+  
+  .event-pilates {
+    background-color: #ffc107; /* Yellow */
+    color: black;
+  }
+  
+  .event-default {
+    background-color: #6c757d; /* Gray */
+    color: white;
   }
   
