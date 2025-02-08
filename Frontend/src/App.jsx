@@ -26,6 +26,7 @@ import Navbar from "./home/Navbar";
 import Hero from "./home/Hero";
 import Footer from "./home/Footer";
 import FarmDetails from "./Farmers/FarmDetails"
+import Calendar from "./calendar/calendar"
 
 
 
@@ -88,6 +89,7 @@ function App() {
               <Route path="weather-forecast" element={<WeatherForecast />} />
               <Route path="description" element={<DescriptionPage />} />
               <Route path="farm-details/:farmId" element={<FarmDetails />} />
+              <Route path="farm-details/:farmId/calendar" element={<Calendar />} />
             </Route>
 
             <Route path="/farmer-Information" element={
