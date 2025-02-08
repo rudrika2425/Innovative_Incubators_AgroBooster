@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom
 import { LanguageProvider } from "./Context/LanguageContext";
 import { UserProvider } from "./Context/UserContext";
 
-import Dashboard from "./home/Dashboard";
-
 import Login from "./authentication/Login";
 import Signup from "./authentication/Signup";
 import SoilTestReportUploader from "./information/SoilAnalysis";
@@ -51,7 +49,7 @@ function App() {
         <Router>
           <Routes>
 
-            <Route path="/" element={<Dashboard />} />
+            
 
             <Route element={<LayoutWithNavbar />}>
               <Route path="/" element={<Hero />} />
@@ -59,9 +57,8 @@ function App() {
               <Route path="/services" element={<Service />} />
               <Route path="/contact" element={<Contact />} />
             </Route>
-            <Route path="/rent" element={<Rent />} />
-            <Route path="/receive" element={<RentProduct />} />
-            <Route path="/description" element={<Description />} />
+            
+            
 
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
