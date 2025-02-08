@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Sprout, Leaf, Tractor, Cloud, Sun } from "lucide-react";
-import FloatingElements from "../FlotingElement/FloatingElements";
+
 const BorrowTools = () => {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -41,7 +41,7 @@ const BorrowTools = () => {
         }
       `}</style>
 
-      <FloatingElements />
+  
 
       <div className="relative z-10">
         {/* Header and Dropdown Row */}

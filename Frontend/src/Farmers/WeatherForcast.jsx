@@ -27,28 +27,7 @@ const WeatherForecast = () => {
         fetchWeather();
     }, []);
 
-    const FloatingElements = () => (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(15)].map((_, i) => (
-                <div
-                    key={i}
-                    className="absolute animate-float opacity-30"
-                    style={{
-                        top: `${Math.random() * 100}%`,
-                        left: `${Math.random() * 100}%`,
-                        animation: `float ${8 + Math.random() * 4}s infinite ${Math.random() * 2}s`,
-                        zIndex: 0
-                    }}
-                >
-                    {i % 2 === 0 ? (
-                        <Leaf className="w-8 h-8 text-emerald-600" />
-                    ) : (
-                        <Sprout className="w-9 h-9 text-lime-600" />
-                    )}
-                </div>
-            ))}
-        </div>
-    );
+   
 
     const kelvinToCelsius = (kelvin) => Math.round(kelvin - 273.15);
 
@@ -132,7 +111,7 @@ const WeatherForecast = () => {
         }
       `}</style>
 
-            <FloatingElements />
+         
 
             <div className="relative z-10 space-y-6">
                 <h1 className="text-4xl font-extrabold text-yellow-900 text-center mb-8">

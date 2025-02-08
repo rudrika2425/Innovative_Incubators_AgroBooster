@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Sprout, Leaf, Sun, Cloud, Tractor } from "lucide-react";
-import FloatingElements from "../FlotingElement/FloatingElements";
+
 const DescriptionPage = () => {
   const { state } = useLocation();
   const { product } = state;
@@ -15,7 +15,7 @@ const DescriptionPage = () => {
       <div className="relative z-10 container mx-auto px-6 py-4 bg-gradient-to-b from-emerald-50 to-emerald-100 backdrop-blur-sm shadow-lg rounded-lg flex flex-col lg:flex-row items-center gap-6 w-full h-[90vh] overflow-hidden">
         
         {/* Floating Background Icons */}
-        <FloatingElements />
+        
 
         {/* Left Section - Image */}
         <div className="flex flex-col items-center w-full lg:w-1/3">

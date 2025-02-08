@@ -1,7 +1,7 @@
 import React from 'react';
 import { Leaf, Sprout, Sun } from "lucide-react";
 import { Link } from 'react-router-dom';
-import FloatingElements from "../FlotingElement/FloatingElements";
+
 const Footer = () => {
   
 
@@ -14,7 +14,7 @@ const Footer = () => {
         }
       `}</style>
       
-      <FloatingElements />
+     
       
       <div className="container mx-auto px-6 text-center relative z-10">
         <h2 className="text-5xl font-bold mb-8">
