@@ -1,19 +1,7 @@
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMicrophone, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import {
-  Wheat,
-  Sprout,
-  Leaf,
-  Sun,
-  Cloud,
-  Droplet,
-  Tractor,
-  Target,
-  Globe,
-  ArrowUpRight,
-  Brain,
-} from "lucide-react";
+import {Wheat,Sprout,Leaf,Sun,Cloud,Droplet,Tractor,Target,Globe,Brain} from "lucide-react";
 
 const FarmerInput = () => {
   const [formData, setFormData] = useState({
