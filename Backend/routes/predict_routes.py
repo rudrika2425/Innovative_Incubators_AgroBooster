@@ -24,7 +24,7 @@ def generate_input_prompt(farmer_data):
     return f"""
     Using the provided Soil and Environmental Analysis Report, predict suitable crops based on soil properties, climate, and official crop data.
 
-    *Farm Details:*
+    Farm Details:
     - Farm Name: {farm_input.get('farmName')}
     - Land Area: {farm_input.get('landArea')} acres
     - Farming Tools: {', '.join(farm_input.get('farmingTools', []))}
@@ -38,10 +38,10 @@ def generate_input_prompt(farmer_data):
     - Tropical Zone: {location.get('tropical_zone')}
     - Crop Season: {farm_input.get('cropSeason')}
 
-    *Soil Report:*
+    Soil Report:
     {farmer_data.get('soilAnalysisReport')}
 
-    *Weather Data:*
+    Weather Data:
     - Cloud Coverage: {weather.get('cloud_coverage')}%
     - Humidity: {weather.get('humidity')}%
     - Temperature: {weather.get('temperature')} K
@@ -51,7 +51,7 @@ def generate_input_prompt(farmer_data):
     - Feels Like: {weather.get('feels_like')} K
     - Pressure: {weather.get('pressure')} hPa
 
-    *Instructions for Crop Prediction:*
+    Instructions for Crop Prediction:
     1. Convert all soil and environmental parameters into appropriate agricultural measurement units internally.
     2. Compare the soil and environmental conditions with crop suitability databases (e.g., USDA, FAO).
     3. Identify and categorize suitable crops into:
@@ -63,12 +63,12 @@ def generate_input_prompt(farmer_data):
        - Spices and Aromatic Crops
        - Medicinal Plants
 
-    *Output Format (Strictly Follow This Format):*
-    - *Crop Type*: [Category]
-      - *Common Name*: [Name]
-      - *Hindi Name*: [Name in Hindi]
-      - *Variety*: [Variety provide list of 2 to 3 varities]
-      - *Description*: (what this crop is about)
+    Output Format (Strictly Follow This Format):
+    - Crop Type: [Category]
+      - Common Name: [Name]
+      - Hindi Name: [Name in Hindi]
+      - Variety: [Variety provide list of 2 to 3 varities]
+      - Description: (what this crop is about)
       - Brief (Provide an overview of this crop, including its optimal soil and climate conditions, ideal growth duration (from sowing to harvest, specifying the months), fertilizer and irrigation needs, and any common diseases it may face. This detailed information will help farmers evaluate whether the crop is suitable for their local environment and farming practices throughout the year.)
       - please suggest atleast 8 crops always.
       -every above data given should me personalised to the input given by the farmer
