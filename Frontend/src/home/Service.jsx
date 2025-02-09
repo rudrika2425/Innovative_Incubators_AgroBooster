@@ -26,7 +26,7 @@ const SectionWrapper = ({ id, title, children }) => (
       <h2 className="text-6xl font-extrabold text-emerald-900 text-center mb-16 tracking-tight">
         <TranslatedText text={title} />
         <div className="text-xl font-normal text-emerald-700 mt-4 ml-5 mr-5">
-          <TranslatedText text="Empowering farmers with cutting-edge agricultural technology, we bring innovation to the fields. Our solutions enhance productivity, reduce waste, and promote sustainable farming. By integrating smart techniques and bioenzymes, we ensure healthier crops and soil. Together, we are shaping the future of agriculture for a greener tomorrow." />
+          <TranslatedText text="Empowering farmers with cutting-edge agricultural technology, we bring innovation to the fields. Our solutions enhance productivity, reduce waste, and promote sustainable farming. By integrating smart techniques and bioenzymes, we ensure healthier crops and soil. Together, we are shaping the future of agriculture for a emeralder tomorrow." />
         </div>
       </h2>
       {children}

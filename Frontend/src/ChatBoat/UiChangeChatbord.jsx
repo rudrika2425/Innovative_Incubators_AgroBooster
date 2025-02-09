@@ -219,7 +219,7 @@
 //             />
 //             <button
 //               onClick={handleFileUpload}
-//               className="bg-green-500 text-white p-2 rounded-lg w-full mt-2 hover:bg-green-600"
+//               className="bg-emerald-500 text-white p-2 rounded-lg w-full mt-2 hover:bg-emerald-600"
 //             >
 //               {currentLanguage === 'en' ? 'Upload Image' : 'छवि अपलोड करें'}
 //             </button>

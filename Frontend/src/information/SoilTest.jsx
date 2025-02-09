@@ -16,6 +16,7 @@ const SoilTest = () => {
   const [showMap, setShowMap] = useState(false);
   const [selectedLab, setSelectedLab] = useState(null);
   const YOUR_GOOGLE_MAPS_API_KEY = "AIzaSyAF5JeH_iVKoIf_eLWiSeVkANZsDO4Ertk";
+  
 
   const getCurrentLocation = () => {
     setIsLoading(true);
@@ -235,140 +236,135 @@ const SoilTest = () => {
 
   const MapView = ({ userLocation, labLocation, onClose }) => {
     useEffect(() => {
-      let map, directionsService, directionsRenderer;
-      console.log("MapView mounted with:", { userLocation, labLocation });
-
+      let map;
+      
       const loadMap = async () => {
         try {
-          // Load Google Maps script
-          await new Promise((resolve, reject) => {
-            if (window.google && window.google.maps) {
-              resolve();
-              return;
-            }
-
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${YOUR_GOOGLE_MAPS_API_KEY}`;
-            script.async = true;
-            script.onload = resolve;
-            script.onerror = reject;
-            document.head.appendChild(script);
-          });
-
-          const mapElement = document.getElementById('map');
-          if (!mapElement) {
-            console.error("Map element not found");
-            return;
+          // Load Google Maps script with geometry library
+          if (!window.google || !window.google.maps) {
+            await new Promise((resolve, reject) => {
+              const script = document.createElement('script');
+              script.src = `https://maps.googleapis.com/maps/api/js?key=${YOUR_GOOGLE_MAPS_API_KEY}&libraries=geometry`;
+              script.async = true;
+              script.onload = resolve;
+              script.onerror = reject;
+              document.head.appendChild(script);
+            });
           }
-
+  
+          const mapElement = document.getElementById('map');
+          if (!mapElement) return;
+  
           // Initialize map
           map = new google.maps.Map(mapElement, {
             zoom: 12,
-            center: userLocation || labLocation,
+            center: labLocation,
             mapTypeControl: true,
             fullscreenControl: true,
             streetViewControl: true,
             zoomControl: true
           });
-
-          // Initialize directions service and renderer
-          directionsService = new google.maps.DirectionsService();
-          directionsRenderer = new google.maps.DirectionsRenderer({
+  
+          // Add lab location marker
+          const labMarker = new google.maps.Marker({
+            position: labLocation,
             map: map,
-            suppressMarkers: false,
-            preserveViewport: false
+            title: selectedLab?.labName
           });
-
-          if (!userLocation) {
-            // Show only lab location if user location is not available
-            console.log("Showing only lab location");
-            new google.maps.Marker({
-              position: labLocation,
+  
+          // Add info window for lab
+          const labInfo = new google.maps.InfoWindow({
+            content: `<div class="p-2">
+              <p class="font-semibold">${selectedLab?.labName}</p>
+              <p class="text-sm">${selectedLab?.address || ''}</p>
+            </div>`
+          });
+  
+          labMarker.addListener('click', () => {
+            labInfo.open(map, labMarker);
+          });
+  
+          // If user location exists, add user marker and adjust bounds
+          if (userLocation) {
+            const userMarker = new google.maps.Marker({
+              position: userLocation,
               map: map,
-              title: selectedLab?.labName,
-              animation: google.maps.Animation.DROP
-            });
-          } else {
-            // Calculate and display route
-            console.log("Calculating route");
-            const request = {
-              origin: userLocation,
-              destination: labLocation,
-              travelMode: google.maps.TravelMode.DRIVING,
-              optimizeWaypoints: true
-            };
-
-            directionsService.route(request, (result, status) => {
-              if (status === google.maps.DirectionsStatus.OK) {
-                console.log("Route calculated successfully");
-                directionsRenderer.setDirections(result);
-              } else {
-                console.error('Directions request failed:', status);
-                alert("Unable to get directions. Showing locations only.");
-                
-                // Add markers if directions fail
-                new google.maps.Marker({
-                  position: userLocation,
-                  map: map,
-                  title: "Your Location",
-                  animation: google.maps.Animation.DROP
-                });
-                new google.maps.Marker({
-                  position: labLocation,
-                  map: map,
-                  title: selectedLab?.labName,
-                  animation: google.maps.Animation.DROP
-                });
-
-                // Fit bounds to show both markers
-                const bounds = new google.maps.LatLngBounds();
-                bounds.extend(userLocation);
-                bounds.extend(labLocation);
-                map.fitBounds(bounds);
+              title: "Your Location",
+              icon: {
+                url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
               }
             });
+  
+            // Fit bounds to show both markers
+            const bounds = new google.maps.LatLngBounds();
+            bounds.extend(userLocation);
+            bounds.extend(labLocation);
+            map.fitBounds(bounds);
+  
+            // Add a line between the points
+            new google.maps.Polyline({
+              path: [userLocation, labLocation],
+              geodesic: true,
+              strokeColor: '#FF0000',
+              strokeOpacity: 1.0,
+              strokeWeight: 2,
+              map: map
+            });
           }
+  
         } catch (error) {
-          console.error("Error loading map:", error);
-          alert("Error loading map. Please try again.");
+          console.error("Map loading error:", error);
+          alert("Error loading map. Please refresh the page and try again.");
         }
       };
-
+  
       loadMap();
-
+  
       return () => {
-        if (directionsRenderer) {
-          directionsRenderer.setMap(null);
+        if (map) {
+          // Cleanup if needed
         }
       };
     }, [userLocation, labLocation]);
-
+  
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-lg w-full max-w-4xl">
           <div className="p-4 border-b flex justify-between items-center">
             <h3 className="text-xl font-bold">
-              {userLocation ? 'Directions to ' : 'Location of '}{selectedLab?.labName}
+              {userLocation ? 'Route to ' : 'Location of '}{selectedLab?.labName}
             </h3>
-            <button 
-              onClick={onClose}
-              className="text-gray-500 hover:text-gray-700"
-            >
-              <FontAwesomeIcon icon={faXmark} size="lg" />
-            </button>
+            <div className="flex items-center gap-4">
+              {userLocation && (
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${labLocation.lat},${labLocation.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                >
+                  <FontAwesomeIcon icon={faDirections} />
+                  <span>Open in Google Maps</span>
+                </a>
+              )}
+              <button 
+                onClick={onClose}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <FontAwesomeIcon icon={faXmark} size="lg" />
+              </button>
+            </div>
           </div>
           <div id="map" className="w-full h-[500px] rounded-b-lg"></div>
         </div>
       </div>
     );
   };
-
   return (
-    <div className="bg-gradient-to-b from-emerald-50 to-emerald-100  p-4 md:p-6 rounded-lg shadow-lg">
+    <div className="bg-gradient-to-b from-yellow-50 to-yellow-100  p-4 md:p-6 rounded-lg shadow-lg">
      
       {/* Header Section */}
       <div className="space-y-4 md:space-y-6">
-        <h2 className="text-2xl md:text-4xl font-bold text-green-600">
+        <h2 className="text-2xl md:text-4xl font-bold text-emerald-600">
           Soil Testing Agencies
         </h2>
         
@@ -411,7 +407,7 @@ const SoilTest = () => {
               />
               <button
                 onClick={() => handleVoiceInput("state")}
-                className="bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition flex items-center gap-2"
+                className="bg-emerald-600 text-white px-3 py-2 rounded-lg hover:bg-emerald-700 transition flex items-center gap-2"
               >
                 <FontAwesomeIcon icon={isListeningState ? faXmark : faMicrophone} />
                 <span className="hidden md:inline">Voice</span>
@@ -435,7 +431,7 @@ const SoilTest = () => {
               />
               <button
                 onClick={() => handleVoiceInput("district")}
-                className="bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition flex items-center gap-2"
+                className="bg-emerald-600 text-white px-3 py-2 rounded-lg hover:bg-emerald-700 transition flex items-center gap-2"
               >
                 <FontAwesomeIcon icon={isListeningDistrict ? faXmark : faMicrophone} />
                 <span className="hidden md:inline">Voice</span>
@@ -448,14 +444,14 @@ const SoilTest = () => {
             <button
               onClick={handleSearch}
               disabled={isLoading}
-              className="flex-1 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
+              className="flex-1 bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition"
             >
               {isLoading ? "Searching..." : "Search"}
             </button>
             <button
               onClick={getCurrentLocation}
               disabled={isLoading}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center gap-2"
+              className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition flex items-center gap-2"
             >
               <FontAwesomeIcon icon={faLocationCrosshairs} />
               <span className="hidden md:inline">Use Location</span>
@@ -464,34 +460,40 @@ const SoilTest = () => {
         </div>
       </div>
 
-      {/* Results Section */}
-      {filteredLabs.length > 0 && (
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredLabs.map((lab, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-green-600 mb-2">{lab.labName}</h3>
-                <div className="space-y-2 text-gray-600">
-                  <p className="text-sm">{lab.address}</p>
-                  <div className="border-t pt-2">
-                    <p className="text-sm">{lab.email}</p>
-                    <p className="text-sm">{lab.phone}</p>
-                  </div>
-                </div>
-                <div className="mt-4 flex justify-end">
-                  <button
-                    onClick={() => handleMapView(lab)}
-                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
-                  >
-                    <FontAwesomeIcon icon={faDirections} />
-                    <span>Get Directions</span>
-                  </button>
-                </div>
-              </div>
+      
+    {/* Results Section */}
+{filteredLabs.length > 0 && (
+  <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {filteredLabs.map((lab, index) => (
+      <div 
+        key={index} 
+        className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow flex flex-col h-full"
+      >
+        <div className="p-4 flex-grow">
+          <h3 className="text-lg font-semibold text-emerald-600 mb-2">{lab.labName}</h3>
+          <div className="space-y-2 text-gray-600">
+            <p className="text-sm">{lab.address}</p>
+            <div className="border-t pt-2">
+              <p className="text-sm">{lab.email}</p>
+              <p className="text-sm">{lab.phone}</p>
             </div>
-          ))}
+          </div>
         </div>
-      )}
+        {/* Button Container: Always at the Bottom */}
+        <div className="p-4 flex justify-end">
+          <button
+            onClick={() => handleMapView(lab)}
+            className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors flex items-center gap-2 w-full text-center"
+          >
+            <FontAwesomeIcon icon={faDirections} />
+            <span>Get Directions</span>
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+)}
+
 
 {showMap && selectedLab && (
   <MapView

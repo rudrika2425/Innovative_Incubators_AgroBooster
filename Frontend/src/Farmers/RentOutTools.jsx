@@ -34,16 +34,20 @@ function RentOutTools() {
   };
 
   const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length > 5) {
-      alert("You can upload up to 5 images only.");
-      return;
-    }
-    setFormData((prevData) => ({
-      ...prevData,
-      images: files,
-    }));
+    const selectedFiles = Array.from(e.target.files);
+  
+    setFormData((prevData) => {
+      // Merge existing and new files, ensuring a max of 5 images
+      const updatedImages = [...prevData.images, ...selectedFiles].slice(0, 5);
+  
+      if (updatedImages.length > 5) {
+        alert("You can upload up to 5 images only.");
+      }
+  
+      return { ...prevData, images: updatedImages };
+    });
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -257,52 +261,51 @@ function RentOutTools() {
             </div>
 
             {/* Image Upload */}
-            <div>
-              <label className="block text-emerald-800 font-semibold mb-2">
-                Upload Images (Max 5)
-              </label>
-              <input
-                type="file"
-                name="images"
-                accept="image/*"
-                multiple
-                className="w-full border border-emerald-300 rounded-lg p-3 hover:bg-emerald-50 transition"
-                onChange={handleImageChange}
-              />
-              {formData.images.length > 0 && (
-                <div className="mt-3">
-                  <h3 className="text-sm text-emerald-700 mb-2">Selected Images:</h3>
-                  <div className="flex flex-wrap gap-4">
-                    {Array.from(formData.images).map((file, index) => (
-                      <div
-                        key={index}
-                        className="relative w-20 h-20 rounded-lg overflow-hidden border border-emerald-300 shadow-md"
-                      >
-                        <img
-                          src={URL.createObjectURL(file)}
-                          alt={`Selected ${index + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setFormData((prevData) => ({
-                              ...prevData,
-                              images: Array.from(prevData.images).filter(
-                                (_, i) => i !== index
-                              ),
-                            }));
-                          }}
-                          className="absolute top-0 right-0 bg-red-500 text-white text-xs p-1 rounded-sm hover:bg-red-700"
-                        >
-                          X
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+<div>
+  <label className="block text-emerald-800 font-semibold mb-2">
+    Upload Images (Max 5)
+  </label>
+  <input
+    type="file"
+    name="images"
+    accept="image/*"
+    multiple
+    className="w-full border border-emerald-300 rounded-lg p-3 hover:bg-emerald-50 transition"
+    onChange={handleImageChange}
+  />
+  {formData.images.length > 0 && (
+    <div className="mt-3">
+      <h3 className="text-sm text-emerald-700 mb-2">Selected Images:</h3>
+      <div className="flex flex-wrap gap-4">
+        {formData.images.map((file, index) => (
+          <div
+            key={index}
+            className="relative w-20 h-20 rounded-lg overflow-hidden border border-emerald-300 shadow-md"
+          >
+            <img
+              src={URL.createObjectURL(file)}
+              alt={`Selected ${index + 1}`}
+              className="w-full h-full object-cover"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                setFormData((prevData) => ({
+                  ...prevData,
+                  images: prevData.images.filter((_, i) => i !== index),
+                }));
+              }}
+              className="absolute top-0 right-0 bg-red-500 text-white text-xs p-1 rounded-sm hover:bg-red-700"
+            >
+              X
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
+
 
             {/* Renter's Details */}
             <div className="grid grid-cols-2 gap-4">
