@@ -237,7 +237,7 @@ const Hero = ({ id }) => {
             </h4>
             <div className="grid grid-cols-3 gap-4">
               {[
-                { icon: <Tractor className="w-12 h-12 text-green-600" />, name: "Precision" },
+                { icon: <Tractor className="w-12 h-12 text-emerald-600" />, name: "Precision" },
                 { icon: <Sun className="w-12 h-12 text-yellow-600" />, name: "Climate" },
                 { icon: <Cloud className="w-12 h-12 text-blue-600" />, name: "Weather" },
                 { icon: <Target className="w-12 h-12 text-red-600" />, name: "Analytics" },

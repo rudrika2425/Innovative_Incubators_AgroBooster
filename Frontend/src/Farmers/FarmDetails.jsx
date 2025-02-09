@@ -47,20 +47,20 @@ const FarmDetails = ({  onWeatherClick, onCalendarClick }) => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navbar */}
-      <nav className="bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg">
+      <nav className="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <h1 className="text-xl font-semibold">Farm Dashboard</h1>
             <div className="flex space-x-4">
               <button 
                 onClick={handleWeather}
-                className="flex items-center px-4 py-2 rounded-md bg-green-500 hover:bg-green-400 transition-colors"
+                className="flex items-center px-4 py-2 rounded-md bg-emerald-500 hover:bg-emerald-400 transition-colors"
               >
                 Weather
               </button>
               <button 
                 onClick={handleCalendar}
-                className="flex items-center px-4 py-2 rounded-md bg-green-500 hover:bg-green-400 transition-colors"
+                className="flex items-center px-4 py-2 rounded-md bg-emerald-500 hover:bg-emerald-400 transition-colors"
               >
                 Calendar
               </button>
@@ -86,10 +86,10 @@ const FarmDetails = ({  onWeatherClick, onCalendarClick }) => {
             <div className="pt-4 space-y-2">
               <h3 className="font-semibold text-gray-700">Current Crop</h3>
               <div className="flex items-center gap-4">
-                <div className="bg-green-100 px-3 py-1 rounded-full text-green-700">
+                <div className="bg-emerald-100 px-3 py-1 rounded-full text-emerald-700">
                   {farm.crop}
                 </div>
-                <div className="bg-green-50 px-3 py-1 rounded-full text-green-600">
+                <div className="bg-emerald-50 px-3 py-1 rounded-full text-emerald-600">
                   {farm.variety}
                 </div>
               </div>

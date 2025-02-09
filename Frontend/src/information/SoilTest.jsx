@@ -16,6 +16,7 @@ const SoilTest = () => {
   const [showMap, setShowMap] = useState(false);
   const [selectedLab, setSelectedLab] = useState(null);
   const YOUR_GOOGLE_MAPS_API_KEY = "AIzaSyAF5JeH_iVKoIf_eLWiSeVkANZsDO4Ertk";
+  
 
   const getCurrentLocation = () => {
     setIsLoading(true);
@@ -359,11 +360,11 @@ const SoilTest = () => {
     );
   };
   return (
-    <div className="bg-gradient-to-b from-emerald-50 to-emerald-100  p-4 md:p-6 rounded-lg shadow-lg">
+    <div className="bg-gradient-to-b from-yellow-50 to-yellow-100  p-4 md:p-6 rounded-lg shadow-lg">
      
       {/* Header Section */}
       <div className="space-y-4 md:space-y-6">
-        <h2 className="text-2xl md:text-4xl font-bold text-green-600">
+        <h2 className="text-2xl md:text-4xl font-bold text-emerald-600">
           Soil Testing Agencies
         </h2>
         
@@ -406,7 +407,7 @@ const SoilTest = () => {
               />
               <button
                 onClick={() => handleVoiceInput("state")}
-                className="bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition flex items-center gap-2"
+                className="bg-emerald-600 text-white px-3 py-2 rounded-lg hover:bg-emerald-700 transition flex items-center gap-2"
               >
                 <FontAwesomeIcon icon={isListeningState ? faXmark : faMicrophone} />
                 <span className="hidden md:inline">Voice</span>
@@ -430,7 +431,7 @@ const SoilTest = () => {
               />
               <button
                 onClick={() => handleVoiceInput("district")}
-                className="bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700 transition flex items-center gap-2"
+                className="bg-emerald-600 text-white px-3 py-2 rounded-lg hover:bg-emerald-700 transition flex items-center gap-2"
               >
                 <FontAwesomeIcon icon={isListeningDistrict ? faXmark : faMicrophone} />
                 <span className="hidden md:inline">Voice</span>
@@ -443,14 +444,14 @@ const SoilTest = () => {
             <button
               onClick={handleSearch}
               disabled={isLoading}
-              className="flex-1 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
+              className="flex-1 bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition"
             >
               {isLoading ? "Searching..." : "Search"}
             </button>
             <button
               onClick={getCurrentLocation}
               disabled={isLoading}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center gap-2"
+              className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition flex items-center gap-2"
             >
               <FontAwesomeIcon icon={faLocationCrosshairs} />
               <span className="hidden md:inline">Use Location</span>
@@ -459,34 +460,40 @@ const SoilTest = () => {
         </div>
       </div>
 
-      {/* Results Section */}
-      {filteredLabs.length > 0 && (
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredLabs.map((lab, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-green-600 mb-2">{lab.labName}</h3>
-                <div className="space-y-2 text-gray-600">
-                  <p className="text-sm">{lab.address}</p>
-                  <div className="border-t pt-2">
-                    <p className="text-sm">{lab.email}</p>
-                    <p className="text-sm">{lab.phone}</p>
-                  </div>
-                </div>
-                <div className="mt-4 flex justify-end">
-                  <button
-                    onClick={() => handleMapView(lab)}
-                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
-                  >
-                    <FontAwesomeIcon icon={faDirections} />
-                    <span>Get Directions</span>
-                  </button>
-                </div>
-              </div>
+      
+    {/* Results Section */}
+{filteredLabs.length > 0 && (
+  <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {filteredLabs.map((lab, index) => (
+      <div 
+        key={index} 
+        className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow flex flex-col h-full"
+      >
+        <div className="p-4 flex-grow">
+          <h3 className="text-lg font-semibold text-emerald-600 mb-2">{lab.labName}</h3>
+          <div className="space-y-2 text-gray-600">
+            <p className="text-sm">{lab.address}</p>
+            <div className="border-t pt-2">
+              <p className="text-sm">{lab.email}</p>
+              <p className="text-sm">{lab.phone}</p>
             </div>
-          ))}
+          </div>
         </div>
-      )}
+        {/* Button Container: Always at the Bottom */}
+        <div className="p-4 flex justify-end">
+          <button
+            onClick={() => handleMapView(lab)}
+            className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors flex items-center gap-2 w-full text-center"
+          >
+            <FontAwesomeIcon icon={faDirections} />
+            <span>Get Directions</span>
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+)}
+
 
 {showMap && selectedLab && (
   <MapView

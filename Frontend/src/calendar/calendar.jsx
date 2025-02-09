@@ -58,7 +58,7 @@ const CropCalendar = () => {
       "Seedbed Preparation": "bg-emerald-200 hover:bg-emerald-300 text-emerald-800",
       "Sowing": "bg-amber-200 hover:bg-amber-300 text-amber-800",
       "Irrigation": "bg-cyan-200 hover:bg-cyan-300 text-cyan-800",
-      "Weed Management": "bg-green-200 hover:bg-green-300 text-green-800",
+      "Weed Management": "bg-emerald-200 hover:bg-emerald-300 text-emerald-800",
       "Pest and Disease Management": "bg-rose-200 hover:bg-rose-300 text-rose-800",
       "Nutrient Management": "bg-violet-200 hover:bg-violet-300 text-violet-800"
     };

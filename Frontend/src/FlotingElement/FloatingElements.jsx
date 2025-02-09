@@ -21,7 +21,7 @@ const FloatingElements = () => (
         ) : i % 5 === 2 ? (
           <Sun className="w-10 h-10 text-yellow-600" />
         ) : i % 5 === 3 ? (
-          <Tractor className="w-11 h-11 text-green-600" />
+          <Tractor className="w-11 h-11 text-emerald-600" />
         ) : (
           <Cloud className="w-10 h-10 text-gray-600" />
         )}
