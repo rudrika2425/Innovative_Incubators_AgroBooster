@@ -101,7 +101,7 @@ const BorrowTools = () => {
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className="group bg-white/80 backdrop-blur-sm rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-emerald-100"
+                className="group bg-white/80 border-b-2 border-emerald-700 backdrop-blur-sm rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300"
               >
                 <div className="relative h-48 overflow-hidden">
                   <img

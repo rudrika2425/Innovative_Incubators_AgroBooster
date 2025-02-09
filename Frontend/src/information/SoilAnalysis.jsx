@@ -124,6 +124,8 @@ const SoilTestReportUploader = () => {
         weather: weatherData,
         soilAnalysisReport: result,
       };
+
+      console.log(farmerData)
   
       alert("AgroBooster is accessing your location");
   
@@ -209,7 +211,7 @@ const SoilTestReportUploader = () => {
           className={`px-4 py-2 rounded-lg transition ${
             result && !isSubmitting
               ? "bg-emerald-600 text-white hover:bg-emerald-700"
-              : "bg-gray-400 text-gray-700 cursor-not-allowed"
+              : "bg-gray-400 text-white cursor-not-allowed"
           }`}
         >
           {isSubmitting ? "Processing..." : "Submit"}

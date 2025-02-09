@@ -48,6 +48,7 @@ const CropPrediction = () => {
         const farmId = localStorage.getItem('farmId');
         if (!farmId) {
           throw new Error('No farm ID found in local storage');
+
         }
 
         console.log('Attempting to fetch predictions for farmId:', farmId);
