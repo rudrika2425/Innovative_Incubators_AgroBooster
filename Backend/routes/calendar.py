@@ -125,7 +125,7 @@ def get_farmer_info(farm_id):
         Start Date:The starting date for that task in relation to {current_date} (e.g., 20-02-2025 need exact dates ) 
         End Date: The ending date for that task, calculated based on {current_date} and the starting date.
         Description: [Detailed description]
-        Sustainable resources that can be used: Sustainable resources which can maximize the yield and at the same time will not harm environment
+        Sustainable resources that can be used: Sustainable resources which can maximize the yield and at the same time will not harm environment. It should be personalised accoridng to the user provided data.
         
         - I do not want any other information like GenerateContentResponse , done=True etc. 
         - There should be no   extra info for that particular activity
