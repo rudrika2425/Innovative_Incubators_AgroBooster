@@ -6,7 +6,7 @@ import requests
 weather_forecast_bp = Blueprint("weather_forecast", __name__)
 
 # Replace with your actual API key
-API_KEY = os.getenv("WEATHER_API_KEY")
+API_KEY = os.getenv("WEATHER_API_KEY_OPENWEATHER")
 
 @weather_forecast_bp.route("/forecast", methods=['GET'])
 def get_weather_forecast():
