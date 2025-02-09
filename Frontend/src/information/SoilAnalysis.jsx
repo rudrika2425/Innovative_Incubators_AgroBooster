@@ -124,6 +124,8 @@ const SoilTestReportUploader = () => {
         weather: weatherData,
         soilAnalysisReport: result,
       };
+
+      console.log(farmerData)
   
       alert("AgroBooster is accessing your location");
   

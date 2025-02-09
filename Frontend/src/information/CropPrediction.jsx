@@ -205,6 +205,7 @@ const CropPrediction = () => {
 
   useEffect(() => {
     const farmData = JSON.parse(localStorage.getItem("farmData") || "{}");
+    console.log(farmData)
 
     if (!dataFetched) {
       const fetchPredictions = async () => {
@@ -273,7 +274,6 @@ const CropPrediction = () => {
           setLoading(false);
         } finally {
           setDataFetched(true);
-          localStorage.removeItem("farmData");
         }
       };
 

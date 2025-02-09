@@ -63,7 +63,7 @@ def create_app():
 
     # Attach MongoDB client to app for access in routes
     app.mongo_client = client  # ✅ Fixed this
-
+ 
     return app
 
 if __name__ == "__main__":
