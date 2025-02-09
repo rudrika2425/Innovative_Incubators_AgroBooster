@@ -235,7 +235,7 @@ const Chatbot = () => {
       
       <div className="flex h-screen p-4">
         {/* Sidebar */}
-        <div className="w-72 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-emerald-200 p-6 mr-4">
+        <div className="w-72 bg-yellow-100 backdrop-blur-sm rounded-2xl shadow-lg border border-emerald-200 p-6 mr-4">
           <div className="flex items-center gap-3 mb-8">
             <div className="p-3 bg-emerald-100 rounded-full shadow-md">
               <Leaf className="w-8 h-8 text-emerald-600" />
@@ -276,7 +276,7 @@ const Chatbot = () => {
         </div>
 
         {/* Main Chat Area */}
-        <div className="flex-1 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-emerald-200 flex flex-col">
+        <div className="flex-1 backdrop-blur-sm rounded-2xl shadow-lg border border-emerald-200 flex flex-col">
           {/* Chat Messages */}
           <div className="flex-1 overflow-y-auto p-6">
             {messages.length === 0 ? (

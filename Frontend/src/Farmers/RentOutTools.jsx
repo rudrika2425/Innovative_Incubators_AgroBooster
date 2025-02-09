@@ -109,7 +109,7 @@ function RentOutTools() {
       `}</style>
 
       {/* Navigation Bar */}
-      <nav className="sticky top-0 z-20 w-full bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm shadow-md px-4 py-4">
+      <nav className="sticky top-0 z-20 w-full bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm shadow-md px-4 py-2">
         <div className="flex items-center gap-4">
           <div className="p-3 bg-yellow-100 rounded-full shadow-lg">
             <Tractor className="w-8 h-8 text-yellow-600" />

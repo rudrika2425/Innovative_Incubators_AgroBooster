@@ -31,8 +31,19 @@ def create_tool_rental():
 @tool_rental_bp.route('/gettools', methods=['GET'])
 def get_all_tools():
     try:
+        # Get farmerId from query parameters
+        farmer_id = request.args.get('farmerId')
+        
+        if not farmer_id:
+            return jsonify({"error": "farmerId parameter is required"}), 400
+        
+        # Get all tools and filter out the ones belonging to the specified farmer
+        # Direct string comparison since both IDs are strings
         tools = ToolRental.find_all_tools()
-        return jsonify(tools), 200
+        filtered_tools = [tool for tool in tools if tool['farmer_id'] != farmer_id]
+        
+        return jsonify(filtered_tools), 200
+        
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

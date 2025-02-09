@@ -65,14 +65,11 @@ Using the provided Soil and Environmental Analysis Report, predict suitable crop
 - **Crop Type**: [Category]
   - **Common Name**: [Name]
   - **Hindi Name**: [Name in Hindi]
-  - **Variety**: [Variety]
+  - **Variety**: [Variety provide list of 2 to 3 varities]
   - **Description**: (what this crop is about)
-  - Optimal Soil & Climate Conditions (pH range, water needs, temperature range, sunlight exposure)
-  - Growth Duration (Days to maturity, seasonal growth cycle)
-  - Fertilizer & Irrigation Needs (Recommended fertilizers, irrigation type, organic or synthetic inputs)
-  - Uses & Economic Value** (Food, industrial use, medicinal benefits, market demand, by-products)
-  - Disease Resistance & Pest Control** (Common diseases, pest-resistant varieties, organic pest management methods)
-  - please suggest atleas 5 crops always.
+  - Brief (Provide an overview of this crop, including its optimal soil and climate conditions, ideal growth duration (from sowing to harvest, specifying the months), fertilizer and irrigation needs, and any common diseases it may face. This detailed information will help farmers evaluate whether the crop is suitable for their local environment and farming practices throughout the year.)
+  - please suggest atleast 8 crops always.
+  -every above data given should me personalised to the input given by the farmer
 
 Ensure:
 ✅ Only crop names, Hindi names, varieties, and descriptions are provided based on the given soil and environmental conditions.  
