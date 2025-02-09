@@ -8,7 +8,7 @@ function Navbar() {
 
   return (
     <nav className="flex bg-emerald-600 bg-opacity-100 sticky top-0 left-0 w-full z-50 shadow-md  h-19">
-      <div className="container text-white mx-auto px-10 flex justify-between items-center py-2">
+      <div className="container text-white mx-auto px-10 flex justify-between items-center py-4">
         <Link 
           to="/" 
           className="cursor-pointer  hover:text-amber-600 font-bold text-3xl no-underline"

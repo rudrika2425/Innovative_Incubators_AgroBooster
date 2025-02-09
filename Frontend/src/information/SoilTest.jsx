@@ -328,7 +328,7 @@ const SoilTest = () => {
     }, [userLocation, labLocation]);
   
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 bg-emerald bg-opacity-50 z-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-lg w-full max-w-4xl">
           <div className="p-4 border-b flex justify-between items-center">
             <h3 className="text-xl font-bold">
@@ -340,7 +340,7 @@ const SoilTest = () => {
                   href={`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${labLocation.lat},${labLocation.lng}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                  className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors flex items-center gap-2"
                 >
                   <FontAwesomeIcon icon={faDirections} />
                   <span>Open in Google Maps</span>

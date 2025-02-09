@@ -21,8 +21,8 @@ const FarmerInput = () => {
   const soilTypes = [
     "Khadar (New Alluvium)",
     "Bhangar (Old Alluvium)",
-    "Shallow Black Soil",
-    "Deep Black Soil",
+    "Shallow emerald Soil",
+    "Deep emerald Soil",
     "Yellowish-Red Soil",
     "Reddish-Brown Soil",
     "Upland Laterite",

@@ -86,7 +86,7 @@ const Home = () => {
   
 
   const ToolCard = ({ tool }) => (
-    <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group">
+    <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group border-b-2 border-emerald-700">
       <div className="relative aspect-video overflow-hidden">
         <img
           src={tool.images?.[0] || "/api/placeholder/400/300"}
@@ -94,32 +94,32 @@ const Home = () => {
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
         {tool.images?.length > 1 && (
-          <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
+          <div className="absolute bottom-2 right-2 bg-emerald/70 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
             <ImageIcon size={12} />
             <span>{tool.images.length}</span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-emerald/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
       <div className="p-4">
         <div className="flex justify-between items-start mb-2">
           <div>
-            <h3 className="text-xl font-semibold text-gray-900">{tool.title}</h3>
-            <p className="text-sm text-gray-600">{tool.brand} {tool.model}</p>
+            <h3 className="text-xl font-semibold text-emerald-900">{tool.title}</h3>
+            <p className="text-sm text-emerald-600">{tool.brand} {tool.model}</p>
           </div>
           <div className="text-right">
-            <p className="text-lg font-bold text-amber-600">₹{tool.rate}/day</p>
+            <p className="text-lg font-bold text-emerald-600">₹{tool.rate}/day</p>
             {tool.deposit > 0 && (
-              <p className="text-xs text-gray-500">Deposit: ₹{tool.deposit}</p>
+              <p className="text-xs text-emerald-500">Deposit: ₹{tool.deposit}</p>
             )}
           </div>
         </div>
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <span className="px-2 py-1 bg-amber-50 text-amber-700 rounded-full">{tool.category}</span>
-            <span className="px-2 py-1 bg-amber-50 text-amber-700 rounded-full">{tool.condition}</span>
+          <div className="flex items-center gap-2 text-sm text-emerald-600">
+            <span className="px-2 py-1 bg-emerald-50 text-emerald-700 rounded-full">{tool.category}</span>
+            <span className="px-2 py-1 bg-emerald-50 text-emerald-700 rounded-full">{tool.condition}</span>
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-emerald-600">
             {tool.district}, {tool.state}
           </p>
         </div>
@@ -133,7 +133,7 @@ const Home = () => {
           </button>
           <label
             htmlFor={`file-upload-${tool._id}`}
-            className="flex items-center gap-1 px-3 py-1.5 bg-amber-50 text-amber-600 rounded-full hover:bg-amber-100 transition-colors cursor-pointer"
+            className="flex items-center gap-1 px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-full hover:bg-emerald-100 transition-colors cursor-pointer"
           >
             <ImageIcon size={16} />
             <span>Update Images</span>
@@ -154,7 +154,7 @@ const Home = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-yellow-50 to-yellow-100">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500" />
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500" />
       </div>
     );
   }
@@ -163,7 +163,7 @@ const Home = () => {
     <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
       <div className="bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
-          <h1 className="text-2xl font-bold text-amber-900">Manage your agricultural tools and equipment</h1>
+          <h1 className="text-3xl font-bold text-emerald-900">Manage your agricultural tools and equipment</h1>
          
         </div>
       </div>
@@ -177,34 +177,34 @@ const Home = () => {
 
         {myTools.length === 0 ? (
           <div className="max-w-2xl mx-auto">
-            <div className="text-center py-12 bg-white/80 backdrop-blur-sm rounded-xl border border-amber-200 shadow-lg">
-              <ImageIcon size={48} className="mx-auto text-amber-400 mb-4" />
-              <h3 className="text-2xl font-semibold text-amber-900 mb-2">Start Your Equipment Listing</h3>
-              <p className="text-amber-700 mb-4 px-4">Share your agricultural tools with other farmers and earn additional income</p>
+            <div className="text-center py-12 bg-white/80 backdrop-blur-sm rounded-xl border border-emerald-200 shadow-lg">
+              <ImageIcon size={48} className="mx-auto text-emerald-400 mb-4" />
+              <h3 className="text-2xl font-semibold text-emerald-900 mb-2">Start Your Equipment Listing</h3>
+              <p className="text-emerald-700 mb-4 px-4">Share your agricultural tools with other farmers and earn additional income</p>
               <div className="space-y-4">
                 <div className="flex items-center justify-center gap-8 px-6">
                   <div className="text-center">
-                    <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <span className="text-amber-600 font-bold">1</span>
+                    <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <span className="text-emerald-600 font-bold">1</span>
                     </div>
-                    <p className="text-sm text-amber-700">List Your Tools</p>
+                    <p className="text-sm text-emerald-700">List Your Tools</p>
                   </div>
                   <div className="text-center">
-                    <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <span className="text-amber-600 font-bold">2</span>
+                    <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <span className="text-emerald-600 font-bold">2</span>
                     </div>
-                    <p className="text-sm text-amber-700">Set Your Rates</p>
+                    <p className="text-sm text-emerald-700">Set Your Rates</p>
                   </div>
                   <div className="text-center">
-                    <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <span className="text-amber-600 font-bold">3</span>
+                    <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <span className="text-emerald-600 font-bold">3</span>
                     </div>
-                    <p className="text-sm text-amber-700">Start Earning</p>
+                    <p className="text-sm text-emerald-700">Start Earning</p>
                   </div>
                 </div>
                 <Link 
                   to="/farmerdashboard/rent-out-tools"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors mx-auto"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors mx-auto"
                 >
                   <span>Add Your First Tool</span>
                   <ArrowRight size={20} />
@@ -213,38 +213,38 @@ const Home = () => {
             </div>
 
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-amber-200">
-                <h4 className="text-lg font-semibold text-amber-900 mb-2">Market Insights</h4>
-                <p className="text-amber-700 text-sm">Most demanded equipment in your area:</p>
+              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-emerald-200">
+                <h4 className="text-lg font-semibold text-emerald-900 mb-2">Market Insights</h4>
+                <p className="text-emerald-700 text-sm">Most demanded equipment in your area:</p>
                 <ul className="mt-2 space-y-2">
-                  <li className="flex items-center gap-2 text-sm text-amber-600">
-                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
+                  <li className="flex items-center gap-2 text-sm text-emerald-600">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
                     Tractor Implements
                   </li>
-                  <li className="flex items-center gap-2 text-sm text-amber-600">
-                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
+                  <li className="flex items-center gap-2 text-sm text-emerald-600">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
                     Harvesting Equipment
                   </li>
-                  <li className="flex items-center gap-2 text-sm text-amber-600">
-                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
+                  <li className="flex items-center gap-2 text-sm text-emerald-600">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
                     Irrigation Systems
                   </li>
                 </ul>
               </div>
               
-              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-amber-200">
-                <h4 className="text-lg font-semibold text-amber-900 mb-2">Benefits</h4>
+              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-emerald-200">
+                <h4 className="text-lg font-semibold text-emerald-900 mb-2">Benefits</h4>
                 <ul className="space-y-2">
-                  <li className="flex items-center gap-2 text-sm text-amber-700">
-                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
+                  <li className="flex items-center gap-2 text-sm text-emerald-700">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
                     Extra income from idle equipment
                   </li>
-                  <li className="flex items-center gap-2 text-sm text-amber-700">
-                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
+                  <li className="flex items-center gap-2 text-sm text-emerald-700">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
                     Help other farmers in your community
                   </li>
-                  <li className="flex items-center gap-2 text-sm text-amber-700">
-                    <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
+                  <li className="flex items-center gap-2 text-sm text-emerald-700">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
                     Secure rental process
                   </li>
                 </ul>
