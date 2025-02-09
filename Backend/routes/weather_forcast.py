@@ -8,14 +8,10 @@ weather_forecast_bp = Blueprint("weather_forecast", __name__)
 # Replace with your actual API key
 API_KEY = os.getenv("WEATHER_API_KEY")
 
-print(API_KEY)
-
 @weather_forecast_bp.route("/forecast", methods=['GET'])
 def get_weather_forecast():
     lat = request.args.get("lat")
     lon = request.args.get("lon")
-    
-    print(lat,lon)
 
     if not lat or not lon:
         return jsonify({"error": "Latitude and Longitude are required"}), 400
@@ -39,8 +35,6 @@ def get_weather_forecast():
             "hourly": [format_hourly_weather(hour) for hour in data.get("hourly", [])],
             "daily": [format_daily_weather(day) for day in data.get("daily", [])]
         }
-
-        print(formatted_response)
         
         return jsonify(formatted_response)
         

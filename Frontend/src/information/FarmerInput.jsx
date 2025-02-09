@@ -1,5 +1,3 @@
-
-import React from "react";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMicrophone, faXmark } from "@fortawesome/free-solid-svg-icons";

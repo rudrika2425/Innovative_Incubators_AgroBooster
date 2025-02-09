@@ -111,7 +111,7 @@ const WeatherForecast = () => {
                 </div>
 
                 {/* Current Weather */}
-                <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-6">
+                <div className="bg-yellow-100 backdrop-blur-sm rounded-lg shadow-lg p-6">
                     <div className="flex items-center justify-between flex-wrap gap-4">
                         <div className="flex items-center space-x-4">
                             <div className="p-4 bg-emerald-100 rounded-full shadow-lg">
@@ -144,11 +144,11 @@ const WeatherForecast = () => {
                 </div>
 
                 {/* Hourly Forecast */}
-                <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-6">
-                    <h2 className="text-xl font-semibold text-emerald-800 mb-4">Hourly Forecast</h2>
+                <div className="bg-yellow-100 backdrop-blur-sm rounded-lg shadow-lg p-6">
+                    <h2 className="text-2xl font-semibold text-emerald-800 mb-4">Hourly Forecast</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
                         {hourlyForecast.map((hour, index) => (
-                            <div key={index} className="text-center p-2 bg-emerald-50/50 rounded-lg border border-emerald-200 shadow-lg">
+                            <div key={index} className="text-center justify-items-center p-2 bg-emerald-50/50 rounded-3xl border border-emerald-200 shadow-lg">
                                 <div className="text-emerald-700">{formatTime(hour.dt)}</div>
                                 <div className="my-2">
                                     {getWeatherIcon(hour.weather?.[0]?.main)}
@@ -165,13 +165,13 @@ const WeatherForecast = () => {
                 </div>
 
                 {/* Daily Forecast */}
-                <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-6">
-                    <h2 className="text-xl font-semibold text-emerald-800 mb-4">Daily Forecast</h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4">
+                <div className="bg-yellow-100 backdrop-blur-sm rounded-lg shadow-lg p-6">
+                    <h2 className="text-2xl font-semibold text-emerald-800 mb-4">Daily Forecast</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         {dailyForecast.map((day, index) => (
-                            <div key={index} className="text-center p-4 bg-emerald-50/50 rounded-lg border border-emerald-200 shadow-lg">
+                            <div key={index} className="text-center justify-items-center p-4 bg-emerald-50/50 rounded-3xl border border-emerald-200 shadow-lg">
                                 <div className="font-medium text-emerald-800">{formatDate(day.dt)}</div>
-                                <div className="my-2">
+                                <div className="">
                                     {getWeatherIcon(day.weather?.[0]?.main)}
                                 </div>
                                 <div className="space-y-1">

@@ -79,7 +79,7 @@ const YourFarms = () => {
                   <span>{farm.location.city}, {farm.location.region}</span>
                 </div>
 
-                <div className="mt-4 text-gray-600 space-y-2">
+                <div className="mt-3 text-gray-600 space-y-2">
                   <p className="flex items-center gap-2">
                     <Sprout className="w-5 h-5 text-emerald-500" />
                     Land Area: {farm.farmerInput.landArea} acres
