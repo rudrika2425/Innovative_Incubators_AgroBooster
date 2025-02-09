@@ -2,16 +2,19 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Sprout, Leaf, Tractor, Cloud, Sun } from "lucide-react";
+import { useUser } from "../Context/UserContext";
 
 const BorrowTools = () => {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const {user} = useUser();
+  const farmerId = user.id;
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:4000/tools/gettools")
+      .get(`http://127.0.0.1:4000/tools/gettools?farmerId=${farmerId}`)
       .then((response) => {
         setProducts(response.data);
       })
