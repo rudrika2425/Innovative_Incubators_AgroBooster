@@ -7,7 +7,7 @@ function Navbar() {
   
 
   return (
-    <nav className="bg-white sticky bg-opacity-100 fixed top-0 left-0 w-full z-50 shadow-md">
+    <nav className="bg-white bg-opacity-100 sticky top-0 left-0 w-full z-50 shadow-md">
       <div className="container text-emerald-600 mx-auto px-10 flex justify-between items-center py-2">
         <Link 
           to="/" 
@@ -16,7 +16,7 @@ function Navbar() {
           <TranslatedText text="AgroBooster"/>
         </Link>
 
-        <ul className="hidden lg:flex space-x-8 mr-10   ">
+        <ul className="hidden lg:flex space-x-8 mr-10  mt-3 ">
           <li>
             <NavLink
               to="/"

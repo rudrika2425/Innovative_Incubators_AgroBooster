@@ -48,7 +48,7 @@ const YourFarms = () => {
 
       <div className="relative z-10">
         <div className="sticky bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm shadow-md fix">
-          <div className="max-w-7xl mx-auto py-4 px-6 flex justify-between items-center">
+          <div className="max-w-7xl mx-auto py-2 px-6 flex justify-between items-center">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-yellow-100 rounded-full shadow-lg">
                 <Home className="w-8 h-8 text-yellow-600" />
@@ -57,7 +57,7 @@ const YourFarms = () => {
             </div>
             <a
               href="/farmer-Information/basicinformation"
-              className="inline-flex items-center gap-2 bg-yellow-600 text-white px-6 py-3 rounded-full hover:bg-yellow-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="inline-flex items-center gap-2 bg-yellow-600 text-white px-6 py-3 rounded-full hover:bg-yellow-700 transition-all duration-300 shadow-lg hover:shadow-xl no-underline"
             >
               <Plus className="w-5 h-5" />
               <span>Add New Farm</span>
@@ -79,7 +79,7 @@ const YourFarms = () => {
                   <span>{farm.location.city}, {farm.location.region}</span>
                 </div>
 
-                <div className="mt-4 text-gray-600 space-y-2">
+                <div className="mt-3 text-gray-600 space-y-2">
                   <p className="flex items-center gap-2">
                     <Sprout className="w-5 h-5 text-emerald-500" />
                     Land Area: {farm.farmerInput.landArea} acres

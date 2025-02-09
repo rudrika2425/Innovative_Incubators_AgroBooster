@@ -2,16 +2,19 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Sprout, Leaf, Tractor, Cloud, Sun } from "lucide-react";
+import { useUser } from "../Context/UserContext";
 
 const BorrowTools = () => {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const {user} = useUser();
+  const farmerId = user.id;
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:4000/tools/gettools")
+      .get(`http://127.0.0.1:4000/tools/gettools?farmerId=${farmerId}`)
       .then((response) => {
         setProducts(response.data);
       })
@@ -45,7 +48,7 @@ const BorrowTools = () => {
 
       <div className="relative z-10">
         {/* Header and Dropdown Row */}
-        <div className="container mx-auto px-4 py-4 flex shadow-md items-center justify-between bg-gradient-to-b from-yellow-50 to-yellow-100">
+        <div className="container mx-auto px-4 py-2 flex shadow-md items-center justify-between bg-gradient-to-b from-yellow-50 to-yellow-100">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-yellow-100 rounded-full shadow-lg">
               <Tractor className="w-8 h-8 text-yellow-600" />

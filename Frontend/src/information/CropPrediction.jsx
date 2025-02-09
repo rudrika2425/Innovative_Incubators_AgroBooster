@@ -39,11 +39,8 @@ const CropCard = ({ cropData = {}, index }) => {
 
   const renderDetailIcon = (key) => {
     const iconMap = {
-      optimalConditions: <Sun className="w-6 h-6 text-yellow-600" />,
-      growthDuration: <Leaf className="w-6 h-6 text-emerald-600" />,
-      fertilizerNeeds: <Droplet className="w-6 h-6 text-blue-600" />,
-      economicValue: <CloudRain className="w-6 h-6 text-purple-600" />,
-      diseaseResistance: <Leaf className="w-6 h-6 text-red-600" />
+      Brief: <Sun className="w-6 h-6 text-yellow-600" />,
+      
     };
     return iconMap[key] || null;
   };
@@ -73,7 +70,7 @@ const CropCard = ({ cropData = {}, index }) => {
           <div className="flex items-center gap-3">
             <Sprout className="w-8 h-8 text-emerald-600" />
             <div>
-              <strong className="text-emerald-900 text-lg block mb-1">Variety</strong>
+              <strong className="text-emerald-900 text-lg block mb-1">Varieties</strong>
               <span className="text-emerald-800 text-lg">{formatText(variety)}</span>
             </div>
           </div>
@@ -178,11 +175,7 @@ const CropPrediction = () => {
           currentCrop.variety = line.replace('- **Variety**:', '').trim();
         } else {
           const descriptions = {
-            'Optimal Soil & Climate Conditions': 'optimalConditions',
-            'Growth Duration': 'growthDuration',
-            'Fertilizer & Irrigation Needs': 'fertilizerNeeds',
-            'Uses & Economic Value': 'economicValue',
-            'Disease Resistance & Pest Control': 'diseaseResistance'
+            'Brief':'Brief',
           };
 
           for (const [key, field] of Object.entries(descriptions)) {
@@ -337,14 +330,14 @@ const CropPrediction = () => {
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
       
-      <div className="relative z-10 w-full max-w-5xl mx-auto pt-8 px-4 pb-12">
+      <div className="relative z-10 w-full max-w-8xl mx-auto pt-8 px-4 p-10">
         <h2 className="text-5xl font-extrabold text-emerald-900 mb-8 text-center">
           Crop Predictions for Your Farm
         </h2>
         <h2 className="text-lg font-extrabold text-yellow-900 mb-8 text-center">
         "Harvest Success with Smart Crop Predictions—Customized for Your Farm, Driven by Your Data!" 🌾🚀
         </h2>
-        <div className="flex flex-col items-center">
+        <div className="grid grid-cols-3 gap-4 items-center m-10">
           {predictions && predictions.length > 0 ? (
             predictions.map((crop, index) => (
               <CropCard key={index} cropData={crop} index={index}/>

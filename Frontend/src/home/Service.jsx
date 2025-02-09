@@ -1,16 +1,12 @@
 import React from "react";
 import { 
   BarChart2, Landmark, TestTube2, Microscope, CloudSun, CropIcon, 
-  Leaf, Wheat, Sun, Droplet, Clock, Trophy, AlertCircle, Users, Database,Star
+  Leaf, Wheat, Sun, Droplet, Clock, Trophy, AlertCircle, Users, Database, Star
 } from "lucide-react";
-
-
+import { TranslatedText } from "../languageTranslation/TranslatedText";
 
 const SectionWrapper = ({ id, title, children }) => (
-
-  
- <div id={id} className="relative min-h-screen overflow-hidden bg-gradient-to-b from-yellow-100 to-yellow-200 py-16">
-
+  <div id={id} className="relative min-h-screen overflow-hidden bg-gradient-to-b from-yellow-100 to-yellow-200 py-16">
     <style>{`
       @keyframes float {
         0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -26,12 +22,11 @@ const SectionWrapper = ({ id, title, children }) => (
       }
     `}</style>
 
-   
     <div className="container mx-auto px-4 relative z-10">
       <h2 className="text-6xl font-extrabold text-emerald-900 text-center mb-16 tracking-tight">
-        {title}
+        <TranslatedText text={title} />
         <div className="text-xl font-normal text-emerald-700 mt-4 ml-5 mr-5">
-        Empowering farmers with cutting-edge agricultural technology, we bring innovation to the fields. Our solutions enhance productivity, reduce waste, and promote sustainable farming. By integrating smart techniques and bioenzymes, we ensure healthier crops and soil. Together, we are shaping the future of agriculture for a greener tomorrow.
+          <TranslatedText text="Empowering farmers with cutting-edge agricultural technology, we bring innovation to the fields. Our solutions enhance productivity, reduce waste, and promote sustainable farming. By integrating smart techniques and bioenzymes, we ensure healthier crops and soil. Together, we are shaping the future of agriculture for a greener tomorrow." />
         </div>
       </h2>
       {children}
@@ -142,7 +137,7 @@ const Service = ({ id }) => {
     ];
   
     return (
-      <div className="bg-yellow-600 py-16 rounded-3xl">
+      <div className="bg-yellow-600 py-16 rounded-3xl mt-10">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -151,7 +146,9 @@ const Service = ({ id }) => {
                   {React.cloneElement(stat.icon, { className: "w-12 h-12 text-emerald-300" })}
                 </div>
                 <div className="text-4xl font-bold mb-2">{stat.value}</div>
-                <div className="text-emerald-200">{stat.label}</div>
+                <div className="text-emerald-200">
+                  <TranslatedText text={stat.label} />
+                </div>
               </div>
             ))}
           </div>
@@ -159,10 +156,10 @@ const Service = ({ id }) => {
       </div>
     );
   };
+
   return (
     <SectionWrapper id={id} title="Agricultural Services">
-     
-      <div className="grid md:grid-cols-3 gap-8 mx-4 md:mx-20 mb-15 ">
+      <div className="grid md:grid-cols-3 gap-8 mx-4 md:mx-20 mb-15">
         {purposes.map((purpose, index) => (
           <div
             key={index}
@@ -178,16 +175,16 @@ const Service = ({ id }) => {
             </div>
             <div className="space-y-4">
               <h3 className={`text-2xl font-bold mb-3 ${purpose.iconColor}`}>
-                {purpose.title}
+                <TranslatedText text={purpose.title} />
               </h3>
               <p className="text-emerald-800 text-sm leading-relaxed">
-                {purpose.description}
+                <TranslatedText text={purpose.description} />
               </p>
               <ul className="text-sm text-emerald-700 mt-4 space-y-2">
                 {purpose.features.map((feature, idx) => (
                   <li key={idx} className="flex items-center justify-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                    {feature}
+                    <TranslatedText text={feature} />
                   </li>
                 ))}
               </ul>
@@ -196,7 +193,6 @@ const Service = ({ id }) => {
         ))}
       </div>
       <StatsSection />
-  
     </SectionWrapper>
   );
 };
