@@ -1,67 +1,23 @@
-.calendar-container {
-    max-width: 1000px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  }
-  
-  .calendar-title {
-    text-align: center;
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .calendar-card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  .fc-event {
-    border-radius: 8px;
-    background: linear-gradient(to right, #34d058, #28a745);
-    color: white;
-    padding: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-  }
-  
-   
-  .modal-task-details p {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .modal-task-details strong {
-    color: #28a745;
-  }
-  
-  button.close {
-    font-size: 24px;
-    color: #333;
-  }
-  
-  .event-aqua-pump {
-    background-color: #007bff; /* Blue */
-    color: white;
-  }
-  
-  .event-power-strength {
-    background-color: #28a745; /* Green */
-    color: white;
-  }
-  
-  .event-pilates {
-    background-color: #ffc107; /* Yellow */
-    color: black;
-  }
-  
-  .event-default {
-    background-color: #6c757d; /* Gray */
-    color: white;
-  }
-  
+.event-aqua-pump {
+  background-color: #007bff !important;
+  color: white !important;
+  border: none !important;
+}
+
+.event-power-strength {
+  background-color: #28a745 !important;
+  color: white !important;
+  border: none !important;
+}
+
+.event-pilates {
+  background-color: #ff5733 !important;
+  color: white !important;
+  border: none !important;
+}
+
+.event-default {
+  background-color: #6c757d !important;
+  color: white !important;
+  border: none !important;
+}
