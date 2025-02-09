@@ -16,7 +16,7 @@ function Navbar() {
           <TranslatedText text="AgroBooster"/>
         </Link>
 
-        <ul className="hidden lg:flex space-x-8 mr-10   ">
+        <ul className="hidden lg:flex space-x-8 mr-10  mt-3 ">
           <li>
             <NavLink
               to="/"

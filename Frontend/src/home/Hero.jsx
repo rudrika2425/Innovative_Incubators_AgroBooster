@@ -141,7 +141,7 @@ const Hero = ({ id }) => {
 
       {/* Main Hero Section */}
       <div className="relative min-h-screen">
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4">
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-10">
           <div className="space-y-6 max-w-5xl -mt-20">
             <div className="flex justify-center gap-4 mb-4">
               <div className="p-4 bg-emerald-100 rounded-full shadow-lg animate-bounce-slow">

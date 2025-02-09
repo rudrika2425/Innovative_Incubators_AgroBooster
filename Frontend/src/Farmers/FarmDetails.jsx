@@ -1,24 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { WiDaySunny } from 'react-icons/wi';  // Weather icon
 import { BsCalendar } from 'react-icons/bs'; // Calendar icon
-import { useNavigate } from 'react-router-dom';
 
 const FarmDetails = () => {
   const { farmId } = useParams();   
   const [farm, setFarm] = useState(null);
   const [error, setError] = useState(null);
- 
-  const navigate=useNavigate();
-
- const handleCalendar=()=>{
-        navigate(`/farmerdashboard/farm-details/${farmId}/calendar`)
- }
-
- const handleWeather = () => {
-  navigate("/farmerdashboard/weather-forecast");
- }
 
   useEffect(() => {
     const fetchFarmDetails = async () => {
@@ -32,6 +21,22 @@ const FarmDetails = () => {
     
     fetchFarmDetails();
   }, [farmId]);
+ 
+  const navigate = useNavigate();
+
+  const handleCalendar = () => {
+    navigate(`/farmerdashboard/farm-details/${farmId}/calendar`);
+  };
+
+  const handleWeather = () => {
+    if (farm?.location) {
+      navigate(`/farmerdashboard/weather-forecast?lat=${farm.location.latitude}&lon=${farm.location.longitude}`);
+    } else {
+      navigate("/farmerdashboard/weather-forecast");
+    }
+  };
+
+
 
   if (error) return <p className="text-red-500">{error}</p>;
   if (!farm) return <p>Loading farm details...</p>;
@@ -43,7 +48,7 @@ const FarmDetails = () => {
         <h1 className="text-xl font-bold">Farm Dashboard</h1>
         <div className="flex space-x-6 text-2xl">
           <WiDaySunny className="cursor-pointer" title="Weather Info" onClick={handleWeather} />
-          <BsCalendar className="cursor-pointer" title="Calendar"  onClick={handleCalendar}/>
+          <BsCalendar className="cursor-pointer" title="Calendar" onClick={handleCalendar} />
         </div>
       </nav>
 

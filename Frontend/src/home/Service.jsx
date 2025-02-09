@@ -142,7 +142,7 @@ const Service = ({ id }) => {
     ];
   
     return (
-      <div className="bg-yellow-600 py-16 rounded-3xl">
+      <div className="bg-yellow-600 py-16 rounded-3xl mt-10">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (

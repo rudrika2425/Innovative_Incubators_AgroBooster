@@ -1,3 +1,4 @@
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMicrophone, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -275,7 +276,7 @@ const FarmerInput = () => {
                   <button
                     type="button"
                     onClick={() => startListening(field)}
-                    className="p-3 bg-emerald-600 text-white rounded-4xl h-12 flex items-center gap-2 w-30 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors duration-300"
+                    className="p-3 bg-emerald-600 text-white rounded-xl h-12 flex items-center gap-2 w-30 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors duration-300"
                   >
                     Voice
                     <FontAwesomeIcon icon={faMicrophone} />

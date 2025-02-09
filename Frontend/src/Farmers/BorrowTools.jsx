@@ -45,7 +45,7 @@ const BorrowTools = () => {
 
       <div className="relative z-10">
         {/* Header and Dropdown Row */}
-        <div className="container mx-auto px-4 py-4 flex shadow-md items-center justify-between bg-gradient-to-b from-yellow-50 to-yellow-100">
+        <div className="container mx-auto px-4 py-2 flex shadow-md items-center justify-between bg-gradient-to-b from-yellow-50 to-yellow-100">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-yellow-100 rounded-full shadow-lg">
               <Tractor className="w-8 h-8 text-yellow-600" />
