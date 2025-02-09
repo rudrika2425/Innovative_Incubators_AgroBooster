@@ -1,378 +1,167 @@
-import React, { useState, useEffect } from "react";
-import { Leaf, Droplet, Sun, CloudRain, Sprout, Cloud, Tractor } from 'lucide-react';
-import { useNavigate } from "react-router-dom";
-
-
-const gradientClasses = [
-  'bg-gradient-to-br from-emerald-100 to-emerald-200',
-  'bg-gradient-to-br from-amber-100 to-amber-200',
-  'bg-gradient-to-br from-yellow-100 to-yellow-200',
-  'bg-gradient-to-br from-lime-100 to-lime-200',
-  'bg-gradient-to-br from-stone-100 to-stone-200',
-  'bg-gradient-to-br from-orange-100 to-orange-200'
-];
-
-const CropCard = ({ cropData = {}, index }) => {
-  const [showFullDetails, setShowFullDetails] = useState(false);
-
-  const formatText = (text) => {
-    if (!text) return '';
-    return text
-      .trim()
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
-  };
-
-  const {
-    commonName = 'Unknown Crop',
-    cropType = 'Unspecified',
-    hindiName = '',
-    variety = 'Not Available',
-    description = {}
-  } = cropData;
-
-  const formattedDescription = Object.entries(description).reduce((acc, [key, value]) => {
-    acc[key] = formatText(value);
-    return acc;
-  }, {});
-
-  const renderDetailIcon = (key) => {
-    const iconMap = {
-      Brief: <Sun className="w-6 h-6 text-yellow-600" />,
-      
-    };
-    return iconMap[key] || null;
-  };
-
-  const gradientClass = gradientClasses[index % gradientClasses.length];
-
-  return (
-    <div   className={`w-full max-w-3xl mx-auto ${gradientClass} rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-[1.02] mb-8`}>
-      <div className="relative p-8" >
-        <div className="absolute top-0 right-0 w-32 h-32 opacity-10">
-          <Sprout className="w-full h-full text-emerald-900" />
-        </div>
-
-        <div className="flex justify-between items-start mb-3">
-          <div className="space-y-2">
-            <h3 className="text-3xl font-bold text-emerald-900 tracking-tight">{formatText(commonName)}</h3>
-            <p className="text-sm font-semibold text-emerald-700 uppercase tracking-wider">{formatText(cropType)}</p>
-          </div>
-          {hindiName && (
-            <span className="text-sm font-medium text-emerald-700 bg-emerald-50 px-4 py-2 rounded-full shadow-sm border border-emerald-200">
-              {formatText(hindiName)}
-            </span>
-          )}
-        </div>
-
-        <div className="mb-2 bg-white bg-opacity-70 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-emerald-100">
-          <div className="flex items-center gap-3">
-            <Sprout className="w-8 h-8 text-emerald-600" />
-            <div>
-              <strong className="text-emerald-900 text-lg block mb-1">Varieties</strong>
-              <span className="text-emerald-800 text-lg">{formatText(variety)}</span>
-            </div>
-          </div>
-        </div>
-
-        {Object.keys(formattedDescription).length > 0 && showFullDetails && (
-          <div className="space-y-4">
-            {Object.entries(formattedDescription).map(([key, value]) => (
-              <div key={key} className="flex items-start gap-4 bg-white bg-opacity-70 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-emerald-100 transition-all duration-300 hover:bg-opacity-90">
-                <div className="mt-1">{renderDetailIcon(key)}</div>
-                <div className="flex-1">
-                  <h4 className="font-semibold text-lg text-emerald-900 mb-2">
-                    {formatText(key.replace(/([A-Z])/g, ' $1').trim())}
-                  </h4>
-                  <p className="text-emerald-800 leading-relaxed">{value}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {Object.keys(description).length > 0 && (
-          <button
-            onClick={() => setShowFullDetails(!showFullDetails)}
-            className="mt-1 w-full py-4 text-emerald-700 bg-white bg-opacity-70 hover:bg-opacity-90 rounded-xl transition-all duration-300 font-semibold shadow-sm border border-emerald-100 hover:shadow-md"
-          >
-            {showFullDetails ? "Hide Details" : "Show More Details"}
-          </button>
-        )}
-      </div>
-    </div>
-  );
-};
+import React, { useState, useEffect } from 'react';
 
 const CropPrediction = () => {
   const [predictions, setPredictions] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [dataFetched, setDataFetched] = useState(false);
-  const [crop, setCrop] = useState("");
-  const [variety, setVariety] = useState("");
- 
-  const navigate = useNavigate();
-  
-  const handleCrop = async () => {
-    const farmId = localStorage.getItem("farmId");
-    console.log("Farm ID:", farmId);
-    console.log(crop);
-    console.log(variety);
-    if (!farmId) {
-      console.error("Farm ID is missing.");
-      return;
-    } 
+
+  const parsePrediction = (prediction) => {
     try {
-      const response = await fetch("http://127.0.0.1:4000/calendar/update-farm", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          crop,
+      const lines = prediction.split('\n').filter(line => line.trim() !== '');
+      
+      const getValueFromLine = (prefix) => {
+        const line = lines.find(l => l.includes(prefix));
+        return line ? line.replace(prefix, '').replace('', '').trim() : '';
+      };
+
+      const cropType = getValueFromLine('Crop Type:');
+      const commonName = getValueFromLine('Common Name:');
+      const hindiName = getValueFromLine('Hindi Name:');
+      const variety = getValueFromLine('Variety:');
+      
+      const descIndex = lines.findIndex(l => l.includes('Description:'));
+      const description = descIndex !== -1 
+        ? lines.slice(descIndex).join('\n').replace('Description:', '').trim()
+        : '';
+
+      // Only return the prediction if it has all required fields
+      if (cropType && commonName && variety && description) {
+        return {
+          cropType,
+          commonName,
+          hindiName,
           variety,
-          farmId,
-        }),
-      });
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Crop saved successfully:", result);
-        navigate("/farmerdashboard", {
-          state: { farmId, crop, variety },
-        });
-      } else {
-        console.error("Failed to save crop data.");
+          description
+        };
       }
-    } catch (error) {
-      console.error("Error saving crop data:", error);
-    }
-  };
-
-  const parsePredictions = (predictionText) => {
-    try {
-      const lines = predictionText.split('\n');
-      const predictions = [];
-      let currentCrop = {};
-
-      lines.forEach(line => {
-        line = line.trim();
-        
-        if (line.startsWith('- **Common Name**:')) {
-          if (Object.keys(currentCrop).length > 0) {
-            predictions.push({ ...currentCrop });
-          }
-          currentCrop = {
-            commonName: line.replace('- **Common Name**:', '').trim(),
-            description: {}
-          };
-        } else if (line.startsWith('- **Crop Type**:')) {
-          currentCrop.cropType = line.replace('- **Crop Type**:', '').trim();
-        } else if (line.startsWith('- **Hindi Name**:')) {
-          currentCrop.hindiName = line.replace('- **Hindi Name**:', '').trim();
-        } else if (line.startsWith('- **Variety**:')) {
-          currentCrop.variety = line.replace('- **Variety**:', '').trim();
-        } else {
-          const descriptions = {
-            'Brief':'Brief',
-          };
-
-          for (const [key, field] of Object.entries(descriptions)) {
-            if (line.includes(key)) {
-              const value = line
-                .replace(`* - **${key}**:`, '')
-                .replace(/^\*\s*-?\s*/, '')
-                .trim();
-              
-              currentCrop.description[field] = value;
-              break;
-            }
-          }
-        }
-      });
-
-      if (Object.keys(currentCrop).length > 0) {
-        predictions.push({ ...currentCrop });
-      }
-
-      return predictions.slice(1);
-    } catch (parseError) {
-      console.error("Parsing error:", parseError);
-      return [];
+      return null;
+    } catch (err) {
+      console.error('Error parsing prediction:', err);
+      return null;
     }
   };
 
   useEffect(() => {
-    const farmData = JSON.parse(localStorage.getItem("farmData") || "{}");
-
-    if (!dataFetched) {
-      const fetchPredictions = async () => {
-        try {
-          const requestData = {
-            _id: farmData._id,
-            farmerId: farmData.farmerId,
-            farmerInput: {
-              farmName: farmData.farmerInput?.farmName || "Unknown Farm",
-              landArea: farmData.farmerInput?.landArea || "0",
-              farmingTools: farmData.farmerInput?.farmingTools || [],
-              irrigationSystem: farmData.farmerInput?.irrigationSystem || "Unknown",
-              soilType: farmData.farmerInput?.soilType || "Unknown",
-              cropSeason: farmData.farmerInput?.cropSeason || "Unknown",
-              location: {
-                altitude: farmData.farmerInput?.location?.altitude || 0,
-                city: farmData.farmerInput?.location?.city || "Unknown",
-                country: farmData.farmerInput?.location?.country || "Unknown",
-                ip: farmData.farmerInput?.location?.ip || "",
-                latitude: farmData.farmerInput?.location?.latitude || "0",
-                longitude: farmData.farmerInput?.location?.longitude || "0",
-                region: farmData.farmerInput?.location?.region || "Unknown",
-                tropical_zone: farmData.farmerInput?.location?.tropical_zone || "Unknown"
-              },
-              weather: {
-                cloud_coverage: farmData.farmerInput?.weather?.cloud_coverage || 0,
-                date_time_utc: farmData.farmerInput?.weather?.date_time_utc || "",
-                feels_like: farmData.farmerInput?.weather?.feels_like || 0,
-                humidity: farmData.farmerInput?.weather?.humidity || 0,
-                pressure: farmData.farmerInput?.weather?.pressure || 0,
-                temperature: farmData.farmerInput?.weather?.temperature || 0,
-                weather_description: farmData.farmerInput?.weather?.weather_description || "Unknown",
-                wind_speed: farmData.farmerInput?.weather?.wind_speed || 0
-              },
-              soilAnalysisReport: farmData.farmerInput?.soilAnalysisReport || "Unknown"
-            }
-          };
-
-          const response = await fetch("http://127.0.0.1:4000/predict/", {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestData)
-          });
-          
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          
-          const data = await response.json();
-          
-          if (data.status === "success") {
-            const parsedPredictions = parsePredictions(data.predictions);
-            console.log(parsedPredictions);
-            if (parsedPredictions && parsedPredictions.length > 0) {
-              setPredictions(parsedPredictions);
-              setLoading(false);
-            }
-          } else {
-            throw new Error(data.message || "Failed to get predictions");
-          }
-        } catch (error) {
-          console.error("Fetch error:", error);
-          setError(`Failed to fetch crop predictions: ${error.message}`);
-          setLoading(false);
-        } finally {
-          setDataFetched(true);
-          localStorage.removeItem("farmData");
+    const fetchPredictions = async () => {
+      setLoading(true);
+      try {
+        const farmId = localStorage.getItem('farmId');
+        if (!farmId) {
+          throw new Error('No farm ID found in local storage');
         }
-      };
 
-      fetchPredictions();
-    }
-  }, [dataFetched]);
+        console.log('Attempting to fetch predictions for farmId:', farmId);
 
-  const LoadingScreen = () => (
-    <div className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
-        <style>{`
-          @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(5deg); }
-          }
-          @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-          }
-        `}</style>
-      
-      
-      
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4">
-        <div className="space-y-6">
-          <div className="flex justify-center gap-4 mb-8">
-            <div className="p-4 bg-emerald-100 rounded-full shadow-lg animate-bounce">
-              <Sprout className="w-12 h-12 text-emerald-600" />
-            </div>
-          </div>
-          <h2 className="text-3xl font-extrabold text-yellow-900 animate-pulse">
-            Analyzing Your Farm Data
-          </h2>
-          <p className="text-lg text-emerald-800">
-            Please wait while we process your crop predictions...
-          </p>
-        </div>
+        const response = await fetch('http://127.0.0.1:4000/predict/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ farmId }),
+          credentials: 'omit'
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(`errorData.message || HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.status === 'error') {
+          throw new Error(data.message);
+        }
+        
+        setPredictions(data.predictions);
+      } catch (err) {
+        console.error('Error fetching predictions:', err);
+        setError(err.message || 'Failed to connect to the server. Please make sure the backend is running.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPredictions();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center p-12 space-y-4">
+        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+        <p className="text-gray-600">Analyzing farm data and generating predictions...</p>
       </div>
-    </div>
-  );
-
-  if (error) return (
-    <div className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
-     
-      <div className="relative z-10 w-full max-w-4xl mx-auto mt-8 bg-red-50 border border-red-200 text-red-800 rounded-lg p-6 text-center">
-        {error}
-      </div>
-    </div>
-  );
-
-  if (loading || !predictions || predictions.length === 0) {
-    return <LoadingScreen />;
+    );
   }
 
-  return (
-    <div className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
-      
-      <div className="relative z-10 w-full max-w-8xl mx-auto pt-8 px-4 p-10">
-        <h2 className="text-5xl font-extrabold text-emerald-900 mb-8 text-center">
-          Crop Predictions for Your Farm
-        </h2>
-        <h2 className="text-lg font-extrabold text-yellow-900 mb-8 text-center">
-        "Harvest Success with Smart Crop Predictions—Customized for Your Farm, Driven by Your Data!" 🌾🚀
-        </h2>
-        <div className="grid grid-cols-3 gap-4 items-center m-10">
-          {predictions && predictions.length > 0 ? (
-            predictions.map((crop, index) => (
-              <CropCard key={index} cropData={crop} index={index}/>
-            ))
-          ) : (
-            <div className="text-center text-gray-500">
-              No crop predictions available.
-            </div>
-          )}
+  if (error) {
+    return (
+      <div className="max-w-4xl mx-auto my-8 p-6 bg-red-50 rounded-lg border border-red-200">
+        <h3 className="text-xl font-semibold text-red-700 mb-2">Error</h3>
+        <p className="text-red-600">{error}</p>
+        <div className="mt-4">
+          <p className="text-sm text-gray-600">Please ensure:</p>
+          <ul className="list-disc ml-6 mt-2 text-sm text-gray-600">
+            <li>The Flask server is running on port 4000</li>
+            <li>MongoDB is running and accessible</li>
+            <li>Your farm ID is correctly stored in local storage</li>
+          </ul>
         </div>
       </div>
-      <div className="crop-form ">
-      <div className="input">
-        <label>Crop:</label>
-        <input
-          type="text"
-          value={crop}
-          onChange={(e) => setCrop(e.target.value)}
-          placeholder="Enter crop name"
-        />
+    );
+  }
+
+  if (!predictions) {
+    return (
+      <div className="max-w-4xl mx-auto my-8 p-6 bg-yellow-50 rounded-lg border border-yellow-200">
+        <p className="text-yellow-700">No predictions available at this time.</p>
       </div>
-      <div className="input">
-        <label>Variety:</label>
-        <input
-          type="text"
-          value={variety}
-          onChange={(e) => setVariety(e.target.value)}
-          placeholder="Enter variety name"
-        />
-      </div>
-      <button onClick={handleCrop}>Save Crop</button>
-    </div>
+    );
+  }
+
+  const parsedPredictions = predictions
+    .split('\n\n')
+    .map(parsePrediction)
+    .filter(Boolean); // Remove null values
+
+  return (
+    <div className="max-w-6xl mx-auto my-12 bg-white rounded-xl shadow-lg p-8">
+      <h2 className="text-3xl font-bold text-gray-800 mb-8">Crop Predictions</h2>
       
+      {parsedPredictions.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {parsedPredictions.map((prediction, index) => (
+            <div 
+              key={index}
+              className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow"
+            >
+              <div className="mb-4">
+                <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                  {prediction.cropType}
+                </span>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                {prediction.commonName}
+              </h3>
+              {prediction.hindiName && (
+                <p className="text-gray-600 mb-2">{prediction.hindiName}</p>
+              )}
+              <div className="mb-4">
+                <h4 className="font-medium text-gray-700 mb-1">Varieties:</h4>
+                <p className="text-gray-600">{prediction.variety}</p>
+              </div>
+              <div>
+                <h4 className="font-medium text-gray-700 mb-1">Description:</h4>
+                <p className="text-gray-600 text-sm">{prediction.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-8">
+          <p className="text-gray-600">No valid predictions found. Please try again.</p>
+        </div>
+      )}
     </div>
-    
   );
 };
 

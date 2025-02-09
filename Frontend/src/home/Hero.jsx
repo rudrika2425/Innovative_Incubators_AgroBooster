@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import { 
-  Sprout, Leaf, Sun, Cloud, Tractor, Target, 
-  Globe, ArrowUpRight, MapPin, Mic, Calendar, 
-  Shield, Brain, Database, Radio, Droplet 
-} from "lucide-react";
+import React from "react";
+import { Sprout, Leaf, Sun, Cloud, Tractor, Target, Globe, ArrowUpRight, MapPin, Mic, Calendar, Shield, Brain, Database, Radio, } from "lucide-react";
 import { TranslatedText } from "../languageTranslation/TranslatedText";
 
 const Hero = ({ id }) => {
@@ -76,38 +72,7 @@ const Hero = ({ id }) => {
     }
   ];
 
-  const FloatingElements = ({ density = 7, additionalClasses = "" }) => {
-    const allFloatingIcons = [
-      { icon: <Leaf className="w-6 h-6 text-emerald-600" />, className: "top-1/4 left-1/4" },
-      { icon: <Sprout className="w-7 h-7 text-lime-600" />, className: "top-1/2 right-1/3" },
-      { icon: <Sun className="w-8 h-8 text-yellow-600" />, className: "bottom-1/4 left-1/2" },
-      { icon: <Tractor className="w-11 h-11 text-green-600" />, className: "top-1/3 right-1/4" },
-      { icon: <Cloud className="w-10 h-10 text-gray-600" />, className: "bottom-1/3 left-1/3" },
-      { icon: <Droplet className="w-8 h-8 text-blue-600" />, className: "top-2/3 right-1/2" },
-      { icon: <Target className="w-9 h-9 text-red-600" />, className: "bottom-1/2 left-1/4" },
-      { icon: <Globe className="w-7 h-7 text-indigo-600" />, className: "top-1/5 left-1/5" },
-      { icon: <Radio className="w-8 h-8 text-purple-600" />, className: "bottom-1/5 right-1/5" },
-      { icon: <ArrowUpRight className="w-9 h-9 text-amber-600" />, className: "top-3/4 left-3/4" },
-      { icon: <Brain className="w-10 h-10 text-teal-600" />, className: "bottom-3/4 right-3/4" }
-    ];
   
-    return (
-      <div className={`absolute inset-0 overflow-hidden pointer-events-none ${additionalClasses}`}>
-        {allFloatingIcons.slice(0, density).map((item, i) => (
-          <div
-            key={i}
-            className={`absolute animate-float opacity-40 ${item.className}`}
-            style={{
-              animation: `float ${4 + Math.random() * 2}s infinite ${Math.random() * 1}s`,
-              zIndex: 0
-            }}
-          >
-            {item.icon}
-          </div>
-        ))}
-      </div>
-    );
-  };
 
   const PlatformStep = ({ icon, title, description, color, details }) => (
     <div className="group relative max-w-7xl h-96 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg transform transition-all hover:scale-105 hover:shadow-xl">
@@ -135,7 +100,7 @@ const Hero = ({ id }) => {
   );
 
   return (
-    <div id={id} className="bg-gradient-to-b from-yellow-100 to-yellow-200 relative">
+    <div id={id} className="bg-gradient-to-b from-yellow-50 to-yellow-100 relative">
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -143,10 +108,9 @@ const Hero = ({ id }) => {
         }
       `}</style>
 
-      <FloatingElements density={12} additionalClasses="z-0" />
+   
 
-      {/* Main Hero Section */}
-      <div className="relative min-h-screen">
+      <div className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-10">
           <div className="space-y-6 max-w-5xl -mt-20">
             <div className="flex justify-center gap-4 mb-4">
@@ -211,8 +175,8 @@ const Hero = ({ id }) => {
       </div>
 
       {/* Platform Steps Section */}
-      <section className="container mx-auto px-6 py-16 bg-white/50 relative">
-        <FloatingElements />
+      <section className="container mx-auto px-6 py-16 bg-white/50 relative bg-gradient-to-b from-yellow-50 to-yellow-100">
+
         <h2 className="text-6xl font-bold text-center text-emerald-900 mb-12">
           <TranslatedText text="Our Platform" />{' '}
           <span className="text-yellow-700">
@@ -235,9 +199,9 @@ const Hero = ({ id }) => {
       </section>
 
       {/* Technology Impact Section */}
-      <section className="container mx-auto px-6 py-16 bg-gradient-to-b from-white to-yellow-50 relative">
-        <FloatingElements />
-        <h2 className="text-6xl font-bold text-center text-emerald-900 mb-12">
+      <section className="container mx-auto px-6 py-16 bg-gradient-to-b from-yellow-50 to-yellow-100 relative">
+        
+        <h2 className="text-6xl font-bold text-center text-emerald-900 mb-20">
           <TranslatedText text="Technology" />{' '}
           <span className="text-yellow-700">
             <TranslatedText text="Transforming Agriculture" />
