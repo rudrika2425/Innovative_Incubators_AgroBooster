@@ -7,20 +7,20 @@ function Navbar() {
   
 
   return (
-    <nav className="bg-white bg-opacity-100 sticky top-0 left-0 w-full z-50 shadow-md">
-      <div className="container text-emerald-600 mx-auto px-10 flex justify-between items-center py-2">
+    <nav className="flex bg-emerald-600 bg-opacity-100 sticky top-0 left-0 w-full z-50 shadow-md  h-19">
+      <div className="container text-white mx-auto px-10 flex justify-between items-center py-2">
         <Link 
           to="/" 
-          className="cursor-pointer  text-emerald-600  hover:text-amber-600 font-bold text-3xl no-underline"
+          className="cursor-pointer  hover:text-amber-600 font-bold text-3xl no-underline"
         >
           <TranslatedText text="AgroBooster"/>
         </Link>
 
-        <ul className="hidden lg:flex space-x-8 mr-10  mt-3 ">
+        <ul className="hidden lg:flex space-x-8 mr-10 mb-1 text-white">
           <li>
             <NavLink
               to="/"
-              className="  text-emerald-600 cursor-pointer font-semibold text-lg hover:text-amber-600 no-underline"
+              className=" cursor-pointer font-semibold text-xl hover:text-amber-600 no-underline"
             >
               <TranslatedText text="Home"/>
             </NavLink>
@@ -28,7 +28,7 @@ function Navbar() {
           <li>
             <NavLink
               to="/about"
-              className=" text-emerald-600 cursor-pointer font-semibold text-lg hover:text-amber-600 no-underline"
+              className=" cursor-pointer font-semibold text-xl hover:text-amber-600 no-underline"
             >
               <TranslatedText text="About Us"/>
             </NavLink>
@@ -36,7 +36,7 @@ function Navbar() {
           <li>
             <NavLink
               to="/services"
-              className=" text-emerald-600 cursor-pointer font-semibold text-lg hover:text-amber-600 no-underline"
+              className="  cursor-pointer font-semibold text-xl hover:text-amber-600 no-underline"
             >
               <TranslatedText text="Services"/>
             </NavLink>
@@ -44,7 +44,7 @@ function Navbar() {
           <li>
             <NavLink
               to="/contact"
-              className="  text-emerald-600 cursor-pointer font-semibold text-lg hover:text-amber-600 no-underline"
+              className="  cursor-pointer font-semibold text-xl hover:text-amber-600 no-underline"
             >
               <TranslatedText text="Contact Us"/>
             </NavLink>
