@@ -75,7 +75,7 @@ const Hero = ({ id }) => {
   
 
   const PlatformStep = ({ icon, title, description, color, details }) => (
-    <div className="group relative max-w-7xl h-96 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg transform transition-all hover:scale-105 hover:shadow-xl">
+    <div className="group relative max-w-6xl h-96 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg transform transition-all hover:scale-105 hover:shadow-xl">
       <div className={`p-4 rounded-full inline-flex items-center justify-center mb-4 ${color}`}>
         {icon}
       </div>
@@ -184,7 +184,7 @@ const Hero = ({ id }) => {
           </span>
         </h2>
         
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 m-10">
           {platformSteps.map((step, index) => (
             <PlatformStep 
               key={index}
