@@ -20,7 +20,7 @@ farms_collection = db['farmers']
 
 @calendar_bp.route('/update-farm', methods=['POST'])
 def update_farm():
-    data = request.json  # Get data from the request
+    data = request.json  
     farm_id = data.get('farmId')
     crop = data.get('crop')
     variety = data.get('variety')
@@ -122,7 +122,7 @@ def get_farmer_info(farm_id):
         Generate a growing schedule for {crop_type} (variety: {variety}) in {location}. Format each task exactly as follows:
 
         The title of the task | The description of the task
-        Start Date:The starting date for that task in relation to {current_date} (e.g., 20-02-2025 need exact dates ) 
+        Start Date:The starting date for that task in relation to {current_date} (e.g., 20-02-2025 need exact dates )
         End Date: The ending date for that task, calculated based on {current_date} and the starting date.
         Description: [Detailed description]
         Sustainable resources that can be used: Sustainable resources which can maximize the yield and at the same time will not harm environment. It should be personalised accoridng to the user provided data.
