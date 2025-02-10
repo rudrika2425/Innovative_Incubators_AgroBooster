@@ -31,21 +31,29 @@ def create_tool_rental():
 @tool_rental_bp.route('/gettools', methods=['GET'])
 def get_all_tools():
     try:
-        # Get farmerId from query parameters
+        # Get farmerId and district from query parameters
         farmer_id = request.args.get('farmerId')
-        
+        district = request.args.get('district')
+
         if not farmer_id:
             return jsonify({"error": "farmerId parameter is required"}), 400
-        
-        # Get all tools and filter out the ones belonging to the specified farmer
-        # Direct string comparison since both IDs are strings
+        if not district:
+            return jsonify({"error": "district parameter is required"}), 400
+
+        # Get all tools
         tools = ToolRental.find_all_tools()
-        filtered_tools = [tool for tool in tools if tool['farmer_id'] != farmer_id]
-        
+
+        # Filter tools by farmer_id and district
+        filtered_tools = [
+            tool for tool in tools 
+            if tool['farmer_id'] != farmer_id and tool['district'].lower() == district.lower()
+        ]
+
         return jsonify(filtered_tools), 200
-        
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 # Route to get tool rentals by farmer ID
 @tool_rental_bp.route('/tools/farmer/<farmer_id>', methods=['GET'])
