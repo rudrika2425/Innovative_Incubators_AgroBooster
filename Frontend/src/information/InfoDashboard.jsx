@@ -18,7 +18,7 @@ const InfoDashboard = () => {
     <div
     >
       {/* Professional Navbar */}
-      <nav className="bg-white shadow-md">
+      <nav className="bg-gradient-to-b from-yellow-50 to-yellow-100 shadow-md p-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Left side - Logo */}
@@ -30,8 +30,8 @@ const InfoDashboard = () => {
 
             {/* Right side - User Info */}
             <div className="flex items-center space-x-4">
-              <span className="text-emerald-600">
-                Welcome, <span className="font-medium text-amber-600">{user.fullname}</span>
+              <span className="text-emerald-600 text-2xl">
+                Welcome, <span className="font-medium text-2xl text-amber-600">{user.fullname}</span>
               </span>
               <div className="relative group">
                 <UserCircle 
@@ -41,13 +41,13 @@ const InfoDashboard = () => {
                 <div className="hidden  absolute right-0 w-48 py-2 mt-2 bg-white rounded-md shadow-lg border border-gray-100">
                   <Link 
                     to="/farmer-information/basicInformation" 
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50"
                   >
                     Basic Information
                   </Link>
                   <Link 
                     to="/farmer-information/soilTesting" 
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50"
                   >
                     Soil Testing
                   </Link>
@@ -60,7 +60,7 @@ const InfoDashboard = () => {
 
       {/* Main Content */}
       <div className="relative flex-1 min-h-screen">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-50 to-yellow-100"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-emerald-50 to-emerald-100"></div>
         <div className="relative z-10 flex justify-center items-center min-h-screen">
           <main className="w-full max-w-6xl ">
               

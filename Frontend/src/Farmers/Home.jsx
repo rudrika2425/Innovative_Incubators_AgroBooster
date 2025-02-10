@@ -1,28 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { Image as ImageIcon, Trash2, ArrowRight, RefreshCw } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { useUser } from "../Context/UserContext";
 
 const Home = () => {
-  const [tools, setTools] = useState([]);
   const [myTools, setMyTools] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [farmerId, setFarmerId] = useState("679e7026948f428e82f7ab5f");
-  const [searchQuery, setSearchQuery] = useState("");
+  const location = useLocation();
+  const {user} = useUser();
+  const farmerId = user.id;
 
-  // Fetch all tools
-  const fetchAllTools = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:4000/tools/gettools");
-      if (!response.ok) throw new Error("Failed to fetch tools");
-      const data = await response.json();
-      setTools(data);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  // Fetch tools by farmer ID
   const fetchMyTools = async (farmerId) => {
     try {
+      setLoading(true);
       const response = await fetch(
         `http://127.0.0.1:4000/tools/tools/farmer/${farmerId}`
       );
@@ -31,20 +22,22 @@ const Home = () => {
       setMyTools(data);
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
+  // Fetch tools when component mounts or location changes
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchAllTools();
-      if (farmerId) {
-        await fetchMyTools(farmerId);
-      }
-      setLoading(false);
-    };
+    if (farmerId) {
+      fetchMyTools(farmerId);
+    }
+  }, [farmerId, location.key]); // Add location.key to dependencies
 
-    fetchData();
-  }, [farmerId]);
+  const handleRefresh = () => {
+    fetchMyTools(farmerId);
+  };
+
 
   const handleDeleteTool = async (toolId) => {
     try {
@@ -57,7 +50,6 @@ const Home = () => {
         throw new Error(errorData.error || "Failed to delete tool");
       }
 
-      fetchAllTools();
       fetchMyTools(farmerId);
     } catch (error) {
       setError(error.message);
@@ -86,83 +78,185 @@ const Home = () => {
         throw new Error(errorData.error || "Failed to update images");
       }
 
-      fetchAllTools();
       fetchMyTools(farmerId);
     } catch (error) {
       setError(error.message);
     }
   };
+  
 
-  const ToolCard = ({ tool, isMyTool }) => (
-    <div className="bg-white shadow-lg hover:shadow-xl rounded-xl p-4 mb-6 flex flex-col md:flex-row border border-gray-200">
-      <div className="relative w-full md:w-40 h-40 overflow-hidden rounded-lg">
+  const ToolCard = ({ tool }) => (
+    <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group border-b-2 border-emerald-700">
+      <div className="relative aspect-video overflow-hidden">
         <img
-          src={tool.images?.[0] || "/api/placeholder/300/200"}
+          src={tool.images?.[0] || "/api/placeholder/400/300"}
           alt={tool.title}
-          className="w-full h-full object-cover transform transition-all hover:scale-110"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
         {tool.images?.length > 1 && (
-          <span className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-xs">
-            +{tool.images.length - 1}
-          </span>
-        )}
-      </div>
-      <div className="flex-1 mt-4 md:mt-0 md:ml-4">
-        <h3 className="text-xl font-semibold">{tool.title}</h3>
-        <p className="text-gray-500">{tool.brand} {tool.model}</p>
-        <p className="text-lg font-bold text-green-600">₹{tool.rate}/day</p>
-        {tool.deposit > 0 && <p className="text-sm text-gray-500">Deposit: ₹{tool.deposit}</p>}
-        <p className="text-sm text-gray-600">Category: {tool.category}</p>
-        <p className="text-sm">Condition: {tool.condition}</p>
-        <p className="text-sm text-gray-600">Location: {tool.district}, {tool.state}</p>
-
-        {isMyTool && (
-          <div className="mt-3 flex space-x-3">
-            <button onClick={() => handleDeleteTool(tool._id)} className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
-              Delete
-            </button>
-            <input type="file" multiple accept="image/*" onChange={(e) => handleImageUpdate(tool._id, e.target.files)} className="hidden" id={`file-upload-${tool._id}`} />
-            <label htmlFor={`file-upload-${tool._id}`} className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded cursor-pointer">
-              Upload Images
-            </label>
+          <div className="absolute bottom-2 right-2 bg-emerald/70 text-white px-2 py-1 rounded-full text-xs flex items-center gap-1">
+            <ImageIcon size={12} />
+            <span>{tool.images.length}</span>
           </div>
         )}
+        <div className="absolute inset-0 bg-gradient-to-t from-emerald/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      </div>
+      <div className="p-4">
+        <div className="flex justify-between items-start mb-2">
+          <div>
+            <h3 className="text-xl font-semibold text-emerald-900">{tool.title}</h3>
+            <p className="text-sm text-emerald-600">{tool.brand} {tool.model}</p>
+          </div>
+          <div className="text-right">
+            <p className="text-lg font-bold text-emerald-600">₹{tool.rate}/day</p>
+            {tool.deposit > 0 && (
+              <p className="text-xs text-emerald-500">Deposit: ₹{tool.deposit}</p>
+            )}
+          </div>
+        </div>
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-sm text-emerald-600">
+            <span className="px-2 py-1 bg-emerald-50 text-emerald-700 rounded-full">{tool.category}</span>
+            <span className="px-2 py-1 bg-emerald-50 text-emerald-700 rounded-full">{tool.condition}</span>
+          </div>
+          <p className="text-sm text-emerald-600">
+            {tool.district}, {tool.state}
+          </p>
+        </div>
+        <div className="mt-4 flex gap-2">
+          <button
+            onClick={() => handleDeleteTool(tool._id)}
+            className="flex items-center gap-1 px-3 py-1.5 bg-red-50 text-red-600 rounded-full hover:bg-red-100 transition-colors"
+          >
+            <Trash2 size={16} />
+            <span>Delete</span>
+          </button>
+          <label
+            htmlFor={`file-upload-${tool._id}`}
+            className="flex items-center gap-1 px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-full hover:bg-emerald-100 transition-colors cursor-pointer"
+          >
+            <ImageIcon size={16} />
+            <span>Update Images</span>
+          </label>
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={(e) => handleImageUpdate(tool._id, e.target.files)}
+            className="hidden"
+            id={`file-upload-${tool._id}`}
+          />
+        </div>
       </div>
     </div>
   );
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen text-lg font-semibold">Loading...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-yellow-50 to-yellow-100">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500" />
+      </div>
+    );
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="bg-blue-500 text-white p-6 rounded-lg text-center mb-6">
-        <h1 className="text-3xl font-bold">Tool Rental Dashboard</h1>
-        <p className="mt-2">Find and manage your tools easily.</p>
+    <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
+      <div className="bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-6">
+          <h1 className="text-3xl font-bold text-emerald-900">Manage your agricultural tools and equipment</h1>
+         
+        </div>
       </div>
 
-      {error && <div className="text-red-500 bg-red-100 p-4 rounded-lg mb-4">{error}</div>}
+      <div className="container mx-auto px-4 py-8">
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-600 rounded-lg">
+            {error}
+          </div>
+        )}
 
-      <input
-        type="text"
-        placeholder="Search tools..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-full p-3 mb-6 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-
-      <h2 className="text-2xl font-semibold mb-4">My Tool Listings</h2>
-      <div>
         {myTools.length === 0 ? (
-          <div className="text-center text-gray-500">
-            <p>You haven't listed any tools yet.</p>
-            <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
-              Add a Tool
-            </button>
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center py-12 bg-white/80 backdrop-blur-sm rounded-xl border border-emerald-200 shadow-lg">
+              <ImageIcon size={48} className="mx-auto text-emerald-400 mb-4" />
+              <h3 className="text-2xl font-semibold text-emerald-900 mb-2">Start Your Equipment Listing</h3>
+              <p className="text-emerald-700 mb-4 px-4">Share your agricultural tools with other farmers and earn additional income</p>
+              <div className="space-y-4">
+                <div className="flex items-center justify-center gap-8 px-6">
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <span className="text-emerald-600 font-bold">1</span>
+                    </div>
+                    <p className="text-sm text-emerald-700">List Your Tools</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <span className="text-emerald-600 font-bold">2</span>
+                    </div>
+                    <p className="text-sm text-emerald-700">Set Your Rates</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <span className="text-emerald-600 font-bold">3</span>
+                    </div>
+                    <p className="text-sm text-emerald-700">Start Earning</p>
+                  </div>
+                </div>
+                <Link 
+                  to="/farmerdashboard/rent-out-tools"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors mx-auto"
+                >
+                  <span>Add Your First Tool</span>
+                  <ArrowRight size={20} />
+                </Link>
+              </div>
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-emerald-200">
+                <h4 className="text-lg font-semibold text-emerald-900 mb-2">Market Insights</h4>
+                <p className="text-emerald-700 text-sm">Most demanded equipment in your area:</p>
+                <ul className="mt-2 space-y-2">
+                  <li className="flex items-center gap-2 text-sm text-emerald-600">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    Tractor Implements
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-emerald-600">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    Harvesting Equipment
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-emerald-600">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    Irrigation Systems
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-emerald-200">
+                <h4 className="text-lg font-semibold text-emerald-900 mb-2">Benefits</h4>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2 text-sm text-emerald-700">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    Extra income from idle equipment
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-emerald-700">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    Help other farmers in your community
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-emerald-700">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    Secure rental process
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         ) : (
-          myTools.map((tool) => <ToolCard key={tool._id} tool={tool} isMyTool={true} />)
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {myTools.map((tool) => (
+              <ToolCard key={tool._id} tool={tool} />
+            ))}
+          </div>
         )}
       </div>
     </div>

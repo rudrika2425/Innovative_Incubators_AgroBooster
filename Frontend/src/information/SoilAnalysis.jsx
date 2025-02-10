@@ -124,6 +124,8 @@ const SoilTestReportUploader = () => {
         weather: weatherData,
         soilAnalysisReport: result,
       };
+
+      console.log(farmerData)
   
       alert("AgroBooster is accessing your location");
   
@@ -157,7 +159,7 @@ const SoilTestReportUploader = () => {
 
   return (
     <div>
-      <h2 className="text-4xl font-bold text-green-600 mb-6 mt-10">
+      <h2 className="text-4xl font-bold text-emerald-600 mb-6 mt-10">
         Upload Soil Test Report
       </h2>
 
@@ -179,8 +181,8 @@ const SoilTestReportUploader = () => {
         disabled={isAnalyzing || !selectedFile}
         className={`px-4 py-2 text-white rounded-md ${
           isAnalyzing || !selectedFile
-            ? "bg-green-600"
-            : "bg-green-600 hover:bg-green-700"
+            ? "bg-emerald-600"
+            : "bg-emerald-600 hover:bg-emerald-700"
         }`}
       >
         {isAnalyzing ? "Analyzing..." : "Upload and Analyze"}
@@ -208,8 +210,8 @@ const SoilTestReportUploader = () => {
           disabled={isSubmitting}
           className={`px-4 py-2 rounded-lg transition ${
             result && !isSubmitting
-              ? "bg-green-600 text-white hover:bg-green-700"
-              : "bg-gray-400 text-gray-700 cursor-not-allowed"
+              ? "bg-emerald-600 text-white hover:bg-emerald-700"
+              : "bg-gray-400 text-white cursor-not-allowed"
           }`}
         >
           {isSubmitting ? "Processing..." : "Submit"}

@@ -104,7 +104,7 @@ export const Sidebar = () => {
             {isOpen && (
                 <div 
                     onClick={() => setIsOpen(false)}
-                    className="fixed inset-0 bg-black opacity-50 md:hidden z-30"
+                    className="fixed inset-0 bg-emerald opacity-50 md:hidden z-30"
                 />
             )}
         </>

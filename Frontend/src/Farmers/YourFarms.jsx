@@ -69,7 +69,7 @@ const YourFarms = () => {
           {farms.map((farm) => (
             <div
               key={farm._id}
-              className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
+              className="bg-white/90 border-b-2 border-emerald-700 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
             >
               <div className="p-6">
                 <h2 className="text-2xl font-bold text-emerald-800 mb-3">{farm.farmerInput.farmName}</h2>
