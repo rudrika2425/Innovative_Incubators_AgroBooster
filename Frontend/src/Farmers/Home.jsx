@@ -163,7 +163,7 @@ const Home = () => {
     <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
       <div className="bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold text-emerald-900">Manage your agricultural tools and equipment</h1>
+          <h1 className="text-3xl font-bold text-yellow-900">Manage your agricultural tools and equipment</h1>
          
         </div>
       </div>

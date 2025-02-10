@@ -60,7 +60,7 @@ const InfoDashboard = () => {
 
       {/* Main Content */}
       <div className="relative flex-1 min-h-screen">
-        <div className="absolute inset-0 bg-gradient-to-b from-emerald-50 to-emerald-100"></div>
+        <div className="absolute inset-0 bg-white"></div>
         <div className="relative z-10 flex justify-center items-center min-h-screen">
           <main className="w-full max-w-6xl ">
               
