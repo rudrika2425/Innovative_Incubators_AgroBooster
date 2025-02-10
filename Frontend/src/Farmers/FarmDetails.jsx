@@ -2,27 +2,35 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
-const FarmDetails = ({  onWeatherClick, onCalendarClick }) => {
-
-   const { farmId } = useParams();   
+const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
+  const { farmId } = useParams();
   const [farm, setFarm] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFarmDetails = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:4000/farmer_data/farm/${farmId}`);   
+        const response = await axios.get(`http://127.0.0.1:4000/farmer_data/farm/${farmId}`);
         setFarm(response.data);
       } catch (err) {
         setError("Failed to fetch farm details.");
       }
     };
-    
+
     fetchFarmDetails();
   }, [farmId]);
- 
-  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    if (window.confirm('Are you sure you want to delete this farm? This action cannot be undone.')) {
+      try {
+        await axios.delete(`http://127.0.0.1:4000/farmer_data/delete-farm/${farmId}`);
+        navigate('/farmerdashboard'); // Navigate back to dashboard after successful deletion
+      } catch (err) {
+        setError("Failed to delete farm. Please try again.");
+      }
+    }
+  };
 
   const handleCalendar = () => {
     navigate(`/farmerdashboard/farm-details/${farmId}/calendar`);
@@ -36,31 +44,30 @@ const FarmDetails = ({  onWeatherClick, onCalendarClick }) => {
     }
   };
 
-  if (error) return <p className="text-red-500">{error}</p>;
-  if (!farm) return <p>Loading farm details...</p>;
-
-
   const convertKelvinToCelsius = (kelvin) => {
     return (kelvin - 273.15).toFixed(1);
   };
 
+  if (error) return <p className="text-red-500">{error}</p>;
+  if (!farm) return <p>Loading farm details...</p>;
+
   return (
     <div className="min-h-screen bg-emerald-50">
       {/* Navbar */}
-      <nav className="bg-gradient-to-b from-yellow-50 to-yellow-100 text-white shadow-lg p-2">
+      <nav className="sticky top-0 z-20 w-full bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm shadow-md px-4 py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <h1 className="text-3xl font-bold text-yellow-900">Farm Dashboard</h1>
             <div className="flex space-x-4">
-              <button 
+              <button
                 onClick={handleWeather}
-                className="flex items-center px-4 py-2 rounded-md bg-yellow-600 hover:bg-yellow-500 transition-colors"
+                className="flex items-center px-4 py-2 text-white rounded-md bg-yellow-600 hover:bg-yellow-500 transition-colors"
               >
                 Weather
               </button>
-              <button 
+              <button
                 onClick={handleCalendar}
-                className="flex items-center px-4 py-2 rounded-md bg-yellow-600 hover:bg-yellow-500 transition-colors"
+                className="flex items-center px-4 py-2 text-white rounded-md bg-yellow-600 hover:bg-yellow-500 transition-colors"
               >
                 Calendar
               </button>
@@ -77,7 +84,6 @@ const FarmDetails = ({  onWeatherClick, onCalendarClick }) => {
               {farm.farmerInput.farmName}
             </h2>
             <div className="space-y-2">
-            
               <div className="flex items-center gap-2 text-lg text-emerald-700">
                 <span className="font-medium">{farm.farmerInput.landArea}</span>
                 <span className="text-emerald-500">acres</span>
@@ -156,7 +162,7 @@ const FarmDetails = ({  onWeatherClick, onCalendarClick }) => {
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {farm.farmerInput.farmingTools.map((tool, index) => (
-                <div 
+                <div
                   key={index}
                   className="bg-emerald-50 px-4 py-2 rounded-lg text-emerald-700 text-sm"
                 >
@@ -182,6 +188,16 @@ const FarmDetails = ({  onWeatherClick, onCalendarClick }) => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Delete Button */}
+        <div className="mt-8 flex justify-end mr-4">
+          <button
+            onClick={handleDelete}
+            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+          >
+            Delete Farm
+          </button>
         </div>
       </main>
     </div>

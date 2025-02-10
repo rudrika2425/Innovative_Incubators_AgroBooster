@@ -83,3 +83,28 @@ def get_farm_by_id(farmId):
         return jsonify(farm), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@farmer_data_bp.route('/delete-farm/<farmId>', methods=['DELETE'])
+def delete_farm(farmId):
+    try:
+        # Convert string farmId to ObjectId
+        farm_object_id = ObjectId(farmId)
+        
+        # Delete the farm document from MongoDB
+        result = current_app.db.farmers.delete_one({"_id": farm_object_id})
+        
+        if result.deleted_count == 0:
+            return jsonify({"error": "Farm not found"}), 404
+            
+        return jsonify({
+            "message": "Farm deleted successfully",
+            "deleted_id": farmId
+        }), 200
+    except errors.InvalidId:
+        return jsonify({"error": "Invalid farm ID format"}), 400
+    except Exception as e:
+        return jsonify({
+            "error": "An error occurred while deleting the farm",
+            "details": str(e)
+        }), 500
