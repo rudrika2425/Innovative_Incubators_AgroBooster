@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-
+import { TranslatedText } from '../languageTranslation/TranslatedText';
 import { Sprout, Leaf, Save } from 'lucide-react';
 
 const CropPrediction = () => {
@@ -134,9 +134,14 @@ const CropPrediction = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center p-12 space-y-4">
-        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-        <p className="text-gray-600">Analyzing farm data and generating predictions...</p>
+      <div className="flex flex-col items-center justify-center min-h-screen p-12 space-y-6 bg-gradient-to-b from-yellow-50 to-yellow-100">
+        <div className="w-12 h-12 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin" />
+        <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full border border-emerald-200 shadow-lg">
+          <Sprout className="w-5 h-5 text-emerald-600" />
+          <p className="text-emerald-900 text-2xl">
+            <TranslatedText text="Analyzing farm data and generating predictions..." />
+          </p>
+        </div>
       </div>
     );
   }

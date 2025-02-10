@@ -24,7 +24,7 @@ export const Sidebar = () => {
     }
 
     const menuItems = [
-        { id: 'Home', icon: LayoutDashboard, label: 'Home', path: '/farmerdashboard' },
+        { id: 'yourtools', icon: LayoutDashboard, label: 'Your Tools', path: '/farmerdashboard' },
         { id: 'yourfarms', icon: Tractor, label: 'Your Farms', path: '/farmerdashboard/your-farms' },
         { id: 'rentouttools', icon: Wrench, label: 'Rent Out Tools', path: '/farmerdashboard/rent-out-tools' },
         { id: 'borowtools', icon: ShoppingCart, label: 'Borrow Tools', path: '/farmerdashboard/borrow-tools' },

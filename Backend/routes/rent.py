@@ -33,12 +33,10 @@ def get_all_tools():
     try:
         # Get farmerId and district from query parameters
         farmer_id = request.args.get('farmerId')
-        district = request.args.get('district')
+        
 
         if not farmer_id:
             return jsonify({"error": "farmerId parameter is required"}), 400
-        if not district:
-            return jsonify({"error": "district parameter is required"}), 400
 
         # Get all tools
         tools = ToolRental.find_all_tools()
@@ -46,7 +44,7 @@ def get_all_tools():
         # Filter tools by farmer_id and district
         filtered_tools = [
             tool for tool in tools 
-            if tool['farmer_id'] != farmer_id and tool['district'].lower() == district.lower()
+            if tool['farmer_id'] != farmer_id
         ]
 
         return jsonify(filtered_tools), 200
