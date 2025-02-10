@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
+import { Sprout, Leaf, Save } from 'lucide-react';
 
 const CropPrediction = () => {
   const [predictions, setPredictions] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchParams] = useSearchParams();
 
   const parsePrediction = (prediction) => {
     try {
@@ -45,7 +49,9 @@ const CropPrediction = () => {
     const fetchPredictions = async () => {
       setLoading(true);
       try {
-        const farmId = localStorage.getItem('farmId');
+        
+        const farmId = searchParams.get('farmId');
+        console.log(farmId);
         if (!farmId) {
           throw new Error('No farm ID found in local storage');
 
@@ -124,46 +130,88 @@ const CropPrediction = () => {
     .map(parsePrediction)
     .filter(Boolean); // Remove null values
 
-  return (
-    <div className="max-w-6xl mx-auto my-12 bg-white rounded-xl shadow-lg p-8">
-      <h2 className="text-3xl font-bold text-gray-800 mb-8">Crop Predictions</h2>
-      
-      {parsedPredictions.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {parsedPredictions.map((prediction, index) => (
-            <div 
-              key={index}
-              className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow"
-            >
-              <div className="mb-4">
-                <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-                  {prediction.cropType}
-                </span>
+    return (
+      <div className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100 py-12 px-6">
+        <div className="max-w-6xl mx-auto">
+          {/* Header Section */}
+          <div className="text-center mb-12">
+            <div className="flex justify-center gap-4 mb-6">
+              <div className="p-4 bg-emerald-100 rounded-full shadow-lg">
+                <Sprout className="w-6 h-6 text-emerald-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                {prediction.commonName}
-              </h3>
-              {prediction.hindiName && (
-                <p className="text-gray-600 mb-2">{prediction.hindiName}</p>
-              )}
-              <div className="mb-4">
-                <h4 className="font-medium text-gray-700 mb-1">Varieties:</h4>
-                <p className="text-gray-600">{prediction.variety}</p>
-              </div>
-              <div>
-                <h4 className="font-medium text-gray-700 mb-1">Description:</h4>
-                <p className="text-gray-600 text-sm">{prediction.description}</p>
+              <div className="p-4 bg-lime-100 rounded-full shadow-lg">
+                <Leaf className="w-6 h-6 text-lime-600" />
               </div>
             </div>
-          ))}
+            <h2 className="text-4xl font-bold text-yellow-900 mb-4">Crop Predictions</h2>
+          </div>
+  
+          {/* Input Section */}
+          <div className="mb-12 max-w-3xl mx-auto">
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-emerald-200 shadow-lg">
+              <h3 className="text-xl font-semibold text-emerald-800 mb-4">Add New Crop</h3>
+              <div className="flex flex-wrap gap-4">
+                <input
+                  type="text"
+                  placeholder="Crop Name"
+                  className="flex-1 px-4 py-2 border border-emerald-200 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90"
+                  
+                />
+                <input
+                  type="text"
+                  placeholder="Variety"
+                  className="flex-1 px-4 py-2 border border-emerald-200 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90"
+                  
+                />
+                <button
+              
+                  className="flex items-center gap-2 px-6 py-2 bg-emerald-600 text-white rounded-full hover:bg-emerald-700 transition-colors shadow-lg"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>Save Crop</span>
+                </button>
+              </div>
+            </div>
+          </div>
+  
+          {/* Predictions Grid */}
+          {!predictions ? (
+            <div className="text-center py-8">
+              <p className="text-emerald-800">No predictions available at this time.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {parsedPredictions.map((prediction, index) => (
+                <div
+                  key={index}
+                  className="bg-white/80 backdrop-blur-sm rounded-2xl border border-emerald-200 p-6 hover:shadow-xl transition-all duration-300 shadow-lg"
+                >
+                  <div className="mb-4">
+                    <span className="inline-block px-4 py-1.5 bg-emerald-100 text-emerald-800 rounded-full text-sm font-medium">
+                      {prediction.cropType}
+                    </span>
+                  </div>
+                  <h3 className="text-2xl font-semibold text-yellow-900 mb-3">
+                    {prediction.commonName}
+                  </h3>
+                  {prediction.hindiName && (
+                    <p className="text-emerald-800 mb-3 font-medium">{prediction.hindiName}</p>
+                  )}
+                  <div className="mb-4 p-4 bg-emerald-50/50 rounded-xl">
+                    <h4 className="font-medium text-emerald-900 mb-2">Varieties:</h4>
+                    <p className="text-emerald-800">{prediction.variety}</p>
+                  </div>
+                  <div className="p-4 bg-emerald-50/50 rounded-xl">
+                    <h4 className="font-medium text-emerald-900 mb-2">Description:</h4>
+                    <p className="text-emerald-800 leading-relaxed">{prediction.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      ) : (
-        <div className="text-center py-8">
-          <p className="text-gray-600">No valid predictions found. Please try again.</p>
-        </div>
-      )}
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
 export default CropPrediction;

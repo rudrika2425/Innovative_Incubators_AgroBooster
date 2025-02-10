@@ -145,8 +145,7 @@ const SoilTestReportUploader = () => {
       const responseData = await response.json();
       console.log("Data stored successfully:", responseData);
       localStorage.setItem("farmId", responseData.id);
-      localStorage.setItem("farmerData", JSON.stringify(farmerData));
-      nevigate("/crop");
+      nevigate(`/crop?farmId=${responseData.id}`);
 
     } catch (error) {
       setErrorMessage("Failed to collect all required data. Please try again.");
