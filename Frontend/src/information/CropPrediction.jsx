@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Sprout, Leaf, Save } from 'lucide-react';
 
@@ -8,6 +8,10 @@ const CropPrediction = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchParams] = useSearchParams();
+  const [crop,setCrop]=useState("");
+  const [variety,setVariety]=useState("");
+
+  const navigate=useNavigate();
 
   const parsePrediction = (prediction) => {
     try {
@@ -44,6 +48,43 @@ const CropPrediction = () => {
       return null;
     }
   };
+
+ 
+    const handleSave = async () => {
+      const farmId = localStorage.getItem("farmId");
+      console.log("Farm ID:", farmId);
+      console.log(crop);
+      console.log(variety);
+      if (!farmId) {
+        console.error("Farm ID is missing.");
+        return;
+      } 
+      try {
+        const response = await fetch("http://127.0.0.1:4000/calendar/update-farm", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            crop,
+            variety,
+            farmId,
+          }),
+        });
+        console.log(response);
+        if (response.ok) {
+          const result = await response.json();
+          console.log("Crop saved successfully:", result);
+          navigate("/farmerdashboard", {
+            state: { farmId, crop, variety },
+          });
+        } else {
+          console.error("Failed to save crop data.");
+        }
+      } catch (error) {
+        console.error("Error saving crop data:", error);
+      }
+    };
 
   useEffect(() => {
     const fetchPredictions = async () => {
@@ -155,16 +196,17 @@ const CropPrediction = () => {
                   type="text"
                   placeholder="Crop Name"
                   className="flex-1 px-4 py-2 border border-emerald-200 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90"
-                  
+                  onChange={(e) => setCrop(e.target.value)}
                 />
                 <input
                   type="text"
                   placeholder="Variety"
                   className="flex-1 px-4 py-2 border border-emerald-200 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90"
-                  
+                  onChange={(e) => setVariety(e.target.value)}
+
                 />
                 <button
-              
+                  onClick={handleSave}
                   className="flex items-center gap-2 px-6 py-2 bg-emerald-600 text-white rounded-full hover:bg-emerald-700 transition-colors shadow-lg"
                 >
                   <Save className="w-4 h-4" />
