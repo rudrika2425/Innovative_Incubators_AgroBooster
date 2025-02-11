@@ -56,11 +56,14 @@ def generate_input_prompt(farmer_data):
     2. Compare the soil and environmental conditions with crop suitability databases (e.g., USDA, FAO).
     3. Identify and categorize suitable crops into:
        - Food Crops
+       - Fruits
        - Cash Crops
        - Forage Crops
        - Fiber Crops
        - Oilseed Crops
-       - Spices and Aromatic Crops
+       - Spices
+       - Vegetables
+       - Flowers
        - Medicinal Plants
 
     Output Format (Strictly Follow This Format):
@@ -68,9 +71,8 @@ def generate_input_prompt(farmer_data):
       - Common Name: [Name]
       - Hindi Name: [Name in Hindi]
       - Variety: [Variety provide list of 2 to 3 varities]
-      - Description: (what this crop is about)
-      - Brief (Provide an overview of this crop, including its optimal soil and climate conditions, ideal growth duration (from sowing to harvest, specifying the months), fertilizer and irrigation needs, and any common diseases it may face. This detailed information will help farmers evaluate whether the crop is suitable for their local environment and farming practices throughout the year.)
-      - please suggest atleast 8 crops always.
+      - Description: (Provide an overview of this crop, including its optimal soil and climate conditions, ideal growth duration (from sowing to harvest, specifying the months), fertilizer and irrigation needs, and any common diseases it may face. This detailed information will help farmers evaluate whether the crop is suitable for their local environment and farming practices throughout the year.)
+      - please suggest atleast 10 or more crops.
       -every above data given should me personalised to the input given by the farmer
 
     Ensure:
@@ -103,7 +105,7 @@ def get_prediction():
         configure_genai()
         model = genai.GenerativeModel("gemini-1.5-flash")
         response = model.generate_content(generate_input_prompt(farmer_data))
-
+        print("Predictions:", response.text)
         return jsonify({
             "status": "success",
             "predictions": response.text
