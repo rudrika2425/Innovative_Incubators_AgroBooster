@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sprout, Leaf, Save } from 'lucide-react';
+import { TranslatedText } from '../languageTranslation/TranslatedText';
 
 const CropPrediction = () => {
   const [predictions, setPredictions] = React.useState(null);
@@ -126,9 +127,11 @@ const CropPrediction = () => {
         </div>
         <div className="flex flex-col items-center gap-4 max-w-2xl text-center">
           <div className="bg-white/80 backdrop-blur-sm px-8 py-4 rounded-2xl border border-emerald-200 shadow-xl">
-            <h2 className="text-3xl font-bold text-emerald-800 mb-2">AgroBooster</h2>
+            <h2 className="text-3xl font-bold text-emerald-800 mb-2">
+              <TranslatedText text="AgroBooster" />
+            </h2>
             <p className="text-xl text-emerald-600">
-              Analyzing your farm's unique characteristics to predict optimal crops for maximum yield...
+              <TranslatedText text="Analyzing your farm's unique characteristics to predict optimal crops for maximum yield..." />
             </p>
           </div>
           <div className="flex gap-3">
@@ -144,14 +147,18 @@ const CropPrediction = () => {
   if (error) {
     return (
       <div className="max-w-4xl mx-auto my-8 p-6 bg-red-50 rounded-lg border border-red-200">
-        <h3 className="text-xl font-semibold text-red-700 mb-2">Error</h3>
+        <h3 className="text-xl font-semibold text-red-700 mb-2">
+          <TranslatedText text="Error" />
+        </h3>
         <p className="text-red-600">{error}</p>
         <div className="mt-4">
-          <p className="text-sm text-gray-600">Please ensure:</p>
+          <p className="text-sm text-gray-600">
+            <TranslatedText text="Please ensure:" />
+          </p>
           <ul className="list-disc ml-6 mt-2 text-sm text-gray-600">
-            <li>The Flask server is running on port 4000</li>
-            <li>MongoDB is running and accessible</li>
-            <li>Your farm ID is correctly stored in local storage</li>
+            <li><TranslatedText text="The Flask server is running on port 4000" /></li>
+            <li><TranslatedText text="MongoDB is running and accessible" /></li>
+            <li><TranslatedText text="Your farm ID is correctly stored in local storage" /></li>
           </ul>
         </div>
       </div>
@@ -176,11 +183,12 @@ const CropPrediction = () => {
               <Leaf className="w-6 h-6 text-lime-600" />
             </div>
           </div>
-          <h2 className="text-4xl font-bold text-yellow-900 mb-4">Crop Predictions</h2>
+          <h2 className="text-4xl font-bold text-yellow-900 mb-4">
+            <TranslatedText text="Crop Predictions" />
+          </h2>
         </div>
 
         {/* Input Section */}
-        
 
         {/* Description Section */}
         <div className="max-w-3xl mx-auto mb-12 bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-emerald-100">
@@ -189,8 +197,7 @@ const CropPrediction = () => {
               <Sprout className="w-8 h-8 text-emerald-600" />
             </div>
             <p className="text-xl font-medium leading-relaxed bg-gradient-to-r from-emerald-800 to-emerald-600 bg-clip-text text-transparent">
-              Discover your farm's potential with our tailored crop recommendations, 
-              carefully selected based on your unique soil composition and local climate conditions
+              <TranslatedText text="Discover your farm's potential with our tailored crop recommendations, carefully selected based on your unique soil composition and local climate conditions" />
             </p>
           </div>
         </div>
@@ -206,27 +213,31 @@ const CropPrediction = () => {
               >
                 <div className="flex items-center gap-3 mb-4">
                   <IconComponent className="w-6 h-6 text-emerald-600" />
-                  <span className="text-sm font-medium text-emerald-700 bg-white/60 px-4 py-1 rounded-full">
-                    {prediction.cropType}
+                  <span >
+                  <TranslatedText text={prediction.cropType} className="text-sm font-medium text-emerald-700 bg-white/60 px-4 py-1 rounded-full"/>
                   </span>
                 </div>
                 
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                  {prediction.commonName}
+                <h3 >
+                <TranslatedText text={prediction.commonName} className="text-2xl font-bold text-gray-900 mb-2"/>
                 </h3>
                 
-                {prediction.hindiName && (
-                  <p className="text-base text-gray-700 mb-4">{prediction.hindiName}</p>
-                )}
+                
                 
                 <div className="mb-4 p-4 bg-white/60 rounded-xl">
-                  <h4 className="font-medium text-base text-gray-800 mb-2">Recommended Varieties</h4>
-                  <p className="text-sm text-gray-700">{prediction.variety}</p>
+                  <h4 className="font-medium text-base text-gray-800 mb-2">
+                    <TranslatedText text="Recommended Varieties" />
+                  </h4>
+                  <TranslatedText text={prediction.variety} className="text-sm text-gray-700"/>
                 </div>
                 
                 <div className="p-4 bg-white/60 rounded-xl">
-                  <h4 className="font-medium text-base text-gray-800 mb-2">Growing Guide</h4>
-                  <p className="text-sm text-gray-700 leading-relaxed">{prediction.description}</p>
+                  <h4 className="font-medium text-base text-gray-800 mb-2">
+                    <TranslatedText text="Growing Guide" />
+                  </h4>
+                  <p>
+                  <TranslatedText text={prediction.description} className="text-sm text-gray-700 leading-relaxed" />
+                  </p>
                 </div>
               </div>
             );
@@ -234,9 +245,15 @@ const CropPrediction = () => {
         </div>
       </div>
       <div className="mb-12 max-w-3xl mx-auto mt-20">
-          <div className="bg-white/90 backdrop-blur-sm p-8 rounded-3xl border border-emerald-200 shadow-xl">
-            <h3 className="text-2xl font-semibold text-emerald-800 mb-6">Enter the crop you want to grow</h3>
-            <div className="flex flex-wrap gap-4">
+          <div className="bg-white/90 backdrop-blur-sm p-8 rounded-xl shadow-lg border border-emerald-100">
+            <h3 className="text-2xl text-emerald-700 font-semibold mb-4">
+              <TranslatedText text="Save Your Selection" />
+            </h3>
+            
+            <div className="mb-6">
+              <p className="text-lg text-emerald-600 mb-10">
+                <TranslatedText text="Select your preferred crop and variety for your farm." />
+              </p>
               <input
                 type="text"
                 placeholder="Crop Name"
@@ -248,19 +265,21 @@ const CropPrediction = () => {
                 placeholder="Variety"
                 className="flex-1 px-6 py-3 border-2 border-emerald-200 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90 text-lg"
                 onChange={(e) => setVariety(e.target.value)}
-              />
+              />
+            </div>
+            <div className="flex gap-4 mb-8">
               <button
                 onClick={handleSave}
-                className="flex items-center gap-3 px-8 py-3 bg-emerald-600 text-white rounded-full hover:bg-emerald-700 transition-colors shadow-lg text-lg font-medium"
+                className="flex items-center justify-center gap-2 p-4 text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-md transition-all duration-300"
               >
                 <Save className="w-5 h-5" />
-                <span>Save Crop</span>
+                <TranslatedText text="Save" />
               </button>
             </div>
           </div>
         </div>
     </div>
   );
-};
+}
 
 export default CropPrediction;
