@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { TranslatedText } from '../languageTranslation/TranslatedText';
 
 const CropCalendar = () => {
   const [cropSchedule, setCropSchedule] = useState([]);

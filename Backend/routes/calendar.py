@@ -122,9 +122,9 @@ def get_farmer_info(farm_id):
         Generate a growing schedule for {crop_type} (variety: {variety}) in {location}. Format each task exactly as follows:
 
         The title of the task | The description of the task
-        Start Date:The starting date for that task in relation to {current_date} (e.g., 20-02-2025 need exact dates )
+        Start Date:The starting date for that task and the most yield producing month (give dates according to the {weather} and {location})
         End Date: The ending date for that task, calculated based on {current_date} and the starting date.
-        Description: [Detailed description]
+        Description: [Detailed description] accoriding to the personalised data provided of the farm and other
         Sustainable resources that can be used: Sustainable resources which can maximize the yield and at the same time will not harm environment. It should be personalised accoridng to the user provided data.
         
         - I do not want any other information like GenerateContentResponse , done=True etc. 
@@ -141,7 +141,7 @@ def get_farmer_info(farm_id):
         response = model.generate_content(input_prompt)
         print(response)
 
-        pattern = r"(.*?) \| (.*?)\nStart Date:(\d{4}-\d{2}-\d{2})\nEnd Date:(\d{4}-\d{2}-\d{2})\nDescription:(.*?)\nSustainable resources that can be used:(.*?)(?=\n\n|\Z)"
+        pattern = r"(.+?) \| (.+?)\nStart Date: (\d{4}-\d{2}-\d{2})\nEnd Date: (\d{4}-\d{2}-\d{2})\nDescription: (.+?)\nSustainable resources that can be used: (.+?)(?=\n\n|\Z)"
 
         
         matches = re.finditer(pattern, response.text, re.DOTALL)

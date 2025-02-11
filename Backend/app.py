@@ -59,8 +59,6 @@ def create_app():
     app.register_blueprint(calendar_bp,url_prefix='/calendar')
     app.register_blueprint(labs_bp,url_prefix='/api')
 
-    
-
     # Attach MongoDB client to app for access in routes
     app.mongo_client = client  # ✅ Fixed this
  
