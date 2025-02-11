@@ -1,32 +1,16 @@
 import React from "react";
 import { 
   BarChart2, Landmark, TestTube2, Microscope, CloudSun, CropIcon, 
-  Leaf, Wheat, Sun, Droplet, Clock, Trophy, AlertCircle, Users, Database, Star
+  Droplet, Clock, Trophy, AlertCircle, Users, Database
 } from "lucide-react";
-import { TranslatedText } from "../languageTranslation/TranslatedText";
 
 const SectionWrapper = ({ id, title, children }) => (
   <div id={id} className="relative min-h-screen overflow-hidden bg-gradient-to-b from-yellow-100 to-yellow-200 py-16">
-    <style>{`
-      @keyframes float {
-        0%, 100% { transform: translateY(0) rotate(0deg); }
-        50% { transform: translateY(-20px) rotate(5deg); }
-      }
-      @keyframes pulse-slow {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.7; }
-      }
-      @keyframes bounce-slow {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-      }
-    `}</style>
-
     <div className="container mx-auto px-4 relative z-10">
-      <h2 className="text-6xl font-extrabold text-emerald-900 text-center mb-16 tracking-tight">
-        <TranslatedText text={title} />
-        <div className="text-xl font-normal text-emerald-700 mt-4 ml-5 mr-5">
-          <TranslatedText text="Empowering farmers with cutting-edge agricultural technology, we bring innovation to the fields. Our solutions enhance productivity, reduce waste, and promote sustainable farming. By integrating smart techniques and bioenzymes, we ensure healthier crops and soil. Together, we are shaping the future of agriculture for a emeralder tomorrow." />
+      <h2 className="text-6xl font-extrabold text-emerald-900 text-center mb-16">
+        {title}
+        <div className="text-xl font-normal text-emerald-700 mt-10 p-5">
+          Empowering farmers with cutting-edge agricultural technology, we bring innovation to the fields. Our solutions enhance productivity, reduce waste, and promote sustainable farming. By integrating smart techniques and bioenzymes, we ensure healthier crops and soil. Together, we are shaping the future of agriculture for a emeralder tomorrow.
         </div>
       </h2>
       {children}
@@ -38,7 +22,7 @@ const Service = ({ id }) => {
   const purposes = [
     {
       icon: <BarChart2 />,
-      secondaryIcon: <Database className="w-6 h-6 text-emerald-400 absolute top-2 right-2" />,
+      secondaryIcon: <Database className="w-6 h-6 text-emerald-900 absolute top-2 right-2" />,
       title: "Data-Driven Insights",
       description: "Access real-time analysis of weather, soil, and terrain conditions to make informed farming decisions. Optimize practices to ensure optimal crop growth.",
       features: [
@@ -48,12 +32,13 @@ const Service = ({ id }) => {
         "Historical data insights"
       ],
       iconBg: "bg-emerald-100",
-      iconColor: "text-emerald-500 animate-pulse",
-      bgColor: "bg-gradient-to-br from-emerald-50/90 to-emerald-100/90",
+      iconColor: "text-emerald-900",
+      bgColor: "bg-emerald-200",
+      textColor: "text-emerald-900"
     },
     {
       icon: <Landmark />,
-      secondaryIcon: <Clock className="w-6 h-6 text-amber-400 absolute top-2 right-2" />,
+      secondaryIcon: <Clock className="w-6 h-6 text-rose-900 absolute top-2 right-2" />,
       title: "Precision Tools",
       description: "Receive personalized crop calendars and task schedules tailored to your farm. Improve efficiency and productivity by managing time and resources effectively.",
       features: [
@@ -62,13 +47,14 @@ const Service = ({ id }) => {
         "Resource allocation optimization",
         "Farm efficiency tracking"
       ],
-      iconBg: "bg-amber-100",
-      iconColor: "text-amber-500 animate-pulse",
-      bgColor: "bg-gradient-to-br from-amber-100/90 to-amber-200/90",
+      iconBg: "bg-rose-100",
+      iconColor: "text-rose-900",
+      bgColor: "bg-rose-200",
+      textColor: "text-rose-900"
     },
     {
       icon: <TestTube2 />,
-      secondaryIcon: <AlertCircle className="w-6 h-6 text-yellow-600 absolute top-2 right-2" />,
+      secondaryIcon: <AlertCircle className="w-6 h-6 text-violet-900 absolute top-2 right-2" />,
       title: "Soil Testing",
       description: "Get data-backed recommendations for soil health to enhance crop yields. Identify nutrient deficiencies and optimize soil management.",
       features: [
@@ -77,13 +63,14 @@ const Service = ({ id }) => {
         "pH and salinity assessment",
         "Fertilizer application insights"
       ],
-      iconBg: "bg-yellow-100",
-      iconColor: "text-yellow-600 animate-spin-slow",
-      bgColor: "bg-gradient-to-br from-yellow-100/90 to-yellow-200/90",
+      iconBg: "bg-violet-100",
+      iconColor: "text-violet-900",
+      bgColor: "bg-violet-200",
+      textColor: "text-violet-900"
     },
     {
       icon: <Microscope />,
-      secondaryIcon: <Trophy className="w-6 h-6 text-lime-600 absolute top-2 right-2" />,
+      secondaryIcon: <Trophy className="w-6 h-6 text-lime-900 absolute top-2 right-2" />,
       title: "Disease Detection",
       description: "AI-powered plant disease recognition detects issues early, minimizing crop loss. Proactively manage plant health and reduce pesticide use.",
       features: [
@@ -93,12 +80,13 @@ const Service = ({ id }) => {
         "Targeted treatment suggestions"
       ],
       iconBg: "bg-lime-100",
-      iconColor: "text-lime-600",
-      bgColor: "bg-gradient-to-br from-lime-100/90 to-lime-200/90",
+      iconColor: "text-lime-900",
+      bgColor: "bg-lime-200",
+      textColor: "text-lime-900"
     },
     {
       icon: <CloudSun />,
-      secondaryIcon: <Users className="w-6 h-6 text-stone-600 absolute top-2 right-2" />,
+      secondaryIcon: <Users className="w-6 h-6 text-stone-900 absolute top-2 right-2" />,
       title: "Weather Prediction",
       description: "AI-driven weather and pest invasion forecasts help farmers prepare for extreme conditions. Make proactive decisions to safeguard crops from unpredictable weather.",
       features: [
@@ -108,12 +96,13 @@ const Service = ({ id }) => {
         "Climate impact assessment"
       ],
       iconBg: "bg-stone-100",
-      iconColor: "text-stone-600 animate-bounce-slow",
-      bgColor: "bg-gradient-to-br from-stone-100/90 to-stone-200/90",
+      iconColor: "text-stone-900",
+      bgColor: "bg-stone-200",
+      textColor: "text-stone-900"
     },
     {
       icon: <CropIcon />,
-      secondaryIcon: <Droplet className="w-6 h-6 text-orange-600 absolute top-2 right-2" />,
+      secondaryIcon: <Droplet className="w-6 h-6 text-orange-900 absolute top-2 right-2" />,
       title: "Actionable Insights",
       description: "Receive real-time, actionable reports to enhance farming decisions. Proactively manage crops and operations with clear, data-driven insights.",
       features: [
@@ -123,8 +112,9 @@ const Service = ({ id }) => {
         "Sustainability and yield tracking"
       ],
       iconBg: "bg-orange-100",
-      iconColor: "text-orange-600",
-      bgColor: "bg-gradient-to-br from-orange-100/90 to-orange-200/90",
+      iconColor: "text-orange-900",
+      bgColor: "bg-orange-200",
+      textColor: "text-orange-900"
     },
   ];
   
@@ -147,7 +137,7 @@ const Service = ({ id }) => {
                 </div>
                 <div className="text-4xl font-bold mb-2">{stat.value}</div>
                 <div className="text-emerald-200">
-                  <TranslatedText text={stat.label} />
+                  {stat.label}
                 </div>
               </div>
             ))}
@@ -159,32 +149,32 @@ const Service = ({ id }) => {
 
   return (
     <SectionWrapper id={id} title="Agricultural Services">
-      <div className="grid md:grid-cols-3 gap-8 mx-4 md:mx-20 mb-15">
+      <div className="grid md:grid-cols-3 gap-6 mx-4 md:mx-16">
         {purposes.map((purpose, index) => (
           <div
             key={index}
-            className={`relative p-8 text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-emerald-100 flex flex-col items-center justify-between rounded-3xl ${purpose.bgColor} border border-emerald-100`}
+            className={`relative p-6 text-center flex flex-col items-center justify-between rounded-2xl ${purpose.bgColor} border border-transparent`}
           >
             {purpose.secondaryIcon}
             <div
-              className={`p-6 rounded-full mb-6 ${purpose.iconBg} flex items-center justify-center transform transition-transform duration-300 hover:scale-110`}
+              className={`p-4 rounded-full mb-4 ${purpose.iconBg}`}
             >
               {React.cloneElement(purpose.icon, {
-                className: `w-12 h-12 ${purpose.iconColor}`,
+                className: `w-8 h-8 ${purpose.iconColor}`,
               })}
             </div>
-            <div className="space-y-4">
-              <h3 className={`text-2xl font-bold mb-3 ${purpose.iconColor}`}>
-                <TranslatedText text={purpose.title} />
+            <div className="space-y-3">
+              <h3 className={`text-xl font-bold mb-2 ${purpose.textColor}`}>
+                {purpose.title}
               </h3>
-              <p className="text-emerald-800 text-sm leading-relaxed">
-                <TranslatedText text={purpose.description} />
+              <p className={`text-sm leading-relaxed ${purpose.textColor}`}>
+                {purpose.description}
               </p>
-              <ul className="text-sm text-emerald-700 mt-4 space-y-2">
+              <ul className={`text-sm ${purpose.textColor} mt-3 space-y-1`}>
                 {purpose.features.map((feature, idx) => (
                   <li key={idx} className="flex items-center justify-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                    <TranslatedText text={feature} />
+                    <span className={`w-1.5 h-1.5 rounded-full ${purpose.iconBg}`}></span>
+                    {feature}
                   </li>
                 ))}
               </ul>

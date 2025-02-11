@@ -1,115 +1,121 @@
-import React from "react";
-import { Sprout, Leaf, Sun, Cloud, Tractor, Target, Globe, ArrowUpRight, MapPin, Mic, Calendar, Shield, Brain, Database, Radio, } from "lucide-react";
-import { TranslatedText } from "../languageTranslation/TranslatedText";
+import React, { useState } from 'react';
+import { TranslatedText } from '../languageTranslation/TranslatedText';
+import { 
+  Sprout, Leaf, Sun, Cloud, Tractor, Target, Globe, ArrowUpRight, 
+  MapPin, Mic, Calendar, Shield, Brain, Database, Radio, Camera,
+  MessageSquare, Upload
+} from 'lucide-react';
 
 const Hero = ({ id }) => {
-  const platformSteps = [
+  const [activeTab, setActiveTab] = useState('features');
+
+  const features = [
     {
-      icon: <MapPin className="w-12 h-12 text-white" />,
-      title: "Location Intelligence",
-      description: "Precise terrain and weather condition analysis for targeted agricultural strategies.",
-      color: "bg-emerald-600",
-      details: [
-        "Satellite-based terrain mapping",
-        "Microclimate analysis",
-        "Soil composition tracking"
-      ]
+      icon: <Target className="w-12 h-12 text-blue-600" />,
+      title: <TranslatedText text="Data-Driven Insights" />,
+      description: <TranslatedText text="Get real-time analysis of soil, terrain, and weather patterns with predictive analytics." />,
+      bgColor: "bg-blue-200",
+      hoverColor: "hover:bg-blue-100"
     },
     {
-      icon: <Mic className="w-12 h-12 text-white" />,
-      title: "Voice-Enabled Insights",
-      description: "Seamless communication of agricultural requirements through advanced voice recognition.",
-      color: "bg-lime-600",
-      details: [
-        "Multi-language support",
-        "Agricultural query resolution",
-        "Instant technical guidance"
-      ]
+      icon: <Calendar className="w-12 h-12 text-green-600" />,
+      title: <TranslatedText text="Precision Farming Tools" />,
+      description: <TranslatedText text="Personalized crop calendars and automated schedules for optimal farm management." />,
+      bgColor: "bg-green-200",
+      hoverColor: "hover:bg-green-100"
     },
     {
-      icon: <Calendar className="w-12 h-12 text-white" />,
-      title: "Smart Scheduling",
-      description: "AI-powered calendar for optimal planting, irrigation, and crop management.",
-      color: "bg-yellow-600",
-      details: [
-        "Crop lifecycle management",
-        "Seasonal planting recommendations",
-        "Resource allocation optimization"
-      ]
+      icon: <Cloud className="w-12 h-12 text-cyan-600" />,
+      title: <TranslatedText text="Resource Optimization" />,
+      description: <TranslatedText text="AI-powered irrigation scheduling and smart fertilizer recommendations." />,
+      bgColor: "bg-cyan-200",
+      hoverColor: "hover:bg-cyan-100"
     },
     {
-      icon: <Shield className="w-12 h-12 text-white" />,
-      title: "Crop Protection",
-      description: "Advanced disease detection and prevention strategies using machine learning.",
-      color: "bg-blue-600",
-      details: [
-        "Disease detection algorithms",
-        "Pest risk prediction",
-        "Treatment recommendation system"
-      ]
+      icon: <Database className="w-12 h-12 text-purple-600" />,
+      title: <TranslatedText text="Soil Testing Integration" />,
+      description: <TranslatedText text="Direct access to soil testing services with AI-based recommendations." />,
+      bgColor: "bg-purple-200",
+      hoverColor: "hover:bg-purple-100"
     },
     {
-      icon: <Brain className="w-12 h-12 text-white" />,
-      title: "Predictive Analytics",
-      description: "Machine learning models to forecast crop yields and potential challenges.",
-      color: "bg-purple-600",
-      details: [
-        "Yield forecasting models",
-        "Market price predictions",
-        "Risk assessment framework"
-      ]
+      icon: <Camera className="w-12 h-12 text-indigo-600" />,
+      title: <TranslatedText text="Real-Time Image Analysis" />,
+      description: <TranslatedText text="Upload crop images for instant disease detection and treatment suggestions." />,
+      bgColor: "bg-indigo-200",
+      hoverColor: "hover:bg-indigo-100"
     },
     {
-      icon: <Database className="w-12 h-12 text-white" />,
-      title: "Comprehensive Insights",
-      description: "Aggregate data-driven recommendations for holistic farm management.",
-      color: "bg-indigo-600",
-      details: [
-        "Integrated agricultural database",
-        "Cross-regional comparative analysis",
-        "Historical performance tracking"
-      ]
+      icon: <Mic className="w-12 h-12 text-orange-600" />,
+      title: <TranslatedText text="Voice Integration" />,
+      description: <TranslatedText text="AI-powered voice commands in multiple regional languages." />,
+      bgColor: "bg-orange-200",
+      hoverColor: "hover:bg-orange-100"
+    },
+    {
+      icon: <Globe className="w-12 h-12 text-gray-600" />,
+      title: <TranslatedText text="Global Network" />,
+      description: <TranslatedText text="Transparent supply chain tracking and compliance management." />,
+      bgColor: "bg-gray-200",
+      hoverColor: "hover:bg-gray-100"
+    },
+    {
+      icon: <Target className="w-12 h-12 text-red-600" />,
+      title: <TranslatedText text="Resource Sharing" />,
+      description: <TranslatedText text="Access and share agricultural resources with nearby farmers." />,
+      bgColor: "bg-red-200",
+      hoverColor: "hover:bg-red-100"
     }
   ];
 
-  
-
-  const PlatformStep = ({ icon, title, description, color, details }) => (
-    <div className="group relative max-w-6xl h-96 bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg transform transition-all hover:scale-105 hover:shadow-xl">
-      <div className={`p-4 rounded-full inline-flex items-center justify-center mb-4 ${color}`}>
-        {icon}
-      </div>
-      <h3 className="text-2xl font-bold text-emerald-900 mb-3">
-        <TranslatedText text={title} />
-      </h3>
-      <p className="text-emerald-800 mb-3">
-        <TranslatedText text={description} />
-      </p>
-      <ul className="space-y-2">
-        {details.map((detail, detailIndex) => (
-          <li 
-            key={detailIndex} 
-            className="flex items-center text-emerald-800"
-          >
-            <Leaf className="mr-2 text-emerald-600 w-4 h-4" />
-            <TranslatedText text={detail} />
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  const workflowSteps = [
+    {
+      icon: <Sprout className="w-8 h-8 text-emerald-600" />,
+      title: <TranslatedText text="Farmer Authentication" />,
+      description: <TranslatedText text="Sign up and verify your farming credentials" />,
+      animation: "animate-fade-right",
+      bgColor: "bg-emerald-200"
+    },
+    {
+      icon: <Globe className="w-8 h-8 text-blue-600" />,
+      title: <TranslatedText text="Location Access" />,
+      description: <TranslatedText text="Get terrain and weather data for your area" />,
+      animation: "animate-fade-right delay-100",
+      bgColor: "bg-blue-200"
+    },
+    {
+      icon: <Mic className="w-8 h-8 text-purple-600" />,
+      title: <TranslatedText text="Voice Input" />,
+      description: <TranslatedText text="Share farm details through voice commands" />,
+      animation: "animate-fade-right delay-200",
+      bgColor: "bg-purple-200"
+    },
+    {
+      icon: <Target className="w-8 h-8 text-red-600" />,
+      title: <TranslatedText text="Crop Selection" />,
+      description: <TranslatedText text="Choose crops based on AI recommendations" />,
+      animation: "animate-fade-right delay-300",
+      bgColor: "bg-red-200"
+    },
+    {
+      icon: <Calendar className="w-8 h-8 text-amber-600" />,
+      title: <TranslatedText text="Smart Calendar" />,
+      description: <TranslatedText text="Get AI-powered farming schedule" />,
+      animation: "animate-fade-left delay-100",
+      bgColor: "bg-amber-200"
+    },
+    {
+      icon: <MessageSquare className="w-8 h-8 text-green-600" />,
+      title: <TranslatedText text="AI Assistant" />,
+      description: <TranslatedText text="Upload images for instant crop analysis" />,
+      animation: "animate-fade-left delay-200",
+      bgColor: "bg-green-200"
+    }
+  ];
 
   return (
-    <div id={id} className="bg-gradient-to-b from-yellow-50 to-yellow-100 relative">
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-30px) rotate(5deg); }
-        }
-      `}</style>
-
-   
-
+    <div className="bg-gradient-to-b from-yellow-50 to-yellow-100">
+      {/* Hero Section */}
       <div className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-10">
           <div className="space-y-6 max-w-5xl -mt-20">
@@ -173,32 +179,45 @@ const Hero = ({ id }) => {
           </div>
         </div>
       </div>
+      <section className="py-20 relative overflow-hidden bg-gradient-to-b from-yellow-50 to-yellow-100 relative">
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl font-bold text-center text-emerald-900 mb-16 animate-fade-down">
+          <TranslatedText text="How AgroBooster Works"/>
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative">
+            {workflowSteps.map((step, index) => (
+              <div 
+                key={index} 
+                className={`relative ${step.bgColor} backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 ${step.animation}`}
+              >
+                <div className="absolute -right-4 -top-4 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-full p-4 shadow-lg">
+                  {step.icon}
+                </div>
+                <div className="pt-8">
+                  <h3 className="text-xl font-bold text-emerald-900 mb-3">
+                    {step.title}
+                  </h3>
+                  <p className="text-emerald-700">
+                    {step.description}
+                  </p>
+                </div>
+                
+                {index < workflowSteps.length - 1 && index !== 2 && (
+                  <div className="hidden lg:block absolute top-1/2 right-0 w-8 h-1 bg-emerald-400 transform translate-x-full" />
+                )}
+              </div>
+            ))}
+          </div>
 
-      {/* Platform Steps Section */}
-      <section className="container mx-auto px-6 py-16 bg-white/50 relative bg-gradient-to-b from-yellow-50 to-yellow-100">
-
-        <h2 className="text-6xl font-bold text-center text-emerald-900 mb-12">
-          <TranslatedText text="Our Platform" />{' '}
-          <span className="text-yellow-700">
-            <TranslatedText text="Journey" />
-          </span>
-        </h2>
-        
-        <div className="grid md:grid-cols-3 gap-8 m-10">
-          {platformSteps.map((step, index) => (
-            <PlatformStep 
-              key={index}
-              icon={step.icon}
-              title={step.title}
-              description={step.description}
-              color={step.color}
-              details={step.details}
-            />
-          ))}
+          {/* Additional Features */}
+          
         </div>
-      </section>
 
-      {/* Technology Impact Section */}
+        {/* Decorative Elements */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-emerald-100 rounded-full filter blur-3xl opacity-30 animate-pulse" />
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-yellow-100 rounded-full filter blur-3xl opacity-30 animate-pulse delay-1000" />
+      </section>
       <section className="container mx-auto px-6 py-16 bg-gradient-to-b from-yellow-50 to-yellow-100 relative">
         
         <h2 className="text-6xl font-bold text-center text-emerald-900 mb-20">
@@ -255,6 +274,35 @@ const Hero = ({ id }) => {
           </div>
         </div>
       </section>
+      {/* Features Grid */}
+      <section className="py-20 bg-gradient-to-b from-yellow-50 to-yellow-100 relative">
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl font-bold text-center text-emerald-900 mb-16 animate-fade-down">
+            <TranslatedText text="How Our AI Solution Benefits Farmers" />
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <div 
+                key={index} 
+                className={`${feature.bgColor} p-6 rounded-xl shadow-lg ${feature.hoverColor} transition-all duration-300 transform hover:-translate-y-1 animate-fade-up`}
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="mb-4">{feature.icon}</div>
+                <h3 className="text-xl font-bold text-emerald-900 mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-emerald-700">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Workflow Section */}
+      
+      
     </div>
   );
 };
