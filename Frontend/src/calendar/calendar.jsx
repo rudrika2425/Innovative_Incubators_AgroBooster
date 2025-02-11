@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { TranslatedText } from '../languageTranslation/TranslatedText';
+import { TranslatedText } from "../languageTranslation/TranslatedText";
 
 const CropCalendar = () => {
   const [cropSchedule, setCropSchedule] = useState([]);
@@ -44,12 +44,13 @@ const CropCalendar = () => {
     console.error("Failed after multiple retries.");
   };
 
+
   const fetchAndCacheData = async () => {
     try {
       const response = await fetch(`http://127.0.0.1:4000/calendar/generate_schedule/${farmId}`);
       const data = await response.json();
       if (data.length > 0) {
-        localStorage.setItem(`cropSchedule_${farmId}`, JSON.stringify(data));
+        localStorage.setItem(`cropSchedule_${farmId}, JSON.stringify(data)`);
         setCropSchedule(data);
       }
     } catch (error) {
@@ -64,6 +65,7 @@ const CropCalendar = () => {
   useEffect(() => {
     console.log("Crop Schedule:", cropSchedule);
   }, [cropSchedule]);
+
 
   const getDaysInMonth = (date) => {
     const year = date.getFullYear();
@@ -95,7 +97,6 @@ const CropCalendar = () => {
       "Nutrient Management": "🥦",
       "Harvesting": "📅",
     };
-
     return {
       className: colors[title] || "bg-gray-200 text-gray-800",
       emoji: emojiMap[title] || "📌",
@@ -121,7 +122,9 @@ const CropCalendar = () => {
           >
             ←
           </button>
-          <span className="text-2xl font-semibold text-gray-800">{monthYear}</span>
+          <span className="text-2xl font-semibold text-gray-800">
+            <TranslatedText text={monthYear} />
+          </span>
           <button
             onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)))}
             className="p-2 hover:bg-gray-100 rounded-full text-gray-600"
@@ -133,7 +136,7 @@ const CropCalendar = () => {
           onClick={() => setCurrentDate(new Date())}
           className="px-4 py-2 bg-blue-50 text-blue-600 border rounded-md"
         >
-          Today
+          <TranslatedText text="Today" />
         </button>
       </div>
     );
@@ -145,7 +148,11 @@ const CropCalendar = () => {
     const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
     weekDays.forEach((day) => {
-      days.push(<div key={day} className="p-3 text-center font-medium bg-gray-50">{day}</div>);
+      days.push(
+        <div key={day} className="p-3 text-center font-medium bg-gray-50">
+          <TranslatedText text={day} />
+        </div>
+      );
     });
 
     for (let i = 0; i < firstDay; i++) {
@@ -160,7 +167,7 @@ const CropCalendar = () => {
       days.push(
         <div key={day} className={`p-3 border min-h-32 ${isToday ? "bg-blue-50" : "bg-white"}`}>
           <span className={`w-8 h-8 inline-flex items-center justify-center rounded-full ${isToday ? "bg-blue-500 text-white" : "text-gray-700"}`}>
-            {day}
+            <TranslatedText text={day.toString()} />
           </span>
           <div className="mt-2 space-y-1">
             {dayEvents.map((event, index) => {
@@ -174,7 +181,7 @@ const CropCalendar = () => {
                     setModalShow(true);
                   }}
                 >
-                  <span>{emoji}</span> {event.title}
+                  <span>{emoji}</span> <TranslatedText text={event.title} />
                 </div>
               );
             })}
@@ -188,66 +195,68 @@ const CropCalendar = () => {
 
   return (
     <div className="max-w-6xl mx-auto my-12 bg-white rounded-2xl shadow-lg p-8">
-      <h2 className="text-3xl font-bold mb-8">Crop Growing Calendar</h2>
+      <h2 className="text-3xl font-bold mb-8">
+        <TranslatedText text="Crop Growing Calendar" />
+      </h2>
       {renderCalendarHeader()}
-      {loading ? <p>Loading...</p> : renderCalendarBody()}
-      {/* Add modal logic if needed */}
+      {loading ? (
+        <p>
+          <TranslatedText text="Loading..." />
+        </p>
+      ) : (
+        renderCalendarBody()
+      )}
       {modalShow && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg max-w-lg w-full p-6 shadow-xl">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold text-amber-900">
-                {currentTask?.title}
+                <TranslatedText text={currentTask?.title} />
               </h3>
               <button
                 onClick={() => setModalShow(false)}
                 className="text-amber-500 hover:text-amber-700 text-2xl font-light"
               >
+                ×
               </button>
             </div>
             <div className="space-y-4">
               <div>
-                <h4 className="font-medium text-amber-800">Description</h4>
-                <p className="text-amber-700 mt-1">{currentTask?.description}</p>
+                <h4 className="font-medium text-amber-800">
+                  <TranslatedText text="Description" />
+                </h4>
+                <p className="text-amber-700 mt-1">
+                  <TranslatedText text={currentTask?.description} />
+                </p>
               </div>
               <div>
-                <h4 className="font-medium text-amber-800">Task Details</h4>
+                <h4 className="font-medium text-amber-800">
+                  <TranslatedText text="Task Details" />
+                </h4>
                 <p className="text-amber-700 mt-1">
-                  {currentTask?.task_description}
+                  <TranslatedText text={currentTask?.task_description} />
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <h4 className="font-medium text-amber-800">Start Date</h4>
+                  <h4 className="font-medium text-amber-800">
+                    <TranslatedText text="Start Date" />
+                  </h4>
                   <p className="text-amber-700 mt-1">
                     {currentTask?.start_date &&
-                      new Date(currentTask.start_date).toLocaleDateString()}
+                      <TranslatedText text={new Date(currentTask.start_date).toLocaleDateString()} />}
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-medium text-amber-800">End Date</h4>
+                  <h4 className="font-medium text-amber-800">
+                    <TranslatedText text="End Date" />
+                  </h4>
                   <p className="text-amber-700 mt-1">
                     {currentTask?.end_date &&
-                      new Date(currentTask.end_date).toLocaleDateString()}
+                      <TranslatedText text={new Date(currentTask.end_date).toLocaleDateString()} />}
                   </p>
                 </div>
               </div>
-              <div>
-                <h4 className="font-medium text-amber-800">
-                  Sustainable Resources
-                </h4>
-                <p className="text-amber-700 mt-1">
-                  {currentTask?.sustainable_resource}
-                </p>
-              </div>
-            </div>
-            <div className="mt-6 flex justify-end">
-              <button
-                onClick={() => setModalShow(false)}
-                className="px-4 py-2 bg-amber-100 hover:bg-amber-200 rounded-md transition-colors text-amber-700"
-              >
-                Close
-              </button>
             </div>
           </div>
         </div>
