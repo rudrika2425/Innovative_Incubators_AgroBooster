@@ -28,6 +28,7 @@ import Footer from "./home/Footer";
 import FarmDetails from "./Farmers/FarmDetails"
 import Calendar from "./calendar/calendar"
 
+import Farmerscheme from "./Farmers/FarmerScheme";
 
 
 
@@ -58,6 +59,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/chatbot" element={<Chatbot />} />
+            <Route path="farmerscheme" element={<Farmerscheme />} />
 
             {/* Protected routes */}
             <Route path="/crop" element={
@@ -90,6 +92,7 @@ function App() {
               <Route path="description" element={<DescriptionPage />} />
               <Route path="farm-details/:farmId" element={<FarmDetails />} />
               <Route path="farm-details/:farmId/calendar" element={<Calendar />} />
+              
             </Route>
 
             <Route path="/farmer-Information" element={
