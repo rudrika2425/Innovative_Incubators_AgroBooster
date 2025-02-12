@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { TranslatedText } from "../languageTranslation/TranslatedText";
 
 const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
   const { farmId } = useParams();
   const [farm, setFarm] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  
 
   useEffect(() => {
     const fetchFarmDetails = async () => {
@@ -18,19 +21,21 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
       }
     };
 
+
     fetchFarmDetails();
   }, [farmId]);
 
   const handleDelete = async () => {
-    if (window.confirm('Are you sure you want to delete this farm? This action cannot be undone.')) {
+    if (window.confirm(<TranslatedText text="deleteConfirmation" />)) {
       try {
         await axios.delete(`http://127.0.0.1:4000/farmer_data/delete-farm/${farmId}`);
-        navigate('/farmerdashboard'); // Navigate back to dashboard after successful deletion
+        navigate('/farmerdashboard');
       } catch (err) {
-        setError("Failed to delete farm. Please try again.");
+        setError(<TranslatedText text="deleteError" />);
       }
     }
   };
+
 
   const handleCalendar = () => {
     navigate(`/farmerdashboard/farm-details/${farmId}/calendar`);
@@ -44,12 +49,14 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
     }
   };
 
+
   const convertKelvinToCelsius = (kelvin) => {
     return (kelvin - 273.15).toFixed(1);
   };
 
   if (error) return <p className="text-red-500">{error}</p>;
-  if (!farm) return <p>Loading farm details...</p>;
+  if (!farm) return <p><TranslatedText text="loading" /></p>;
+
 
   return (
     <div className="min-h-screen bg-emerald-50">
@@ -57,19 +64,21 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
       <nav className="sticky top-0 z-20 w-full bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm shadow-md px-4 py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <h1 className="text-3xl font-bold text-yellow-900">Farm Dashboard</h1>
+            <h1 className="text-3xl font-bold text-yellow-900">
+              <TranslatedText text="farmDashboard" />
+            </h1>
             <div className="flex space-x-4">
               <button
                 onClick={handleWeather}
                 className="flex items-center px-4 py-2 text-white rounded-md bg-yellow-600 hover:bg-yellow-500 transition-colors"
               >
-                Weather
+                <TranslatedText text="weather" />
               </button>
               <button
                 onClick={handleCalendar}
                 className="flex items-center px-4 py-2 text-white rounded-md bg-yellow-600 hover:bg-yellow-500 transition-colors"
               >
-                Calendar
+                <TranslatedText text="calendar" />
               </button>
             </div>
           </div>
@@ -81,22 +90,24 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
           {/* Main Info Card */}
           <div className="bg-white border-b-2 border-emerald-500 rounded-lg shadow-md p-6 space-y-4">
             <h2 className="text-2xl font-bold text-emerald-800 border-b border-emerald-500 pb-2">
-              {farm.farmerInput.farmName}
+            <TranslatedText text={farm.farmerInput.farmName} />
             </h2>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-lg text-emerald-700">
-                <span className="font-medium">{farm.farmerInput.landArea}</span>
-                <span className="text-emerald-500">acres</span>
+                <span className="font-medium"> <TranslatedText text={farm.farmerInput.landArea}/></span>
+                <span className="text-emerald-500"><TranslatedText text="acres" /></span>
               </div>
             </div>
             <div className="pt-4 space-y-2">
-              <h3 className="font-semibold text-emerald-700">Current Crop</h3>
+              <h3 className="font-semibold text-emerald-700">
+                <TranslatedText text="currentCrop" />
+              </h3>
               <div className="flex items-center gap-4">
                 <div className="bg-emerald-100 px-3 py-1 rounded-full text-emerald-700">
-                  {farm.crop}
+                <TranslatedText text={farm.crop} />
                 </div>
                 <div className="bg-emerald-50 px-3 py-1 rounded-full text-emerald-600">
-                  {farm.variety}
+                <TranslatedText text={farm.variety} />
                 </div>
               </div>
             </div>
@@ -105,51 +116,51 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
           {/* Weather Card */}
           <div className="bg-white border-b-2 border-emerald-500 rounded-lg shadow-md p-6 space-y-4">
             <h2 className="text-xl font-bold text-emerald-800 border-b border-emerald-500 pb-2">
-              Current Weather
+              <TranslatedText text="currentWeather" />
             </h2>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <p className="text-3xl font-bold text-emerald-800">
-                  {convertKelvinToCelsius(farm.weather.temperature)}°C
+                <TranslatedText text= {convertKelvinToCelsius(farm.weather.temperature)} />°C
                 </p>
                 <p className="text-sm text-emerald-500">
-                  Feels like {convertKelvinToCelsius(farm.weather.feels_like)}°C
+                  <TranslatedText text="feelsLike" /> {convertKelvinToCelsius(farm.weather.feels_like)}°C
                 </p>
               </div>
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-emerald-500">Humidity</span>
-                  <span className="font-medium text-emerald-700">{farm.weather.humidity}%</span>
+                  <span className="text-emerald-500"><TranslatedText text="humidity" /></span>
+                  <span className="font-medium text-emerald-700"> <TranslatedText text={farm.weather.humidity}/>%</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-emerald-500">Wind</span>
-                  <span className="font-medium text-emerald-700">{farm.weather.wind_speed} m/s</span>
+                  <span className="text-emerald-500"><TranslatedText text="wind" /></span>
+                  <span className="font-medium text-emerald-700"><TranslatedText text={farm.weather.wind_speed}/>m/s</span>
                 </div>
               </div>
             </div>
             <p className="text-sm text-emerald-600 capitalize pt-2">
-              {farm.weather.weather_description}
+            <TranslatedText text={farm.weather.weather_description}/>
             </p>
           </div>
 
           {/* Location Card */}
           <div className="bg-white border-b-2 border-emerald-500 rounded-lg shadow-md p-6 space-y-4">
             <h2 className="text-xl font-bold text-emerald-800 border-b border-emerald-500 pb-2">
-              Location
+              <TranslatedText text="location" />
             </h2>
             <div className="space-y-2">
               <p className="text-emerald-700">
-                {farm.location.city}, {farm.location.region}
+              <TranslatedText text= {farm.location.city} />,  <TranslatedText text={farm.location.region}/>
               </p>
-              <p className="text-emerald-700">{farm.location.country}</p>
+              <p className="text-emerald-700"> <TranslatedText text={farm.location.country}/></p>
               <div className="pt-2 grid grid-cols-2 gap-2 text-sm">
                 <div>
-                  <p className="text-emerald-500">Altitude</p>
-                  <p className="font-medium text-emerald-700">{farm.location.altitude} m</p>
+                  <p className="text-emerald-500"><TranslatedText text="altitude" /></p>
+                  <p className="font-medium text-emerald-700"> <TranslatedText text={farm.location.altitude} />m</p>
                 </div>
                 <div>
-                  <p className="text-emerald-500">Zone</p>
-                  <p className="font-medium text-emerald-700">{farm.location.tropical_zone}</p>
+                  <p className="text-emerald-500"><TranslatedText text="zone" /></p>
+                  <p className="font-medium text-emerald-700"> <TranslatedText text={farm.location.tropical_zone} /></p>
                 </div>
               </div>
             </div>
@@ -158,7 +169,7 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
           {/* Tools and Equipment */}
           <div className="bg-white rounded-lg border-b-2 border-emerald-500 shadow-md p-6 col-span-1 lg:col-span-2">
             <h2 className="text-xl font-bold text-emerald-800 border-b border-emerald-500 pb-2 mb-4">
-              Farm Equipment
+              <TranslatedText text="farmEquipment" />
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {farm.farmerInput.farmingTools.map((tool, index) => (
@@ -166,7 +177,7 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
                   key={index}
                   className="bg-emerald-50 px-4 py-2 rounded-lg text-emerald-700 text-sm"
                 >
-                  {tool}
+                  <TranslatedText text={tool} /> 
                 </div>
               ))}
             </div>
@@ -175,16 +186,20 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
           {/* Irrigation and Soil */}
           <div className="bg-white rounded-lg border-b-2 border-emerald-500 shadow-md p-6">
             <h2 className="text-xl font-bold text-emerald-800 border-b border-emerald-500 pb-2 mb-4">
-              Irrigation & Soil
+              <TranslatedText text="irrigationSoil" />
             </h2>
             <div className="space-y-4">
               <div>
-                <h3 className="text-sm font-medium text-emerald-500">Irrigation System</h3>
-                <p className="text-emerald-700">{farm.farmerInput.irrigationSystem}</p>
+                <h3 className="text-sm font-medium text-emerald-500">
+                  <TranslatedText text="irrigationSystem" />
+                </h3>
+                <p className="text-emerald-700"> <TranslatedText text={farm.farmerInput.irrigationSystem} /></p>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-emerald-500">Soil Analysis</h3>
-                <p className="text-emerald-700">{farm.soilAnalysisReport}</p>
+                <h3 className="text-sm font-medium text-emerald-500">
+                  <TranslatedText text="soilAnalysis" />
+                </h3>
+                <p className="text-emerald-700"> <TranslatedText text={farm.soilAnalysisReport}/></p>
               </div>
             </div>
           </div>
@@ -196,7 +211,7 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
             onClick={handleDelete}
             className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
           >
-            Delete Farm
+            <TranslatedText text="deleteFarm" />
           </button>
         </div>
       </main>
