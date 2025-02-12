@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Sprout, Leaf, Tractor, Cloud, Sun } from "lucide-react";
 import { useUser } from "../Context/UserContext";
+import { TranslatedText } from '../languageTranslation/TranslatedText';
 
 const BorrowTools = () => {
   const [products, setProducts] = useState([]);
@@ -35,7 +36,7 @@ const BorrowTools = () => {
 
   const categories = ["Shop All", "Tractor", "Harvester", "Irrigation System", "Plow", "Other"];
 
-  return (
+ return (
     <div className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
       <style>{`
         @keyframes float {
@@ -44,8 +45,6 @@ const BorrowTools = () => {
         }
       `}</style>
 
-  
-
       <div className="relative z-10">
         {/* Header and Dropdown Row */}
         <div className="container mx-auto px-4 py-2 flex shadow-md items-center justify-between bg-gradient-to-b from-yellow-50 to-yellow-100">
@@ -53,7 +52,9 @@ const BorrowTools = () => {
             <div className="p-3 bg-yellow-100 rounded-full shadow-lg">
               <Tractor className="w-8 h-8 text-yellow-600" />
             </div>
-            <h1 className="text-3xl font-bold text-yellow-900">Borrow Tools</h1>
+            <h1 className="text-3xl font-bold text-yellow-900">
+              <TranslatedText text="Borrow Tools" />
+            </h1>
           </div>
 
           <div className="relative w-64">
@@ -61,10 +62,11 @@ const BorrowTools = () => {
               onClick={() => setIsCategoryDropdownOpen(!isCategoryDropdownOpen)}
               className="w-full bg-yellow-600 text-white py-3 px-4 rounded-full flex items-center justify-between hover:bg-yellow-500 transition-colors"
             >
-              {selectedCategory ?
-                selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1) :
-                "Select Category"
-              }
+              {selectedCategory ? (
+                <TranslatedText text={selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} />
+              ) : (
+                <TranslatedText text="Select Category" />
+              )}
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -87,7 +89,7 @@ const BorrowTools = () => {
                       setIsCategoryDropdownOpen(false);
                     }}
                   >
-                    {category}
+                    <TranslatedText text={category} />
                   </button>
                 ))}
               </div>
@@ -112,14 +114,16 @@ const BorrowTools = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold text-emerald-900">{product.title}</h3>
-                  <p className="text-amber-600 font-bold mt-2">Rs. {product.rate} per day.</p>
+                  <h3 className="text-lg font-semibold text-emerald-900"><TranslatedText text={product.title}/></h3>
+                  <p className="text-amber-600 font-bold mt-2">
+                    <TranslatedText text="Rs." /> {product.rate} <TranslatedText text="per day." />
+                  </p>
                   <p className="text-sm text-emerald-700 mt-1 truncate">{product.address}</p>
                   <button
                     onClick={() => handleInfo(product)}
                     className="w-full mt-4 bg-emerald-600 text-white py-2 rounded-full hover:bg-emerald-500 transition-all duration-300 flex items-center justify-center gap-2"
                   >
-                    <span>View More Details</span>
+                    <span><TranslatedText text="View More Details" /></span>
                   </button>
                 </div>
               </div>

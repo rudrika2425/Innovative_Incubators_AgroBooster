@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Image as ImageIcon, Trash2, ArrowRight, RefreshCw } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useUser } from "../Context/UserContext";
-
+import { TranslatedText } from '../languageTranslation/TranslatedText';
 const Home = () => {
   const [myTools, setMyTools] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -163,15 +163,16 @@ const Home = () => {
     <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
       <div className="bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold text-yellow-900">Manage your agricultural tools and equipment</h1>
-         
+          <h1 className="text-3xl font-bold text-yellow-900">
+            <TranslatedText text="Manage your agricultural tools and equipment" />
+          </h1>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-8">
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-600 rounded-lg">
-            {error}
+            <TranslatedText text={error} />
           </div>
         )}
 
@@ -179,34 +180,44 @@ const Home = () => {
           <div className="max-w-2xl mx-auto">
             <div className="text-center py-12 bg-white/80 backdrop-blur-sm rounded-xl border border-emerald-200 shadow-lg">
               <ImageIcon size={48} className="mx-auto text-emerald-400 mb-4" />
-              <h3 className="text-2xl font-semibold text-emerald-900 mb-2">Start Your Equipment Listing</h3>
-              <p className="text-emerald-700 mb-4 px-4">Share your agricultural tools with other farmers and earn additional income</p>
+              <h3 className="text-2xl font-semibold text-emerald-900 mb-2">
+                <TranslatedText text="Start Your Equipment Listing" />
+              </h3>
+              <p className="text-emerald-700 mb-4 px-4">
+                <TranslatedText text="Share your agricultural tools with other farmers and earn additional income" />
+              </p>
               <div className="space-y-4">
                 <div className="flex items-center justify-center gap-8 px-6">
                   <div className="text-center">
                     <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2">
                       <span className="text-emerald-600 font-bold">1</span>
                     </div>
-                    <p className="text-sm text-emerald-700">List Your Tools</p>
+                    <p className="text-sm text-emerald-700">
+                      <TranslatedText text="List Your Tools" />
+                    </p>
                   </div>
                   <div className="text-center">
                     <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2">
                       <span className="text-emerald-600 font-bold">2</span>
                     </div>
-                    <p className="text-sm text-emerald-700">Set Your Rates</p>
+                    <p className="text-sm text-emerald-700">
+                      <TranslatedText text="Set Your Rates" />
+                    </p>
                   </div>
                   <div className="text-center">
                     <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-2">
                       <span className="text-emerald-600 font-bold">3</span>
                     </div>
-                    <p className="text-sm text-emerald-700">Start Earning</p>
+                    <p className="text-sm text-emerald-700">
+                      <TranslatedText text="Start Earning" />
+                    </p>
                   </div>
                 </div>
                 <Link 
                   to="/farmerdashboard/rent-out-tools"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors mx-auto"
                 >
-                  <span>Add Your First Tool</span>
+                  <TranslatedText text="Add Your First Tool" />
                   <ArrowRight size={20} />
                 </Link>
               </div>
@@ -214,38 +225,44 @@ const Home = () => {
 
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-emerald-200">
-                <h4 className="text-lg font-semibold text-emerald-900 mb-2">Market Insights</h4>
-                <p className="text-emerald-700 text-sm">Most demanded equipment in your area:</p>
+                <h4 className="text-lg font-semibold text-emerald-900 mb-2">
+                  <TranslatedText text="Market Insights" />
+                </h4>
+                <p className="text-emerald-700 text-sm">
+                  <TranslatedText text="Most demanded equipment in your area:" />
+                </p>
                 <ul className="mt-2 space-y-2">
                   <li className="flex items-center gap-2 text-sm text-emerald-600">
                     <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
-                    Tractor Implements
+                    <TranslatedText text="Tractor Implements" />
                   </li>
                   <li className="flex items-center gap-2 text-sm text-emerald-600">
                     <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
-                    Harvesting Equipment
+                    <TranslatedText text="Harvesting Equipment" />
                   </li>
                   <li className="flex items-center gap-2 text-sm text-emerald-600">
                     <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
-                    Irrigation Systems
+                    <TranslatedText text="Irrigation Systems" />
                   </li>
                 </ul>
               </div>
               
               <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl border border-emerald-200">
-                <h4 className="text-lg font-semibold text-emerald-900 mb-2">Benefits</h4>
+                <h4 className="text-lg font-semibold text-emerald-900 mb-2">
+                  <TranslatedText text="Benefits" />
+                </h4>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-sm text-emerald-700">
                     <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
-                    Extra income from idle equipment
+                    <TranslatedText text="Extra income from idle equipment" />
                   </li>
                   <li className="flex items-center gap-2 text-sm text-emerald-700">
                     <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
-                    Help other farmers in your community
+                    <TranslatedText text="Help other farmers in your community" />
                   </li>
                   <li className="flex items-center gap-2 text-sm text-emerald-700">
                     <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
-                    Secure rental process
+                    <TranslatedText text="Secure rental process" />
                   </li>
                 </ul>
               </div>

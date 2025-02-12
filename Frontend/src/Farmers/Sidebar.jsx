@@ -11,6 +11,7 @@ import {
     Sprout
 } from 'lucide-react';
 import { useUser } from '../Context/UserContext';
+import { TranslatedText } from '../languageTranslation/TranslatedText'; // Import the TranslatedText component
 
 export const Sidebar = () => {
     const location = useLocation();
@@ -24,10 +25,10 @@ export const Sidebar = () => {
     }
 
     const menuItems = [
-        { id: 'yourtools', icon: LayoutDashboard, label: 'Your Tools', path: '/farmerdashboard' },
-        { id: 'yourfarms', icon: Tractor, label: 'Your Farms', path: '/farmerdashboard/your-farms' },
-        { id: 'rentouttools', icon: Wrench, label: 'Rent Out Tools', path: '/farmerdashboard/rent-out-tools' },
-        { id: 'borowtools', icon: ShoppingCart, label: 'Borrow Tools', path: '/farmerdashboard/borrow-tools' },
+        { id: 'yourtools', icon: LayoutDashboard, label: <TranslatedText text="Your Tools" />, path: '/farmerdashboard' },
+        { id: 'yourfarms', icon: Tractor, label: <TranslatedText text="Your Farms" />, path: '/farmerdashboard/your-farms' },
+        { id: 'rentouttools', icon: Wrench, label: <TranslatedText text="Rent Out Tools" />, path: '/farmerdashboard/rent-out-tools' },
+        { id: 'borowtools', icon: ShoppingCart, label: <TranslatedText text="Borrow Tools" />, path: '/farmerdashboard/borrow-tools' },
     ];
 
     const renderMenuItem = (item) => (
@@ -68,7 +69,9 @@ export const Sidebar = () => {
                     <div className="p-6 flex flex-col items-center">
                         <div className="flex items-center gap-2 mb-6">
                             <Sprout className="w-8 h-8 text-yellow-600" />
-                            <h1 className="text-3xl font-bold text-yellow-900">AgroBooster</h1>
+                            <h1 className="text-3xl font-bold text-yellow-900">
+                                <TranslatedText text="AgroBooster" />
+                            </h1>
                         </div>
                         
                         <div className="relative">
@@ -81,7 +84,9 @@ export const Sidebar = () => {
                         </div>
                         
                         <div className="text-center mb-8">
-                            <h2 className="text-2xl font-semibold text-yellow-900">{user?.fullname || "Farmer"}</h2>
+                            <h2 className="text-2xl font-semibold text-yellow-900">
+                            <TranslatedText text={user?.fullname ? user.fullname : "Farmer"} />
+                            </h2>
                         </div>
 
                         <nav className="w-full space-y-2">
@@ -96,7 +101,9 @@ export const Sidebar = () => {
                         className="flex items-center w-full px-6 py-3 text-left text-white bg-gradient-to-r from-red-500 to-red-600 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg hover:shadow-xl"
                     >
                         <LogOut className="w-5 h-5 mr-3" />
-                        <span className="font-medium">Logout</span>
+                        <span className="font-medium">
+                            <TranslatedText text="Logout" />
+                        </span>
                     </button>
                 </div>
             </div>

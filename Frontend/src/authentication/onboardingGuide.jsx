@@ -5,6 +5,7 @@ import {
   ThermometerSun, Sprout, Wheat
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { TranslatedText } from '../languageTranslation/TranslatedText';
 
 const OnboardingGuide = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -18,73 +19,73 @@ const OnboardingGuide = () => {
 
   const steps = [
     {
-      title: "Smart Farming Assistant",
+      title: <TranslatedText text="Smart Farming Assistant" />,
       icon: <Sprout className="w-12 h-12 text-emerald-500 animate-bounce" />,
-      description: "Your digital farming companion that brings traditional farming wisdom together with modern technology.",
+      description: <TranslatedText text="Your digital farming companion that brings traditional farming wisdom together with modern technology." />,
       details: [
-        "Simple farmer-friendly interface",
-        "Local language support",
-        "Voice-guided assistance"
+        <TranslatedText text="Simple farmer-friendly interface" />,
+        <TranslatedText text="Local language support" />,
+        <TranslatedText text="Voice-guided assistance" />
       ],
       bgColor: "bg-gradient-to-br from-emerald-100/80 to-emerald-200/80",
       accent: "emerald"
     },
     {
-      title: "Local Field Conditions",
+      title: <TranslatedText text="Local Field Conditions" />,
       icon: <ThermometerSun className="w-12 h-12 text-amber-500 animate-pulse" />,
-      description: "Get precise weather and soil insights specific to your field location.",
+      description: <TranslatedText text="Get precise weather and soil insights specific to your field location." />,
       details: [
-        "Field-specific weather alerts",
-        "Soil condition monitoring",
-        "Local climate patterns"
+        <TranslatedText text="Field-specific weather alerts" />,
+        <TranslatedText text="Soil condition monitoring" />,
+        <TranslatedText text="Local climate patterns" />
       ],
       bgColor: "bg-gradient-to-br from-amber-100/80 to-amber-200/80",
       accent: "amber"
     },
     {
-      title: "Crop Management",
+      title: <TranslatedText text="Crop Management" />,
       icon: <Wheat className="w-12 h-12 text-yellow-600 animate-spin-slow" />,
-      description: "Track your crops from sowing to harvest with expert guidance at every step.",
+      description: <TranslatedText text="Track your crops from sowing to harvest with expert guidance at every step." />,
       details: [
-        "Crop health monitoring",
-        "Growth stage tracking",
-        "Harvest timing optimization"
+        <TranslatedText text="Crop health monitoring" />,
+        <TranslatedText text="Growth stage tracking" />,
+        <TranslatedText text="Harvest timing optimization" />
       ],
       bgColor: "bg-gradient-to-br from-yellow-100/80 to-yellow-200/80",
       accent: "yellow"
     },
     {
-      title: "Seasonal Planning",
+      title: <TranslatedText text="Seasonal Planning" />,
       icon: <Calendar className="w-12 h-12 text-lime-600" />,
-      description: "Plan your farming activities according to seasons and market demands.",
+      description: <TranslatedText text="Plan your farming activities according to seasons and market demands." />,
       details: [
-        "Seasonal crop recommendations",
-        "Market price predictions",
-        "Planting schedules"
+        <TranslatedText text="Seasonal crop recommendations" />,
+        <TranslatedText text="Market price predictions" />,
+        <TranslatedText text="Planting schedules" />
       ],
       bgColor: "bg-gradient-to-br from-lime-100/80 to-lime-200/80",
       accent: "lime"
     },
     {
-      title: "Equipment & Tools",
+      title: <TranslatedText text="Equipment & Tools" />,
       icon: <Tractor className="w-12 h-12 text-stone-600 animate-bounce-slow" />,
-      description: "Access modern farming equipment and tools when you need them.",
+      description: <TranslatedText text="Access modern farming equipment and tools when you need them." />,
       details: [
-        "Local equipment rentals",
-        "Tool sharing network",
-        "Maintenance schedules"
+        <TranslatedText text="Local equipment rentals" />,
+        <TranslatedText text="Tool sharing network" />,
+        <TranslatedText text="Maintenance schedules" />
       ],
       bgColor: "bg-gradient-to-br from-stone-100/80 to-stone-200/80",
       accent: "stone"
     },
     {
-      title: "Soil Care",
+      title: <TranslatedText text="Soil Care" />,
       icon: <Beaker className="w-12 h-12 text-orange-600" />,
-      description: "Understand and improve your soil health for better yields.",
+      description: <TranslatedText text="Understand and improve your soil health for better yields." />,
       details: [
-        "Soil testing services",
-        "Fertilizer recommendations",
-        "Organic farming tips"
+        <TranslatedText text="Soil testing services" />,
+        <TranslatedText text="Fertilizer recommendations" />,
+        <TranslatedText text="Organic farming tips" />
       ],
       bgColor: "bg-gradient-to-br from-orange-100/80 to-orange-200/80",
       accent: "orange"
@@ -199,25 +200,25 @@ const OnboardingGuide = () => {
           </div>
 
           <h1 className="text-5xl font-bold text-stone-800 mb-6">
-            Welcome to Agro Booster
+            <TranslatedText text="Welcome to Agro Booster" />
           </h1>
 
           <p className="text-xl text-stone-700 max-w-2xl mx-auto leading-relaxed">
-            Combining generations of farming wisdom with modern technology for sustainable agriculture.
+            <TranslatedText text="Combining generations of farming wisdom with modern technology for sustainable agriculture." />
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mt-8">
             <div className="flex items-center gap-2 bg-white/90 backdrop-blur px-6 py-3 rounded-full shadow-lg border border-emerald-200 hover:scale-105 transition-transform duration-300">
               <Sprout className="w-5 h-5 text-emerald-600" />
-              <span className="text-stone-800 font-medium">Farmer-First Approach</span>
+              <span className="text-stone-800 font-medium"><TranslatedText text="Farmer-First Approach" /></span>
             </div>
             <div className="flex items-center gap-2 bg-white/90 backdrop-blur px-6 py-3 rounded-full shadow-lg border border-amber-200 hover:scale-105 transition-transform duration-300">
               <Sun className="w-5 h-5 text-amber-600" />
-              <span className="text-stone-800 font-medium">Weather-Smart</span>
+              <span className="text-stone-800 font-medium"><TranslatedText text="Weather-Smart" /></span>
             </div>
             <div className="flex items-center gap-2 bg-white/90 backdrop-blur px-6 py-3 rounded-full shadow-lg border border-lime-200 hover:scale-105 transition-transform duration-300">
               <Leaf className="w-5 h-5 text-lime-600" />
-              <span className="text-stone-800 font-medium">Sustainable Methods</span>
+              <span className="text-stone-800 font-medium"><TranslatedText text="Sustainable Methods" /></span>
             </div>
           </div>
         </div>
@@ -270,20 +271,20 @@ const OnboardingGuide = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link to="/farmer-Information" className="block w-full sm:w-auto">
               <button className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-emerald-700 to-lime-600 text-white px-8 py-4 rounded-full hover:from-emerald-600 hover:to-lime-500 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl w-full sm:w-auto">
-                <span className="relative z-10">Start Your Journey</span>
+                <span className="relative z-10"><TranslatedText text="Start Your Journey" /></span>
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-lime-400 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
               </button>
             </Link>
             <Link to="/farmerdashboard" className="block w-full sm:w-auto">
               <button className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-amber-700 to-yellow-600 text-white px-8 py-4 rounded-full hover:from-amber-600 hover:to-yellow-500 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl w-full sm:w-auto">
-                <span className="relative z-10">Browse Equipment</span>
+                <span className="relative z-10"><TranslatedText text="Browse Equipment" /></span>
                 <Tractor className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                 <div className="absolute inset-0 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity" />
               </button>
             </Link>
           </div>
-          <p className="text-sm text-stone-600">Begin your sustainable farming journey today</p>
+          <p className="text-sm text-stone-600"><TranslatedText text="Begin your sustainable farming journey today" /></p>
         </div>
       </div>
     </div>

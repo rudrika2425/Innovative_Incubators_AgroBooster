@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Leaf, Phone, Lock, User, CheckCircle, Sprout, Sun, Cloud, Tractor } from 'lucide-react';
 import signupImage from '../assets/signup.jpg';
-
+import { TranslatedText } from '../languageTranslation/TranslatedText';
 
 const Signup = () => {
   const [fullname, setFullname] = useState("");
@@ -93,33 +93,38 @@ const Signup = () => {
           50% { transform: translateY(-30px) rotate(5deg); }
         }
       `}</style>
-
-      
-
+  
       <div className="container mx-auto px-4 h-screen flex items-center justify-center relative z-10">
         <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden w-full max-w-6xl flex">
+          
           {/* Left Panel - Form */}
           <div className="w-full lg:w-1/2 p-8 lg:p-12">
             <div className="flex items-center gap-3 mb-8">
               <div className="inline-block p-4 bg-yellow-600 rounded-full">
                 <Sprout size={15} className="text-white" />
               </div>
-              <h1 className="text-4xl font-bold text-yellow-900">AgroBooster</h1>
+              <h1 className="text-4xl font-bold text-yellow-900">
+                <TranslatedText text="AgroBooster" />
+              </h1>
             </div>
-
+  
             <div className="mb-8">
-              <h2 className="text-3xl font-bold text-yellow-900 mb-2">Welcome to Our Community</h2>
+              <h2 className="text-3xl font-bold text-yellow-900 mb-2">
+                <TranslatedText text="Welcome to Our Community" />
+              </h2>
             </div>
-
+  
             {error && (
               <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded">
                 <p className="text-red-700">{error}</p>
               </div>
             )}
-
+  
             <form onSubmit={handleSignup} className="space-y-5">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-yellow-900">Full Name</label>
+                <label className="text-sm font-medium text-yellow-900">
+                  <TranslatedText text="Full Name" />
+                </label>
                 <div className="relative">
                   <User className="absolute left-3 top-3 h-5 w-5 text-yellow-600" />
                   <input
@@ -132,9 +137,11 @@ const Signup = () => {
                   />
                 </div>
               </div>
-
+  
               <div className="space-y-2">
-                <label className="text-sm font-medium text-yellow-900">Phone Number</label>
+                <label className="text-sm font-medium text-yellow-900">
+                  <TranslatedText text="Phone Number" />
+                </label>
                 <div className="relative">
                   <Phone className="absolute left-3 top-3 h-5 w-5 text-yellow-600" />
                   <input
@@ -152,7 +159,7 @@ const Signup = () => {
                   />
                 </div>
               </div>
-
+  
               <button
                 type="button"
                 onClick={handleSendOtp}
@@ -162,15 +169,19 @@ const Signup = () => {
                 {isOtpSent ? (
                   <>
                     <CheckCircle className="h-5 w-5" />
-                    <span>OTP Sent</span>
+                    <span>
+                      <TranslatedText text="OTP Sent" />
+                    </span>
                   </>
                 ) : (
                   <>
-                    <span>Send OTP</span>
+                    <span>
+                      <TranslatedText text="Send OTP" />
+                    </span>
                   </>
                 )}
               </button>
-
+  
               {isOtpSent && !isOtpVerified && (
                 <div className="space-y-4 animate-fadeIn">
                   <div className="relative">
@@ -189,15 +200,17 @@ const Signup = () => {
                     onClick={handleVerifyOtp}
                     className="w-full bg-yellow-600 hover:bg-yellow-500 text-white py-3 rounded-xl font-medium transition-colors"
                   >
-                    Verify OTP
+                    <TranslatedText text="Verify OTP" />
                   </button>
                 </div>
               )}
-
+  
               {isOtpVerified && (
                 <div className="space-y-4 animate-fadeIn">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-yellow-900">Password</label>
+                    <label className="text-sm font-medium text-yellow-900">
+                      <TranslatedText text="Password" />
+                    </label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-3 h-5 w-5 text-yellow-600" />
                       <input
@@ -210,9 +223,11 @@ const Signup = () => {
                       />
                     </div>
                   </div>
-
+  
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-yellow-900">Confirm Password</label>
+                    <label className="text-sm font-medium text-yellow-900">
+                      <TranslatedText text="Confirm Password" />
+                    </label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-3 h-5 w-5 text-yellow-600" />
                       <input
@@ -225,28 +240,28 @@ const Signup = () => {
                       />
                     </div>
                   </div>
-
+  
                   <button
                     type="submit"
                     className="w-full bg-yellow-600 hover:bg-yellow-500 text-white py-3 rounded-xl font-medium transition-colors disabled:bg-yellow-300"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Creating Account..." : "Create Account"}
+                    {isSubmitting ? <TranslatedText text="Creating Account..." /> : <TranslatedText text="Create Account" />}
                   </button>
                 </div>
               )}
-
+  
               <div className="text-center">
                 <p className="text-yellow-900">
-                  Already have an account?{' '}
+                  <TranslatedText text="Already have an account?" />{' '}
                   <a href="/login" className="text-yellow-600 hover:text-yellow-700 font-medium">
-                    Login here
+                    <TranslatedText text="Login here" />
                   </a>
                 </p>
               </div>
             </form>
           </div>
-
+  
           {/* Right Panel - Decorative */}
           <div className="hidden lg:flex lg:w-1/2 relative flex-col items-center justify-start">
             <div className="absolute inset-0">
@@ -262,6 +277,6 @@ const Signup = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Signup;
