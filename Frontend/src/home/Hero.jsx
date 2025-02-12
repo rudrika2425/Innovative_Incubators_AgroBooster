@@ -179,7 +179,7 @@ const Hero = ({ id }) => {
           </div>
         </div>
       </div>
-      <section className="py-20 relative overflow-hidden bg-gradient-to-b from-yellow-50 to-yellow-100 relative">
+      <section className="py-20 overflow-hidden bg-gradient-to-b from-yellow-50 to-yellow-100 relative">
         <div className="container mx-auto px-6">
           <h2 className="text-4xl font-bold text-center text-emerald-900 mb-16 animate-fade-down">
           <TranslatedText text="How AgroBooster Works"/>

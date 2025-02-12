@@ -50,7 +50,7 @@ const CropCalendar = () => {
       const response = await fetch(`http://127.0.0.1:4000/calendar/generate_schedule/${farmId}`);
       const data = await response.json();
       if (data.length > 0) {
-        localStorage.setItem(`cropSchedule_${farmId}, JSON.stringify(data)`);
+        localStorage.setItem(`cropSchedule_${farmId}`, JSON.stringify(data));
         setCropSchedule(data);
       }
     } catch (error) {
@@ -194,7 +194,7 @@ const CropCalendar = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto my-12 bg-white rounded-2xl shadow-lg p-8">
+    <div className="max-w-6xl mx-auto  bg-white rounded-2xl shadow-lg p-8">
       <h2 className="text-3xl font-bold mb-8">
         <TranslatedText text="Crop Growing Calendar" />
       </h2>

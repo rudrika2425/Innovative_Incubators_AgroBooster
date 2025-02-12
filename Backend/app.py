@@ -44,6 +44,7 @@ def create_app():
     from routes.rent import tool_rental_bp
     from routes.calendar import calendar_bp
     from routes.labs_routes import labs_bp
+    from routes.weather_alert_routes import weather_alert_bp,init_alert_scheduler
 
     # Register blueprints
     app.register_blueprint(auth_bp, url_prefix="/user")
@@ -58,6 +59,8 @@ def create_app():
     app.register_blueprint(tool_rental_bp, url_prefix="/tools") 
     app.register_blueprint(calendar_bp,url_prefix='/calendar')
     app.register_blueprint(labs_bp,url_prefix='/api')
+    app.register_blueprint(weather_alert_bp)
+    init_alert_scheduler(app)
 
     # Attach MongoDB client to app for access in routes
     app.mongo_client = client  # ✅ Fixed this
