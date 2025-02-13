@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMicrophone, faXmark, faLocationCrosshairs, faMap, faDirections } from '@fortawesome/free-solid-svg-icons';
+import { faMicrophone, faXmark, faLocationCrosshairs, faDirections } from '@fortawesome/free-solid-svg-icons';
+import { TranslatedText } from "../languageTranslation/TranslatedText.jsx";
 import Test from './SoilAnalysis.jsx';
 
 const SoilTest = () => {
@@ -343,7 +344,7 @@ const SoilTest = () => {
                   className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors flex items-center gap-2"
                 >
                   <FontAwesomeIcon icon={faDirections} />
-                  <span>Open in Google Maps</span>
+                  <span><TranslatedText text="Open in Google Maps"/></span>
                 </a>
               )}
               <button 
@@ -365,24 +366,26 @@ const SoilTest = () => {
       {/* Header Section */}
       <div className="space-y-4 md:space-y-6">
         <h2 className="text-2xl md:text-4xl font-bold text-emerald-600">
-          Soil Testing Agencies
+          <TranslatedText text="Soil Testing Agencies" />
         </h2>
         
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <p className="text-base md:text-lg">
-            Find nearby soil testing agencies or upload your soil test report.
+            <TranslatedText text="Find nearby soil testing agencies or upload your soil test report." />
           </p>
           
           <div className="w-full md:w-64">
-            <label className="block font-semibold mb-2">Select Language</label>
+            <label className="block font-semibold mb-2">
+              <TranslatedText text="Select Language" />
+            </label>
             <select
               value={selectedLanguage}
               onChange={(e) => !languageLocked && setSelectedLanguage(e.target.value)}
               className="w-full border rounded-lg p-2"
               disabled={languageLocked}
             >
-              <option value="en-IN">English</option>
-              <option value="hi-IN">Hindi</option>
+              <option value="en-IN"><TranslatedText text="English" /></option>
+              <option value="hi-IN"><TranslatedText text="Hindi" /></option>
             </select>
           </div>
         </div>
@@ -394,13 +397,13 @@ const SoilTest = () => {
           {/* State Input */}
           <div>
             <label htmlFor="stateInput" className="block font-semibold mb-2">
-              Select a State
+              <TranslatedText text="Select a State" />
             </label>
             <div className="flex items-center gap-2">
               <input
                 type="text"
                 id="stateInput"
-                placeholder="Enter state"
+                placeholder={<TranslatedText text="Enter state" />}
                 value={selectedState}
                 onChange={(e) => setSelectedState(e.target.value)}
                 className="flex-1 border rounded-lg p-2"
@@ -410,7 +413,9 @@ const SoilTest = () => {
                 className="bg-emerald-600 text-white px-3 py-2 rounded-lg hover:bg-emerald-700 transition flex items-center gap-2"
               >
                 <FontAwesomeIcon icon={isListeningState ? faXmark : faMicrophone} />
-                <span className="hidden md:inline">Voice</span>
+                <span className="hidden md:inline">
+                  <TranslatedText text="Voice" />
+                </span>
               </button>
             </div>
           </div>
@@ -418,13 +423,13 @@ const SoilTest = () => {
           {/* District Input */}
           <div>
             <label htmlFor="districtInput" className="block font-semibold mb-2">
-              Select a District
+              <TranslatedText text="Select a District" />
             </label>
             <div className="flex items-center gap-2">
               <input
                 type="text"
                 id="districtInput"
-                placeholder="Enter district"
+                placeholder={<TranslatedText text="Enter district" />}
                 value={selectedDistrict}
                 onChange={(e) => setSelectedDistrict(e.target.value)}
                 className="flex-1 border rounded-lg p-2"
@@ -434,7 +439,9 @@ const SoilTest = () => {
                 className="bg-emerald-600 text-white px-3 py-2 rounded-lg hover:bg-emerald-700 transition flex items-center gap-2"
               >
                 <FontAwesomeIcon icon={isListeningDistrict ? faXmark : faMicrophone} />
-                <span className="hidden md:inline">Voice</span>
+                <span className="hidden md:inline">
+                  <TranslatedText text="Voice" />
+                </span>
               </button>
             </div>
           </div>
@@ -446,7 +453,7 @@ const SoilTest = () => {
               disabled={isLoading}
               className="flex-1 bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition"
             >
-              {isLoading ? "Searching..." : "Search"}
+              <TranslatedText text={isLoading ? "Searching..." : "Search"} />
             </button>
             <button
               onClick={getCurrentLocation}
@@ -454,58 +461,62 @@ const SoilTest = () => {
               className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition flex items-center gap-2"
             >
               <FontAwesomeIcon icon={faLocationCrosshairs} />
-              <span className="hidden md:inline">Use Location</span>
+              <span className="hidden md:inline">
+                <TranslatedText text="Use Location" />
+              </span>
             </button>
           </div>
         </div>
       </div>
 
-      
-    {/* Results Section */}
-{filteredLabs.length > 0 && (
-  <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    {filteredLabs.map((lab, index) => (
-      <div 
-        key={index} 
-        className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow flex flex-col h-full"
-      >
-        <div className="p-4 flex-grow">
-          <h3 className="text-lg font-semibold text-emerald-600 mb-2">{lab.labName}</h3>
-          <div className="space-y-2 text-gray-600">
-            <p className="text-sm">{lab.address}</p>
-            <div className="border-t pt-2">
-              <p className="text-sm">{lab.email}</p>
-              <p className="text-sm">{lab.phone}</p>
+      {/* Results Section */}
+      {filteredLabs.length > 0 && (
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredLabs.map((lab, index) => (
+            <div 
+              key={index} 
+              className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow flex flex-col h-full"
+            >
+              <div className="p-4 flex-grow">
+                <h3 className="text-lg font-semibold text-emerald-600 mb-2">
+                  <TranslatedText text={lab.labName} />
+                </h3>
+                <div className="space-y-2 text-gray-600">
+                  <p className="text-sm">
+                    <TranslatedText text={lab.address} />
+                  </p>
+                  <div className="border-t pt-2">
+                    <p className="text-sm">{lab.email}</p>
+                    <p className="text-sm">{lab.phone}</p>
+                  </div>
+                </div>
+              </div>
+              {/* Button Container: Always at the Bottom */}
+              <div className="p-4 flex justify-end">
+                <button
+                  onClick={() => handleMapView(lab)}
+                  className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors flex items-center gap-2 w-full text-center"
+                >
+                  <FontAwesomeIcon icon={faDirections} />
+                  <span><TranslatedText text="Get Directions" /></span>
+                </button>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
-        {/* Button Container: Always at the Bottom */}
-        <div className="p-4 flex justify-end">
-          <button
-            onClick={() => handleMapView(lab)}
-            className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors flex items-center gap-2 w-full text-center"
-          >
-            <FontAwesomeIcon icon={faDirections} />
-            <span>Get Directions</span>
-          </button>
-        </div>
-      </div>
-    ))}
-  </div>
-)}
+      )}
 
-
-{showMap && selectedLab && (
-  <MapView
-    userLocation={userLocation}
-    labLocation={selectedLab.location} // Ensure this is correct
-    onClose={() => setShowMap(false)}
-  />
-)}
+      {showMap && selectedLab && (
+        <MapView
+          userLocation={userLocation}
+          labLocation={selectedLab.location}
+          onClose={() => setShowMap(false)}
+        />
+      )}
 
       <Test />
     </div>
-  );
+);
 };
 
 export default SoilTest;

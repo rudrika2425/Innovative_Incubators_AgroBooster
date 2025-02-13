@@ -4,11 +4,11 @@ import { Phone, Lock, Sprout } from "lucide-react";
 import loginImage from "../assets/login.jpg";
 import { useNavigate } from "react-router-dom";
 import { TranslatedText } from '../languageTranslation/TranslatedText';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Login = () => {
   const { setUser } = useUser();
   const [formData, setFormData] = useState({ phoneNumber: "", password: "" });
-  const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
@@ -20,10 +20,20 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.phoneNumber || !formData.password) {
-      setError("All fields are required");
+      toast.error("All fields are required", {
+        duration: 3000,
+        position: 'top-center',
+        style: {
+          background: '#FEF2F2',
+          color: '#991B1B',
+          padding: '16px',
+          borderRadius: '8px',
+          fontSize: '16px',
+        },
+      });
       return;
     }
-    setError("");
+
     setIsSubmitting(true);
 
     try {
@@ -43,8 +53,6 @@ const Login = () => {
         throw new Error(data.error || "Login failed");
       }
 
-      console.log("Login response data:", data);
-
       const userData = {
         fullname: data.user.fullname,
         id: data.user.id,
@@ -55,17 +63,41 @@ const Login = () => {
       setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
 
+      // Show success toast and delay navigation
+      const successPromise = toast.success("Login successful! Redirecting...", {
+        duration: 2000,
+        position: 'top-center',
+        style: {
+          background: '#F0FDF4',
+          color: '#166534',
+          padding: '16px',
+          borderRadius: '8px',
+          fontSize: '16px',
+        },
+      });
+
+      // Wait for toast to complete before navigating
+      await successPromise;
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
       if (userData.isFirstLogin === true) {
         window.location.href = "/guide";
       } else {
         window.location.href = "/farmerdashboard";
       }
 
-      const from = location.state?.from?.pathname || "/guide";
-      navigate(from, { replace: true });
-
     } catch (err) {
-      setError(err.message);
+      toast.error(err.message, {
+        duration: 3000,
+        position: 'top-center',
+        style: {
+          background: '#FEF2F2',
+          color: '#991B1B',
+          padding: '16px',
+          borderRadius: '8px',
+          fontSize: '16px',
+        },
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -73,12 +105,12 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100 relative">
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-30px) rotate(5deg); }
-        }
-      `}</style>
+      {/* Add Toaster component at the root */}
+      <Toaster 
+        toastOptions={{
+          className: 'shadow-lg',
+        }}
+      />
 
       <div className="container mx-auto px-4 h-screen flex items-center justify-center relative z-10">
         <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden w-full max-w-6xl flex">
@@ -97,14 +129,6 @@ const Login = () => {
                 <TranslatedText text="Welcome Back!" />
               </h2>
             </div>
-
-            {error && (
-              <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded">
-                <p className="text-red-700">
-                  <TranslatedText text={error} />
-                </p>
-              </div>
-            )}
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">

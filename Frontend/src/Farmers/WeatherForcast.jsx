@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Sun, Cloud, CloudRain, CloudFog, Wind, Droplets } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
+import { TranslatedText } from '../languageTranslation/TranslatedText';
 
 const WeatherForecast = () => {
     const [searchParams] = useSearchParams();
@@ -8,7 +9,6 @@ const WeatherForecast = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Get lat and lon from URL parameters
     const latitude = searchParams.get('lat');
     const longitude = searchParams.get('lon');
     const API_URL = `http://127.0.0.1:4000/weather_forecast/forecast?lat=${latitude}&lon=${longitude}`;
@@ -85,7 +85,9 @@ const WeatherForecast = () => {
         return (
             <div className="p-6 min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
                 <div className="bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-6">
-                    <div className="text-red-400 text-center">{error}</div>
+                    <div className="text-red-400 text-center">
+                        <TranslatedText text={error} />
+                    </div>
                 </div>
             </div>
         );
@@ -99,14 +101,14 @@ const WeatherForecast = () => {
         <div className="p-6 min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
             <div className="space-y-6">
                 <h1 className="text-4xl font-extrabold text-yellow-900 text-center mb-8">
-                    Weather Intelligence
+                    <TranslatedText text="Weather Intelligence" />
                 </h1>
 
                 {/* Location Display */}
                 <div className="text-center text-emerald-800 mb-4">
-                    Location: {latitude}°, {longitude}°
+                    <TranslatedText text="Location" />: {latitude}°, {longitude}°
                     <div className="text-sm text-emerald-600">
-                        Timezone: {weatherData?.timezone}
+                        <TranslatedText text="Timezone" />: {weatherData?.timezone}
                     </div>
                 </div>
 
@@ -122,21 +124,21 @@ const WeatherForecast = () => {
                                     {kelvinToCelsius(current.temp)}°C
                                 </div>
                                 <div className="text-emerald-700">
-                                    Feels like {kelvinToCelsius(current.feels_like)}°C
+                                    <TranslatedText text="Feels like" /> {kelvinToCelsius(current.feels_like)}°C
                                 </div>
                             </div>
                         </div>
                         <div className="text-right">
                             <div className="text-xl text-emerald-800">{formatDate(current.dt)}</div>
                             <div className="text-emerald-700">
-                                {current.weather?.[0]?.description}
+                                <TranslatedText text={current.weather?.[0]?.description || ''} />
                                 <div className="flex items-center justify-end gap-2">
                                     <Droplets className="w-4 h-4" />
                                     {current.humidity}%
                                 </div>
                                 <div className="flex items-center justify-end gap-2">
                                     <Wind className="w-4 h-4" />
-                                    {Math.round(current.wind_speed)} m/s
+                                    {Math.round(current.wind_speed)} <TranslatedText text="m/s" />
                                 </div>
                             </div>
                         </div>
@@ -145,7 +147,9 @@ const WeatherForecast = () => {
 
                 {/* Hourly Forecast */}
                 <div className="bg-yellow-100 backdrop-blur-sm rounded-lg shadow-lg p-6">
-                    <h2 className="text-2xl font-semibold text-emerald-800 mb-4">Hourly Forecast</h2>
+                    <h2 className="text-2xl font-semibold text-emerald-800 mb-4">
+                        <TranslatedText text="Hourly Forecast" />
+                    </h2>
                     <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
                         {hourlyForecast.map((hour, index) => (
                             <div key={index} className="text-center justify-items-center p-2 bg-emerald-50/50 rounded-3xl border border-emerald-200 shadow-lg">
@@ -156,7 +160,7 @@ const WeatherForecast = () => {
                                 <div className="text-emerald-900">{kelvinToCelsius(hour.temp)}°</div>
                                 {hour.pop > 0 && (
                                     <div className="text-xs text-blue-600">
-                                        {Math.round(hour.pop * 100)}% rain
+                                        {Math.round(hour.pop * 100)}% <TranslatedText text="rain" />
                                     </div>
                                 )}
                             </div>
@@ -166,7 +170,9 @@ const WeatherForecast = () => {
 
                 {/* Daily Forecast */}
                 <div className="bg-yellow-100 backdrop-blur-sm rounded-lg shadow-lg p-6">
-                    <h2 className="text-2xl font-semibold text-emerald-800 mb-4">Daily Forecast</h2>
+                    <h2 className="text-2xl font-semibold text-emerald-800 mb-4">
+                        <TranslatedText text="Daily Forecast" />
+                    </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         {dailyForecast.map((day, index) => (
                             <div key={index} className="text-center justify-items-center p-4 bg-emerald-50/50 rounded-3xl border border-emerald-200 shadow-lg">
@@ -184,7 +190,7 @@ const WeatherForecast = () => {
                                 </div>
                                 {day.summary && (
                                     <div className="text-xs text-emerald-600 mt-2">
-                                        {day.summary}
+                                        <TranslatedText text={day.summary} />
                                     </div>
                                 )}
                             </div>

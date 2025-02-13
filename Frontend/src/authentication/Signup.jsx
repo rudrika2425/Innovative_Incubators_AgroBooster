@@ -3,6 +3,7 @@ import axios from "axios";
 import { Leaf, Phone, Lock, User, CheckCircle, Sprout, Sun, Cloud, Tractor } from 'lucide-react';
 import signupImage from '../assets/signup.jpg';
 import { TranslatedText } from '../languageTranslation/TranslatedText';
+import { Toaster, toast }from "react-hot-toast";
 
 const Signup = () => {
   const [fullname, setFullname] = useState("");
@@ -19,31 +20,69 @@ const Signup = () => {
   // Existing handlers remain the same
   const handleSendOtp = async () => {
     if (!phoneNumber) {
-      alert("Please enter a phone number");
+      toast.error("Please enter a phone number", {
+        duration: 3000,
+        position: 'top-center',
+        icon: '📱',
+      });
       return;
     }
+    const loadingToast = toast.loading("Sending OTP...", {
+      position: 'top-center'
+    });
+    
     try {
       const response = await axios.post("http://localhost:4000/twilio/send_sms", {
         phone_number: phoneNumber,
       });
+      toast.dismiss(loadingToast);
       if (response.data.message === "OTP sent successfully") {
-        alert("OTP sent successfully");
+        toast.success("OTP sent successfully! Check your phone", {
+          duration: 4000,
+          position: 'top-center',
+          icon: '✉️',
+        });
         setExpectedOtp(response.data.otp);
         setIsOtpSent(true);
       } else {
-        alert("Failed to send OTP");
+        toast.error("Failed to send OTP. Please try again", {
+          duration: 3000,
+          position: 'top-center',
+          icon: '❌',
+        });
       }
     } catch (error) {
-      alert("Failed to send OTP");
+      toast.dismiss(loadingToast);
+      toast.error("Network error. Please check your connection", {
+        duration: 3000,
+        position: 'top-center',
+        icon: '🌐',
+      });
     }
   };
 
   const handleVerifyOtp = () => {
+    if (!otp) {
+      toast.error("Please enter the OTP", {
+        duration: 3000,
+        position: 'top-center',
+        icon: '🔢',
+      });
+      return;
+    }
     if (otp === expectedOtp) {
-      alert("OTP verified successfully");
+      toast.success("OTP verified successfully!", {
+        duration: 3000,
+        position: 'top-center',
+        icon: '✅',
+      });
       setIsOtpVerified(true);
     } else {
-      alert("Invalid OTP");
+      toast.error("Invalid OTP. Please try again", {
+        duration: 3000,
+        position: 'top-center',
+        icon: '❌',
+      });
     }
   };
 
@@ -51,16 +90,27 @@ const Signup = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      toast.error("Passwords do not match!", {
+        duration: 3000,
+        position: 'top-center',
+        icon: '🔐',
+      });
       return;
     }
 
     if (!isOtpVerified) {
-      alert("Please verify OTP before signing up");
+      toast.error("Please verify OTP before signing up", {
+        duration: 3000,
+        position: 'top-center',
+        icon: '📝',
+      });
       return;
     }
 
     setIsSubmitting(true);
+    const loadingToast = toast.loading("Creating your account...", {
+      position: 'top-center'
+    });
     setError("");
 
     try {
@@ -71,15 +121,24 @@ const Signup = () => {
         otp,
         expected_otp: expectedOtp
       });
-
+      toast.dismiss(loadingToast);
       if (response.data.message) {
-        console.log(response.data);
-        alert("Signup successful!");
+        toast.success("Welcome to AgroBooster! Redirecting...", {
+          duration: 4000,
+          position: 'top-center',
+          icon: '🌱',
+        });
+        
         window.location.href = '/login';
       }
     } catch (error) {
+      toast.dismiss(loadingToast);
+      toast.error(error.response?.data?.error || "Signup failed. Please try again", {
+        duration: 4000,
+        position: 'top-center',
+        icon: '❌',
+      });
       setError(error.response?.data?.error || "Signup failed");
-      alert(error.response?.data?.error || "Signup failed");
     } finally {
       setIsSubmitting(false);
     }

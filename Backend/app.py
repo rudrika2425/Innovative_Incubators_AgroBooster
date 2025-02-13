@@ -4,12 +4,12 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pymongo
 from config import Config
-from datetime import datetime
 import logging
 from pytz import timezone
 from pymongo import MongoClient
 from twilio.rest import Client 
 from apscheduler.schedulers.background import BackgroundScheduler
+from datetime import datetime,timedelta
 
 werkzeug_logger = logging.getLogger("werkzeug")
 werkzeug_logger.setLevel(logging.ERROR)
@@ -52,6 +52,7 @@ def create_app():
     from routes.rent import tool_rental_bp
     from routes.calendar import calendar_bp
     from routes.labs_routes import labs_bp
+    from routes.scheme_routes import scheme_bp
     # from routes.weather_alert_routes import weather_alert_bp,init_alert_scheduler
 
     # Register blueprints
@@ -67,12 +68,15 @@ def create_app():
     app.register_blueprint(tool_rental_bp, url_prefix="/tools") 
     app.register_blueprint(calendar_bp,url_prefix='/calendar')
     app.register_blueprint(labs_bp,url_prefix='/api')
+    app.register_blueprint(scheme_bp,url_prefix='/api')
     # app.register_blueprint(weather_alert_bp)
     # init_alert_scheduler(app)
+    # News API Configuration
+    
 
     # Attach MongoDB client to app for access in routes
-    app.mongo_client = client  # ✅ Fixed this
- 
+    app.mongo_client = client  # Fixed this
+    
     return app
 
 client = MongoClient("mongodb://localhost:27017/")
@@ -132,9 +136,14 @@ scheduler.add_job(
     timezone="Asia/Kolkata"
 )
 
+
+
 if __name__ == "__main__":
     app = create_app()
     if app:
         app.run(debug=True, port=4000)  # Run the Flask app only if MongoDB is connected
     else:
         print("❌ Application startup failed due to MongoDB connection error.")
+
+
+

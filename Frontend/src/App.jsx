@@ -27,10 +27,10 @@ import Hero from "./home/Hero";
 import Footer from "./home/Footer";
 import FarmDetails from "./Farmers/FarmDetails"
 import Calendar from "./calendar/calendar"
-
-
-
-
+import { Toaster } from "react-hot-toast";
+import Farmerscheme from "./Farmers/FarmerScheme";
+import Schemes from './Scheme/Schemes';
+import News from './Scheme/News';
 
 function LayoutWithNavbar() {
   return (
@@ -46,6 +46,7 @@ function App() {
   return (
     <LanguageProvider>
       <UserProvider>
+      <Toaster position="top" reverseOrder={false} />
         <Router>
           <Routes>
             {/* Public routes */}
@@ -58,6 +59,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/chatbot" element={<Chatbot />} />
+            <Route path="/farmerscheme" element={<Farmerscheme />} />
+            <Route path="/schemes" element={<Schemes />} />
+            <Route path="/news" element={<News />} />
 
             {/* Protected routes */}
             <Route path="/crop" element={
@@ -90,6 +94,7 @@ function App() {
               <Route path="description" element={<DescriptionPage />} />
               <Route path="farm-details/:farmId" element={<FarmDetails />} />
               <Route path="farm-details/:farmId/calendar" element={<Calendar />} />
+              
             </Route>
 
             <Route path="/farmer-Information" element={
