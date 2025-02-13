@@ -27,13 +27,10 @@ import Hero from "./home/Hero";
 import Footer from "./home/Footer";
 import FarmDetails from "./Farmers/FarmDetails"
 import Calendar from "./calendar/calendar"
-
+import { Toaster } from "react-hot-toast";
 import Farmerscheme from "./Farmers/FarmerScheme";
 import Schemes from './Scheme/Schemes';
 import News from './Scheme/News';
-
-
-
 
 function LayoutWithNavbar() {
   return (
@@ -49,6 +46,7 @@ function App() {
   return (
     <LanguageProvider>
       <UserProvider>
+      <Toaster position="top" reverseOrder={false} />
         <Router>
           <Routes>
             {/* Public routes */}
