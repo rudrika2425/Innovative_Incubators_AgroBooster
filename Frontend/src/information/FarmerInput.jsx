@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMicrophone, faXmark } from "@fortawesome/free-solid-svg-icons";
-import {Wheat,Sprout,Leaf,Sun,Cloud,Droplet,Tractor,Target,Globe,Brain} from "lucide-react";
+import {Wheat} from "lucide-react";
+import { TranslatedText } from "../languageTranslation/TranslatedText";
 
 const FarmerInput = () => {
   const [formData, setFormData] = useState({
@@ -151,102 +152,54 @@ const FarmerInput = () => {
     localStorage.setItem("farmerInput", JSON.stringify(formData));
     window.location.href = "/farmer-information/soilTesting";
   };
-  const FloatingElements = () => (
-    <div
-      className="absolute inset-0 overflow-hidden pointer-events-none"
-      aria-hidden="true"
-    >
-      {[...Array(30)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute animate-float opacity-20"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            animationDuration: `${8 + Math.random() * 4}s`,
-            animationDelay: `${Math.random() * 2}s`,
-            zIndex: 1,
-          }}
-        >
-          {
-            [
-              <Leaf className="w-8 h-8 text-emerald-800" />,
-              <Sprout className="w-9 h-9 text-yellow-600" />,
-              <Sun className="w-10 h-10 text-yellow-500" />,
-              <Tractor className="w-11 h-11 text-emerald-800" />,
-              <Droplet className="w-9 h-9 text-blue-600" />,
-              <Cloud className="w-10 h-10 text-gray-400" />,
-              <Globe className="w-8 h-8 text-indigo-600" />,
-              <Target className="w-9 h-9 text-red-600" />,
-              <Brain className="w-10 h-10 text-purple-600" />,
-              <Wheat className="w-11 h-11 text-amber-600" />,
-            ][i % 10]
-          }
-        </div>
-      ))}
-    </div>
-  );
+  
 
   return (
-    <div className="relative  bg-gradient-to-b from-yellow-50 to-yellow-100 py-10">
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(5deg); }
-        }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-      `}</style>
-
-      <FloatingElements />
-
+    <div className="relative bg-gradient-to-b from-yellow-50 to-yellow-100 py-10">
       <div className="relative z-10 max-w-4xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden">
         <form className="space-y-8 p-8">
           <div className="text-center mb-8">
             <h2 className="text-4xl font-bold text-emerald-800 mb-4">
-              Basic Information
+              <TranslatedText text="Basic Information" />
             </h2>
             <p className="text-lg text-emerald-700">
-              Please provide your farming details to help us serve you better
+              <TranslatedText text="Please provide your farming details to help us serve you better" />
             </p>
           </div>
-
+  
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex items-center justify-between col-span-2">
               <div className="flex items-center gap-2">
                 <Wheat className="w-8 h-8 text-emerald-600" />
                 <span className="text-xl font-semibold text-emerald-800">
-                  Farm Details
+                  <TranslatedText text="Farm Details" />
                 </span>
               </div>
               <div>
                 <label className="block font-semibold mb-1 text-emerald-800">
-                  Select Language
+                  <TranslatedText text="Select Language" />
                 </label>
                 <select
                   value={language}
-                  onChange={(e) =>
-                    !isLanguageLocked && setLanguage(e.target.value)
-                  }
+                  onChange={(e) => !isLanguageLocked && setLanguage(e.target.value)}
                   className="w-48 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   disabled={isLanguageLocked}
                 >
-                  <option value="en-US">English</option>
-                  <option value="hi-IN">Hindi</option>
+                  <option value="en-US"><TranslatedText text="English" /></option>
+                  <option value="hi-IN"><TranslatedText text="Hindi" /></option>
                 </select>
               </div>
             </div>
-
+  
             {["farmName", "landArea"].map((field, index) => (
               <div key={index} className="col-span-2 md:col-span-1">
                 <label
                   htmlFor={field}
                   className="block font-semibold mb-2 text-emerald-800"
                 >
-                  {field === "farmName"
-                    ? "Farm Name"
-                    : "Area of Land (in acres)"}
+                  <TranslatedText 
+                    text={field === "farmName" ? "Farm Name" : "Area of Land (in acres)"} 
+                  />
                 </label>
                 <div className="flex items-center gap-2">
                   <input
@@ -256,25 +209,24 @@ const FarmerInput = () => {
                     value={formData[field]}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-200 rounded-lg text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                    placeholder={`Enter ${
-                      field === "farmName" ? "farm name" : "area of land"
-                    }`}
-                  />
+                    placeholder=
+                      {`Enter ${field === "farmName" ? "farm name" : "area of land"}`}
+                    />
                   <button
                     type="button"
                     onClick={() => startListening(field)}
                     className="p-3 bg-emerald-600 text-white rounded-xl h-12 flex items-center gap-2 w-30 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors duration-300"
                   >
-                    Voice
+                    <TranslatedText text="Voice" />
                     <FontAwesomeIcon icon={faMicrophone} />
                   </button>
                 </div>
               </div>
             ))}
-
+  
             <div className="col-span-2 md:col-span-1">
               <label className="block font-semibold mb-2 text-emerald-800">
-                Soil Type
+                <TranslatedText text="Soil Type" />
               </label>
               <select
                 name="soilType"
@@ -282,18 +234,18 @@ const FarmerInput = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               >
-                <option value="">Select Soil Type</option>
+                <option value=""><TranslatedText text="Select Soil Type" /></option>
                 {soilTypes.map((soil, index) => (
                   <option key={index} value={soil}>
-                    {soil}
+                    <TranslatedText text={soil} />
                   </option>
                 ))}
               </select>
             </div>
-
+  
             <div className="col-span-2 md:col-span-1">
               <label className="block font-semibold mb-2 text-emerald-800">
-                Crop Season
+                <TranslatedText text="Crop Season" />
               </label>
               <select
                 name="cropSeason"
@@ -301,27 +253,27 @@ const FarmerInput = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               >
-                <option value="">Select Crop Season</option>
+                <option value=""><TranslatedText text="Select Crop Season" /></option>
                 {cropSeasons.map((season, index) => (
                   <option key={index} value={season.name}>
-                    {season.name} - {season.period}
+                    <TranslatedText text={`${season.name} - ${season.period}`} />
                   </option>
                 ))}
               </select>
             </div>
-
+  
             <div className="col-span-2">
               <label className="block font-semibold mb-2 text-emerald-800">
-                Farming Tools
+                <TranslatedText text="Farming Tools" />
               </label>
               <select
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 onChange={(e) => handleToolSelect(e.target.value)}
               >
-                <option value="">Select a Tool</option>
+                <option value=""><TranslatedText text="Select a Tool" /></option>
                 {farmingToolsList.map((tool, index) => (
                   <option key={index} value={tool}>
-                    {tool}
+                    <TranslatedText text={tool} />
                   </option>
                 ))}
               </select>
@@ -333,16 +285,16 @@ const FarmerInput = () => {
                     className="flex items-center bg-emerald-600 text-white py-2 px-4 rounded-full shadow-md hover:bg-emerald-700 transition-colors duration-300"
                     onClick={() => handleToolRemove(tool)}
                   >
-                    {tool}
+                    <TranslatedText text={tool} />
                     <FontAwesomeIcon icon={faXmark} className="ml-2" />
                   </button>
                 ))}
               </div>
             </div>
-
+  
             <div className="col-span-2">
               <label className="block font-semibold mb-2 text-emerald-800">
-                Irrigation System
+                <TranslatedText text="Irrigation System" />
               </label>
               <select
                 id="irrigationSystem"
@@ -351,16 +303,16 @@ const FarmerInput = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg text-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               >
-                <option value="">Select Irrigation System</option>
+                <option value=""><TranslatedText text="Select Irrigation System" /></option>
                 {irrigationSystems.map((system, index) => (
                   <option key={index} value={system}>
-                    {system}
+                    <TranslatedText text={system} />
                   </option>
                 ))}
               </select>
             </div>
           </div>
-
+  
           <div className="pt-6">
             <button
               type="button"
@@ -376,7 +328,7 @@ const FarmerInput = () => {
                   : "bg-gray-300 text-gray-600 cursor-not-allowed"
               }`}
             >
-              Next
+              <TranslatedText text="Next" />
             </button>
           </div>
         </form>

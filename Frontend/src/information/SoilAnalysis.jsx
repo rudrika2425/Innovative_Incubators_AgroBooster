@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {useUser} from "../Context/UserContext";
-import {useNavigate} from "react-router-dom"
+import { useUser } from "../Context/UserContext";
+import { useNavigate } from "react-router-dom";
+import { TranslatedText } from "../languageTranslation/TranslatedText";
 
 const SoilTestReportUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -11,7 +12,7 @@ const SoilTestReportUploader = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [farmerInput, setFarmerInput] = useState(null);
   const nevigate = useNavigate();
-  const {user} = useUser();
+  const { user } = useUser();
 
   useEffect(() => {
     const storedFarmerData = localStorage.getItem("farmerInput");
@@ -60,7 +61,7 @@ const SoilTestReportUploader = () => {
 
   const handleUpload = async () => {
     if (!selectedFile) {
-      alert("Please select a file first.");
+      alert(<TranslatedText text="Please select a file first." />);
       return;
     }
 
@@ -88,11 +89,11 @@ const SoilTestReportUploader = () => {
       if (data?.analysis) {
         setResult(data.analysis);
       } else {
-        setErrorMessage("No analysis result received.");
+        setErrorMessage(<TranslatedText text="No analysis result received." />);
       }
     } catch (error) {
       console.error("Error uploading file:", error);
-      setErrorMessage("Failed to analyze the report. Please try again.");
+      setErrorMessage(<TranslatedText text="Failed to analyze the report. Please try again." />);
     } finally {
       setIsAnalyzing(false);
     }
@@ -100,36 +101,32 @@ const SoilTestReportUploader = () => {
 
   const handleSubmit = async () => {
     if (!result) {
-      alert("Please upload the soil report first.");
+      alert(<TranslatedText text="Please upload the soil report first." />);
       return;
     }
   
     setIsSubmitting(true);
     try {
-      // Collect location and weather data
       const locationData = await fetchLocationAndFarmerData();
       const weatherData = await fetchWeather(
         locationData.latitude,
         locationData.longitude
       );
   
-      // Assuming you have a user object available with an id
       const farmerId = user.id;
   
-      // Prepare the data payload
       const farmerData = {
-        farmerId, // Include farmerId directly in the payload
-        farmerInput: farmerInput, // Hardcoded for now, should be passed as a prop
+        farmerId,
+        farmerInput: farmerInput,
         location: locationData,
         weather: weatherData,
         soilAnalysisReport: result,
       };
 
-      console.log(farmerData)
+      console.log(farmerData);
   
       alert("AgroBooster is accessing your location");
   
-      // Send the data to the backend via a POST request
       const response = await fetch("http://127.0.0.1:4000/farmer_data/save-farmer-data", {
         method: "POST",
         headers: {
@@ -148,18 +145,17 @@ const SoilTestReportUploader = () => {
       nevigate(`/crop?farmId=${responseData.id}`);
 
     } catch (error) {
-      setErrorMessage("Failed to collect all required data. Please try again.");
+      setErrorMessage(<TranslatedText text="Failed to collect all required data. Please try again." />);
       console.error("Error in submit:", error);
     } finally {
       setIsSubmitting(false);
     }
   };
-  
 
   return (
     <div>
       <h2 className="text-4xl font-bold text-emerald-600 mb-6 mt-10">
-        Upload Soil Test Report
+        <TranslatedText text="Upload Soil Test Report" />
       </h2>
 
       {!selectedFile ? (
@@ -168,10 +164,13 @@ const SoilTestReportUploader = () => {
           accept="image/*"
           onChange={handleFileChange}
           className="block w-96 p-2 border rounded-md mb-4"
+          aria-label={<TranslatedText text="Upload soil test report" />}
         />
       ) : (
         <div className="mb-4">
-          <span className="text-gray-400">Selected File: {fileName}</span>
+          <span className="text-gray-400">
+            <TranslatedText text="Selected File" />: {fileName}
+          </span>
         </div>
       )}
 
@@ -184,21 +183,28 @@ const SoilTestReportUploader = () => {
             : "bg-emerald-600 hover:bg-emerald-700"
         }`}
       >
-        {isAnalyzing ? "Analyzing..." : "Upload and Analyze"}
+        {isAnalyzing ? 
+          <TranslatedText text="Analyzing..." /> : 
+          <TranslatedText text="Upload and Analyze" />
+        }
       </button>
 
       {errorMessage && (
         <div className="w-full max-w-md p-4 mt-4 border rounded-lg shadow-md bg-red-100 text-red-700">
-          <h3 className="text-lg font-semibold mb-2">Error</h3>
+          <h3 className="text-lg font-semibold mb-2">
+            <TranslatedText text="Error" />
+          </h3>
           <p>{errorMessage}</p>
         </div>
       )}
 
       {result && (
         <div className="w-full max-w-md p-4 mt-4 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold mb-2">Analysis Result</h3>
+          <h3 className="text-xl font-semibold mb-2">
+            <TranslatedText text="Analysis Result" />
+          </h3>
           <div className="p-2 bg-gray-100 rounded-md">
-            <p>{result}</p>
+            <p><TranslatedText text={result}/></p>
           </div>
         </div>
       )}
@@ -213,7 +219,10 @@ const SoilTestReportUploader = () => {
               : "bg-gray-400 text-white cursor-not-allowed"
           }`}
         >
-          {isSubmitting ? "Processing..." : "Submit"}
+          {isSubmitting ? 
+            <TranslatedText text="Processing..." /> : 
+            <TranslatedText text="Submit" />
+          }
         </button>
       </div>
     </div>

@@ -1,20 +1,51 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Home, Sprout, Newspaper } from 'lucide-react';
+import { TranslatedText } from '../languageTranslation/TranslatedText';
 
 const Navbar = () => {
   return (
-    <nav className="bg-green-600 shadow-lg">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center space-x-2">
-            <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10M9 21h6" />
-            </svg>
-            <span className="text-white text-xl font-bold">Farmer's Portal</span>
+    <nav className="bg-gradient-to-r from-emerald-600 to-emerald-500 shadow-lg p-4 backdrop-blur-sm sticky top-0 ">
+      <div className="container mx-auto px-6">
+        <div className="flex items-center justify-between h-15">
+          {/* Logo and Brand */}
+          <Link 
+            to="/" 
+            className="flex items-center gap-3 group"
+          >
+            <div className="p-2 bg-white/10 rounded-full transition-all duration-300 group-hover:bg-white/20">
+              <Sprout className="h-6 w-6 text-white" />
+            </div>
+            <span className="text-white text-2xl font-bold">
+              <TranslatedText text="Government Schemes and News"/>
+            </span>
           </Link>
-          <div className="flex space-x-6">
-            <Link to="/schemes" className="text-white hover:text-green-200 font-medium">Schemes</Link>
-            <Link to="/news" className="text-white hover:text-green-200 font-medium">News</Link>
+
+          {/* Navigation Links */}
+          <div className="flex items-center gap-8">
+            <Link 
+              to="/" 
+              className="flex items-center gap-2 text-white hover:text-yellow-200 text-lg font-medium transition-colors duration-300"
+            >
+              <Home className="w-5 h-5" />
+              <span><TranslatedText text="Home"/></span>
+            </Link>
+            
+            <Link 
+              to="/schemes" 
+              className="flex items-center gap-2 text-white hover:text-yellow-200 text-lg font-medium transition-colors duration-300"
+            >
+              <Sprout className="w-5 h-5" />
+              <span><TranslatedText text="Schemes"/></span>
+            </Link>
+            
+            <Link 
+              to="/news" 
+              className="flex items-center gap-2 text-white hover:text-yellow-200 text-lg font-medium transition-colors duration-300"
+            >
+              <Newspaper className="w-5 h-5" />
+              <span><TranslatedText text="News"/></span>
+            </Link>
           </div>
         </div>
       </div>

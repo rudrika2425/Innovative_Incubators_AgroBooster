@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { TranslatedText } from '../languageTranslation/TranslatedText';
 import { 
   Sprout, Leaf, Sun, Cloud, Tractor, Target, Globe, ArrowUpRight, 
   MapPin, Mic, Calendar, Shield, Brain, Database, Radio, Camera,
-  MessageSquare, Upload
+  MessageSquare, Upload, Newspaper
 } from 'lucide-react';
 
 const Hero = ({ id }) => {
-  const [activeTab, setActiveTab] = useState('features');
+  
+  const navigate = useNavigate();
 
   const features = [
     {
@@ -177,6 +179,28 @@ const Hero = ({ id }) => {
               </a>
             </div>
           </div>
+          <button
+          onClick={() => navigate('/farmerscheme')}
+          className="fixed bottom-8 right-8 z-50 group"
+          aria-label="Go to News"
+        >
+          <div className="relative">
+            {/* Button background with hover effect */}
+            <div className="absolute inset-0 bg-emerald-500 rounded-full transition-transform duration-300 group-hover:scale-110 animate-pulse" />
+            
+            {/* Main button */}
+            <div className="relative bg-yellow-600 p-6 rounded-full shadow-lg transform transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-xl">
+              <Newspaper className="w-6 h-6 text-white" />
+            </div>
+
+            {/* Tooltip */}
+            <div className="absolute bottom-full right-0 mb-2 pointer-events-none">
+              <div className="bg-white px-4 py-2 rounded-full shadow-lg text-emerald-600 font-medium text-sm whitespace-nowrap opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                <TranslatedText text="Check latest news and government schemes."/>
+              </div>
+            </div>
+          </div>
+        </button>
         </div>
       </div>
       <section className="py-20 overflow-hidden bg-gradient-to-b from-yellow-50 to-yellow-100 relative">
