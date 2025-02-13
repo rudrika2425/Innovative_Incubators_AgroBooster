@@ -33,7 +33,7 @@ def create_app():
 
     # Import blueprints after initializing MongoDB
     from routes.auth_routes import auth_bp
-    from routes.twilio_routes import twilio_bp
+    from routes.sms_routes import sms_bp
     from routes.analyze_soil_report_routes import analyze_soil_report_bp
     from routes.get_location import location_bp
     from routes.weather_routes import weather_bp
@@ -44,11 +44,11 @@ def create_app():
     from routes.rent import tool_rental_bp
     from routes.calendar import calendar_bp
     from routes.labs_routes import labs_bp
-    from routes.weather_alert_routes import weather_alert_bp,init_alert_scheduler
+    # from routes.weather_alert_routes import weather_alert_bp,init_alert_scheduler
 
     # Register blueprints
     app.register_blueprint(auth_bp, url_prefix="/user")
-    app.register_blueprint(twilio_bp, url_prefix="/twilio")
+    app.register_blueprint(sms_bp, url_prefix="/twilio")
     app.register_blueprint(analyze_soil_report_bp, url_prefix="/analyze_soil")
     app.register_blueprint(location_bp, url_prefix="/location")
     app.register_blueprint(weather_bp, url_prefix="/weather")
@@ -59,8 +59,8 @@ def create_app():
     app.register_blueprint(tool_rental_bp, url_prefix="/tools") 
     app.register_blueprint(calendar_bp,url_prefix='/calendar')
     app.register_blueprint(labs_bp,url_prefix='/api')
-    app.register_blueprint(weather_alert_bp)
-    init_alert_scheduler(app)
+    # app.register_blueprint(weather_alert_bp)
+    # init_alert_scheduler(app)
 
     # Attach MongoDB client to app for access in routes
     app.mongo_client = client  # ✅ Fixed this

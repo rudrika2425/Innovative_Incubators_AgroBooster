@@ -219,7 +219,7 @@ const CropPrediction = () => {
                 </div>
                 
                 <h3 >
-                <TranslatedText text={prediction.commonName} className="text-2xl font-bold text-gray-900 mb-2"/>
+                <TranslatedText text={prediction.commonName} className="text-2xl font-bold text-gray-900 mb-6"/>
                 </h3>
                 
                 
@@ -263,9 +263,9 @@ const CropPrediction = () => {
               <input
                 type="text"
                 placeholder="Variety"
-                className="flex-1 px-6 py-3 border-2 border-emerald-200 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90 text-lg"
+                className="flex-1 px-6 ml-5 py-3 border-2 border-emerald-200 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90 text-lg"
                 onChange={(e) => setVariety(e.target.value)}
-              />
+              />
             </div>
             <div className="flex gap-4 mb-8">
               <button

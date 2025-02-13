@@ -7,17 +7,14 @@ import { TranslatedText } from '../languageTranslation/TranslatedText';
 
 const Login = () => {
   const { setUser } = useUser();
-  const [formData, setFormData] = useState({ phoneNumber: "+91", password: "" });
+  const [formData, setFormData] = useState({ phoneNumber: "", password: "" });
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    if (e.target.name === "phoneNumber") {
-      setFormData({ ...formData, phoneNumber: "+91" + e.target.value.replace(/^\+91/, "") });
-    } else {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    }
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -174,6 +171,5 @@ const Login = () => {
     </div>
   );
 };
-
 
 export default Login;

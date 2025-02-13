@@ -6,7 +6,7 @@ import { TranslatedText } from '../languageTranslation/TranslatedText';
 
 const Signup = () => {
   const [fullname, setFullname] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("+91");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otp, setOtp] = useState("");
@@ -148,11 +148,7 @@ const Signup = () => {
                     type="text"
                     value={phoneNumber}
                     onChange={(e) => {
-                      let input = e.target.value;
-                      if (!input.startsWith("+91")) {
-                        input = "+91" + input.replace(/[^0-9]/g, "");
-                      }
-                      setPhoneNumber(input);
+                      setPhoneNumber(e.target.value);
                     }}
                     className="w-full pl-10 pr-4 py-3 border-2 border-yellow-200 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
                     required

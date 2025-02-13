@@ -3,6 +3,7 @@ from flask_cors import CORS
 import google.generativeai as genai
 from bson import ObjectId
 from pymongo import MongoClient
+import os
 
 # Create the blueprint
 predict_bp = Blueprint('predict_bp', __name__)
@@ -14,7 +15,7 @@ db = client['agrobooster']
 farms_collection = db['farmers']
 
 def configure_genai():
-    genai.configure(api_key="AIzaSyDfNKh9DapTzLwXRO1kFsmTkPtTighZDJs")
+    genai.configure(api_key=os.getenv('GENAI_API_KEY'))
 
 def generate_input_prompt(farmer_data):
     farm_input = farmer_data.get('farmerInput', {})
