@@ -6,17 +6,71 @@ from datetime import datetime
 from bson import ObjectId
 from flask import Blueprint
 import re
+import os
 from bson import ObjectId, errors
 from pymongo import MongoClient
- 
+from twilio.rest import Client 
+from apscheduler.schedulers.background import BackgroundScheduler
+
+# Initialize the scheduler
+scheduler = BackgroundScheduler()
+scheduler.start()
 
 calendar_bp = Blueprint('calendar_bp', __name__)
 CORS(calendar_bp)
+
+
+from apscheduler.schedulers.background import BackgroundScheduler
+
+# Initialize the scheduler
+# scheduler = BackgroundScheduler()
+# scheduler.start()
+
+# Schedule the activity check to run daily at 9:00 AM
+
 
 # MongoDB connection
 client = MongoClient('mongodb://localhost:27017/')
 db = client['agrobooster']
 farms_collection = db['farmers']
+
+client = MongoClient("mongodb://localhost:27017/")
+db = client["agrobooster"]
+crop_schedules_collection = db["crop_schedules"]
+
+@calendar_bp.route('/save_schedule/<farm_id>', methods=['POST'])
+def create_crop_schedule(farm_id):
+    tasks = request.json.get("tasks", [])
+    phonenum = request.json.get("phonenum", "N/A")
+    crop_schedule = {
+        "farmId": farm_id,
+        "phonenum": phonenum,
+        "tasks": [
+            {
+                "title": task["title"],
+                "description": task["description"],
+                "start_date": datetime.strptime(task["start_date"], "%Y-%m-%d"),
+                "end_date": datetime.strptime(task["end_date"], "%Y-%m-%d"),
+                "task_description": task["task_description"],
+                "sustainable_resource": task["sustainable_resource"]
+            }
+            for task in tasks
+            
+        ],
+        "created_at": datetime.utcnow()
+    }
+    result = crop_schedules_collection.insert_one(crop_schedule)
+    return jsonify({"message": "Crop schedule saved", "id": str(result.inserted_id)}), 201
+
+@calendar_bp.route('/get_schedule/<farm_id>', methods=['GET'])
+def get_crop_schedule(farm_id):
+    schedule = crop_schedules_collection.find_one({"farmId": farm_id})
+    if schedule:
+        schedule["_id"] = str(schedule["_id"])   
+        return jsonify(schedule)
+    else:
+        return jsonify({"message": "No schedule found"}), 404
+
 
 @calendar_bp.route('/update-farm', methods=['POST'])
 def update_farm():
@@ -49,6 +103,80 @@ def update_farm():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+TWILIO_ACCOUNT_SID = os.getenv('TWILIO_SID')
+TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
+TWILIO_PHONE_NUMBER = os.getenv('TWILIO_PHONE_NUMBER')
+
+twilio_client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+def send_sms(to, body):
+    try:
+        message = twilio_client.messages.create(
+            body=body,
+            from_=TWILIO_PHONE_NUMBER,
+            to=to
+        )
+        print(f"SMS sent: {message.sid}")
+        return True
+    except Exception as e:
+        print(f"Error sending SMS: {e}")
+        return False
+
+    
+@calendar_bp.route('/test_check_activities', methods=['GET'])
+def test_check_activities():
+    return check_activities()
+
+
+
+@calendar_bp.route('/check-activities', methods=['GET'])
+def check_activities():
+    try:
+        # Get today's date
+        today = datetime.today().date()
+        print(f"Today's date: {today}")
+        # Fetch all schedules from MongoDB
+        schedules = crop_schedules_collection.find()
+        
+         
+        start_date=datetime.today().date()
+        user_phone_number = "+917860254396"
+        if start_date == today:
+                # Prepare the SMS message
+                sms_body = f"Reminder: your task starts today. Description: "
+                send_sms(user_phone_number, sms_body)
+                    
+        # for schedule in schedules:
+        #     farm_id = schedule.get("farmId")
+        #     tasks = schedule.get("tasks", [])
+        #     user_phone_number = "+917860254396"  # Replace with the user's phone number
+            
+            
+            # for task in tasks:
+            #     start_date = task.get("start_date")
+            #     if isinstance(start_date, str):
+            #         start_date = datetime.fromisoformat(start_date).date()
+
+            #     if start_date == today:
+            #         # Prepare the SMS message
+            #         sms_body = f"Reminder: {task['title']} starts today. Description: {task['description']}"
+            #         send_sms(user_phone_number, sms_body)
+
+        return jsonify({"message": "Activity check completed"}), 200
+
+    except Exception as e:
+        print(f"Error in check_activities: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+# scheduler.add_job(
+#     func=check_activities,
+#     trigger="cron",
+#     hour=19,
+#     minute=50,
+#     timezone="UTC"
+# )
+print("Scheduler started and job added")
 
 genai.configure(api_key="AIzaSyDfNKh9DapTzLwXRO1kFsmTkPtTighZDJs")
 
