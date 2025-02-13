@@ -5,6 +5,7 @@ from flask_cors import CORS
 import pymongo
 from config import Config
 import logging
+from datetime import datetime,timedelta
 
 werkzeug_logger = logging.getLogger("werkzeug")
 werkzeug_logger.setLevel(logging.ERROR)
@@ -61,11 +62,110 @@ def create_app():
     app.register_blueprint(labs_bp,url_prefix='/api')
     # app.register_blueprint(weather_alert_bp)
     # init_alert_scheduler(app)
+    # News API Configuration
+    NEWS_API_KEY = "55b454ac61604a2d9173f2a1576f0260"  # Replace with your actual NewsAPI key
+    NEWS_CACHE = {'data': None, 'last_updated': None}
+
+    # Static Scheme Data
+    SCHEMES_DATA = [
+        {
+            "id": 1,
+            "name": "PM-KISAN",
+            "description": "किसान परिवारों को प्रति वर्ष 6000 रुपये की सीधी आय सहायता",
+            "benefits": [
+                "प्रति वर्ष 6000 रुपये की वित्तीय सहायता",
+                "बैंक खातों में सीधे ट्रांसफर",
+                "कृषि आवश्यकताओं के लिए समर्थन"
+            ],
+            "eligibility": "सभी छोटे और सीमांत किसान",
+            "link": "https://pmkisan.gov.in/",
+            "image": "https://pmkisan.gov.in/new_images/PradhanMantriKisanSammanNidhiBanner.jpg"
+        },
+        {
+            "id": 2,
+            "name": "किसान क्रेडिट कार्ड",
+            "description": "किसानों को समय पर क्रेडिट तक पहुंच प्रदान करता है",
+            "benefits": [
+                "फसलों के लिए आसान क्रेडिट पहुंच",
+                "लचीले पुनर्भुगतान विकल्प",
+                "बीमा कवरेज"
+            ],
+            "eligibility": "सभी किसान, शेयरक्रॉपर्स और कृषि करने वाले",
+            "link": "https://www.india.gov.in/spotlight/kisan-credit-card",
+            "image": "https://pmkisan.gov.in/new_images/SabkaSathSabkaVikasSabkaViswas.jpg"
+        }
+    ]
+
+    @app.route('/api/schemes', methods=['GET'])
+    def get_schemes():
+        try:
+            return jsonify({
+                "status": "success",
+                "data": SCHEMES_DATA
+            })
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
+    @app.route('/api/news', methods=['GET'])
+    def get_news():
+        try:
+            # Check cache (refresh every 30 minutes)
+            if (NEWS_CACHE['data'] and NEWS_CACHE['last_updated'] and 
+                datetime.now() - NEWS_CACHE['last_updated'] < timedelta(minutes=30)):
+                return jsonify({"status": "success", "data": NEWS_CACHE['data']})
+
+            # Keywords for Indian agriculture news in Hindi
+            indian_agri_keywords = "किसान OR कृषि OR पीएम-किसान OR किसान क्रेडिट कार्ड"
+
+            # Build the API URL with specific parameters for Indian agriculture news in Hindi
+            url = (
+                f"https://newsapi.org/v2/everything?"
+                f"q={indian_agri_keywords}&"
+                f"apiKey={NEWS_API_KEY}&"
+                f"language=hi&"  # Set language to Hindi
+                f"sortBy=publishedAt"
+            )
+
+            response = requests.get(url)
+            print(response.json())  # Log the raw response from the API
+
+            if response.status_code == 200:
+                news_data = response.json()
+
+                # Process and filter news
+                formatted_news = []
+                for article in news_data.get("articles", []):
+                    if article.get("urlToImage") and article.get("description"):
+                        formatted_news.append({
+                            "title": article["title"],
+                            "description": article["description"],
+                            "url": article["url"],
+                            "image": article["urlToImage"],
+                            "publishedAt": article["publishedAt"],
+                            "source": article["source"]["name"]
+                        })
+
+                # Update cache with filtered news
+                NEWS_CACHE['data'] = formatted_news[:12]  # Store top 12 relevant articles
+                NEWS_CACHE['last_updated'] = datetime.now()
+
+                return jsonify({
+                    "status": "success",
+                    "data": NEWS_CACHE['data']
+                })
+            else:
+                return jsonify({"error": "Failed to fetch news"}), 500
+
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
     # Attach MongoDB client to app for access in routes
-    app.mongo_client = client  # ✅ Fixed this
- 
+    app.mongo_client = client  # Fixed this
+    
     return app
+
+
+
 
 if __name__ == "__main__":
     app = create_app()
@@ -73,3 +173,6 @@ if __name__ == "__main__":
         app.run(debug=True, port=4000)  # Run the Flask app only if MongoDB is connected
     else:
         print("❌ Application startup failed due to MongoDB connection error.")
+
+
+

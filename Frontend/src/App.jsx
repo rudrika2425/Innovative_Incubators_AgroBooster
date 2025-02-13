@@ -29,6 +29,8 @@ import FarmDetails from "./Farmers/FarmDetails"
 import Calendar from "./calendar/calendar"
 import { Toaster } from "react-hot-toast";
 import Farmerscheme from "./Farmers/FarmerScheme";
+import Schemes from './Scheme/Schemes';
+import News from './Scheme/News';
 
 function LayoutWithNavbar() {
   return (
@@ -58,6 +60,8 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/chatbot" element={<Chatbot />} />
             <Route path="farmerscheme" element={<Farmerscheme />} />
+            <Route path="/schemes" element={<Schemes />} />
+            <Route path="/news" element={<News />} />
 
             {/* Protected routes */}
             <Route path="/crop" element={
