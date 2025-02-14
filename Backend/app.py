@@ -5,11 +5,17 @@ from flask_cors import CORS
 import pymongo
 from config import Config
 import logging
+from pytz import timezone
+from pymongo import MongoClient
+from twilio.rest import Client 
+from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime,timedelta
 
 werkzeug_logger = logging.getLogger("werkzeug")
 werkzeug_logger.setLevel(logging.ERROR)
 logging.getLogger('pymongo').setLevel(logging.WARNING)
+
+
 
 def create_app():
     app = Flask(__name__)
@@ -19,7 +25,8 @@ def create_app():
 
     # Initialize extensions
     CORS(app)
-
+    
+    
     # Initialize MongoDB
     client = pymongo.MongoClient(app.config["MONGO_URI"])
     app.db = client.get_database()  # ✅ This makes db accessible as current_app.db
@@ -72,6 +79,62 @@ def create_app():
     
     return app
 
+client = MongoClient("mongodb://localhost:27017/")
+db = client["agrobooster"]
+crop_schedules_collection = db["crop_schedules"]
+print(crop_schedules_collection)
+   
+TWILIO_ACCOUNT_SID = os.getenv('TWILIO_SID')
+TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
+TWILIO_PHONE_NUMBER = os.getenv('TWILIO_PHONE_NUMBER')
+scheduler = BackgroundScheduler()
+scheduler.start()
+
+twilio_client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+def send_sms(to, body):
+    try:
+        message = twilio_client.messages.create(
+            body=body,
+            from_=TWILIO_PHONE_NUMBER,
+            to=to
+        )
+        print(f"SMS sent: {message.sid}")
+        return True
+    except Exception as e:
+        print(f"Error sending SMS: {e}")
+        return False
+
+ 
+def check_activities():
+    print(f"Scheduled task running at {datetime.now()}")
+    try:
+        # Get today's date
+        today = datetime.today().date()
+        schedules = crop_schedules_collection.find()
+        for schedule in schedules:
+            farm_id = schedule.get("farmId")
+            tasks = schedule.get("tasks", [])
+            user_phone_number = schedule.get("phonenum")
+            
+            for task in tasks:
+                start_date = task.get("start_date")
+                if isinstance(start_date, str):
+                    start_date = datetime.fromisoformat(start_date).date()
+
+                if start_date == today:
+                    # Prepare the SMS message
+                    sms_body = f"Reminder: {task['title']} starts today. Description: {task['description']}"
+                    send_sms(user_phone_number, sms_body)
+    except Exception as e:
+        print(f"Error checking schedules: {e}")
+    
+scheduler.add_job(
+    func=check_activities,
+    trigger="cron",
+    hour=9,
+    minute=30,
+    timezone="Asia/Kolkata"
+)
 
 
 

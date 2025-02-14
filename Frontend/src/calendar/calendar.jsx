@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { TranslatedText } from "../languageTranslation/TranslatedText";
-
+import { useUser } from "../Context/UserContext";
 const CropCalendar = () => {
   const [cropSchedule, setCropSchedule] = useState([]);
   const [modalShow, setModalShow] = useState(false);
@@ -9,19 +9,18 @@ const CropCalendar = () => {
   const [loading, setLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date());
   const { farmId } = useParams();
+   const { user } = useUser();
 
   const fetchSchedule = async () => {
     setLoading(true);
     try {
-      const storedData = localStorage.getItem(`cropSchedule_${farmId}`);
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        if (parsedData.length > 0) {
-          setCropSchedule(parsedData);
-        } else {
-          await retryFetch();
-        }
+      const response = await fetch(`http://127.0.0.1:4000/calendar/get_schedule/${farmId}`);
+      const data = await response.json();
+      console.log(data);
+      if (response.ok) {
+        setCropSchedule(data.tasks);
       } else {
+        console.warn("No schedule found, fetching new data...");
         await retryFetch();
       }
     } catch (error) {
@@ -50,11 +49,29 @@ const CropCalendar = () => {
       const response = await fetch(`http://127.0.0.1:4000/calendar/generate_schedule/${farmId}`);
       const data = await response.json();
       if (data.length > 0) {
-        localStorage.setItem(`cropSchedule_${farmId}`, JSON.stringify(data));
+        await saveScheduleToDB(data); // Save data to the database
         setCropSchedule(data);
+        console.log("crop schedules:",cropSchedule)
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+    }
+  };
+
+  const saveScheduleToDB = async (tasks) => {
+    try {
+      const phone=user.phone_number
+      const response = await fetch(`http://127.0.0.1:4000/calendar/save_schedule/${farmId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ tasks,phonenum:phone }),
+      });
+      const result = await response.json();
+      console.log("Schedule saved:", result);
+    } catch (error) {
+      console.error("Error saving schedule:", error);
     }
   };
 
@@ -64,6 +81,7 @@ const CropCalendar = () => {
 
   useEffect(() => {
     console.log("Crop Schedule:", cropSchedule);
+    console.log(user.phone_number);
   }, [cropSchedule]);
 
 
