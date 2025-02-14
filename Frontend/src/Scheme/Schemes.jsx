@@ -7,7 +7,7 @@ const Schemes = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:4000/api/schemes')
+    fetch(`${import.meta.env.VITE_API_URL}api/schemes`)
       .then(res => res.json())
       .then(data => {
         setSchemes(data.data);

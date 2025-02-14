@@ -14,7 +14,7 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
   useEffect(() => {
     const fetchFarmDetails = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:4000/farmer_data/farm/${farmId}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}farmer_data/farm/${farmId}`);
         setFarm(response.data);
       } catch (err) {
         setError("Failed to fetch farm details.");
@@ -28,7 +28,7 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
   const handleDelete = async () => {
     if (window.confirm(<TranslatedText text="deleteConfirmation" />)) {
       try {
-        await axios.delete(`http://127.0.0.1:4000/farmer_data/delete-farm/${farmId}`);
+        await axios.delete(`${import.meta.env.VITE_API_URL}farmer_data/delete-farm/${farmId}`);
         navigate('/farmerdashboard');
       } catch (err) {
         setError(<TranslatedText text="deleteError" />);

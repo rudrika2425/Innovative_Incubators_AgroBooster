@@ -54,7 +54,7 @@ const SoilTestReportUploader = () => {
 
   const fetchLocationAndFarmerData = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:4000/location/ip-location");
+      const response = await fetch(`${import.meta.env.VITE_API_URL}location/ip-location`);
       if (!response.ok) throw new Error("Failed to fetch location");
       const locationData = await response.json();
       return locationData;
@@ -68,7 +68,7 @@ const SoilTestReportUploader = () => {
   const fetchWeather = async (lat, lon) => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:4000/weather/get_weather?lat=${lat}&lon=${lon}`
+        `${import.meta.env.VITE_API_URL}weather/get_weather?lat=${lat}&lon=${lon}`
       );
       if (!response.ok) throw new Error("Failed to fetch weather");
       const weatherData = await response.json();
@@ -104,7 +104,7 @@ const SoilTestReportUploader = () => {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:4000/analyze_soil/api/analyze-soil-report",
+        `${import.meta.env.VITE_API_URL}analyze_soil/api/analyze-soil-report`,
         {
           method: 'POST',
           body: formData,
@@ -162,7 +162,7 @@ const SoilTestReportUploader = () => {
   
       toast.success(<TranslatedText text="AgroBooster is accessing your location" />, toastConfig.success);
   
-      const response = await fetch("http://127.0.0.1:4000/farmer_data/save-farmer-data", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}farmer_data/save-farmer-data`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

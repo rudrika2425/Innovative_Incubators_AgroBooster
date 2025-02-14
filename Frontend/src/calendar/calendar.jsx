@@ -14,7 +14,7 @@ const CropCalendar = () => {
   const fetchSchedule = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:4000/calendar/get_schedule/${farmId}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}calendar/get_schedule/${farmId}`);
       const data = await response.json();
       console.log(data);
       if (response.ok) {
@@ -46,7 +46,7 @@ const CropCalendar = () => {
 
   const fetchAndCacheData = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:4000/calendar/generate_schedule/${farmId}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}calendar/generate_schedule/${farmId}`);
       const data = await response.json();
       if (data.length > 0) {
         await saveScheduleToDB(data); // Save data to the database
@@ -61,7 +61,7 @@ const CropCalendar = () => {
   const saveScheduleToDB = async (tasks) => {
     try {
       const phone=user.phone_number
-      const response = await fetch(`http://127.0.0.1:4000/calendar/save_schedule/${farmId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}calendar/save_schedule/${farmId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

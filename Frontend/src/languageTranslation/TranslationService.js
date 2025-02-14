@@ -1,9 +1,9 @@
 const API_KEY = 'AIzaSyCXnavNRrmi36bNtHVMrmkonoZRQhoXy7A';
-const API_URL = 'https://translation.googleapis.com/language/translate/v2';
+const VITE_API_URL = 'https://translation.googleapis.com/language/translate/v2';
 
 export const translateText = async (text, targetLanguage) => {
   try {
-    const response = await fetch(`${API_URL}?key=${API_KEY}`, {
+    const response = await fetch(`${VITE_API_URL}?key=${API_KEY}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

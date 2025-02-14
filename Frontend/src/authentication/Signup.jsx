@@ -3,7 +3,7 @@ import axios from "axios";
 import { Leaf, Phone, Lock, User, CheckCircle, Sprout, Sun, Cloud, Tractor } from 'lucide-react';
 import signupImage from '../assets/signup.jpg';
 import { TranslatedText } from '../languageTranslation/TranslatedText';
-import { Toaster, toast }from "react-hot-toast";
+import { Toaster, toast }from "react-hot-toast"
 
 const Signup = () => {
   const [fullname, setFullname] = useState("");
@@ -32,7 +32,7 @@ const Signup = () => {
     });
     
     try {
-      const response = await axios.post("http://localhost:4000/twilio/send_sms", {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}twilio/send_sms`, {
         phone_number: phoneNumber,
       });
       toast.dismiss(loadingToast);
@@ -114,7 +114,7 @@ const Signup = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:4000/user/signup", {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}user/signup`, {
         fullname,
         phone_number: phoneNumber,
         password,

@@ -29,7 +29,7 @@ const Contact = ({ id }) => {
     setIsSubmitting(true);
     
     try {
-      const response = await axios.post("http://127.0.0.1:4000/contact/submit-contact-data", formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}contact/submit-contact-data`, formData);
       
       setStatusMessage({
         type: "success",

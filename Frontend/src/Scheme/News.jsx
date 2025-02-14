@@ -7,7 +7,7 @@ const News = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:4000/api/news')
+    fetch(`${import.meta.env.VITE_API_URL}api/news`)
       .then(res => res.json())
       .then(data => {
         setNews(data.data);
