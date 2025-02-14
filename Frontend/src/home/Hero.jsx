@@ -116,9 +116,9 @@ const Hero = ({ id }) => {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-yellow-50 to-yellow-100">
+    <div className="bg-gradient-to-b from-yellow-100 to-yellow-200">
       {/* Hero Section */}
-      <div className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
+      <div className="relative min-h-screen bg-gradient-to-b from-yellow-100 to-yellow-200">
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-10">
           <div className="space-y-6 max-w-5xl -mt-20">
             <div className="flex justify-center gap-4 mb-4">
@@ -168,14 +168,14 @@ const Hero = ({ id }) => {
                 className="group relative inline-flex items-center gap-3 bg-emerald-600 text-white px-8 py-4 rounded-full hover:bg-emerald-500 transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl no-underline"
               >
                 <Sprout className="w-6 h-6" />
-                <span><TranslatedText text="Plant Bot" /></span>
+                <span><TranslatedText text="Plant Assistance" /></span>
               </a>
               <a
                 href="/login"
                 className="no-underline group relative inline-flex items-center gap-3 bg-amber-600 text-white px-8 py-4 rounded-full hover:bg-amber-500 transition-all duration-300 font-medium text-lg shadow-lg hover:shadow-xl"
               >
                 <Sprout className="w-6 h-6" />
-                <span><TranslatedText text="Grow Crop" /></span>
+                <span><TranslatedText text="Grow Crop or Brouse Equipments" /></span>
               </a>
             </div>
           </div>
@@ -242,7 +242,7 @@ const Hero = ({ id }) => {
         <div className="absolute top-0 left-0 w-64 h-64 bg-emerald-100 rounded-full filter blur-3xl opacity-30 animate-pulse" />
         <div className="absolute bottom-0 right-0 w-64 h-64 bg-yellow-100 rounded-full filter blur-3xl opacity-30 animate-pulse delay-1000" />
       </section>
-      <section className="container mx-auto px-6 py-16 bg-gradient-to-b from-yellow-50 to-yellow-100 relative">
+      <section className="container mx-auto px-6 py-16 bg-gradient-to-b from-yellow-100 to-yellow-200 relative">
         
         <h2 className="text-6xl font-bold text-center text-emerald-900 mb-20">
           <TranslatedText text="Technology" />{' '}

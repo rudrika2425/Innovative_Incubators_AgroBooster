@@ -222,7 +222,7 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
+    <div className="min-h-screen bg-gradient-to-b from-yellow-100 to-yellow-200">
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -235,7 +235,7 @@ const Chatbot = () => {
       
       <div className="flex h-screen p-4">
         {/* Sidebar */}
-        <div className="w-72 bg-yellow-100 backdrop-blur-sm rounded-2xl shadow-lg border border-emerald-200 p-6 mr-4">
+        <div className="w-72 bg-yellow-50 backdrop-blur-sm rounded-2xl shadow-lg border border-emerald-500 p-6 mr-4">
           <div className="flex items-center gap-3 mb-8">
             <div className="p-3 bg-emerald-100 rounded-full shadow-md">
               <Leaf className="w-8 h-8 text-emerald-600" />
@@ -276,7 +276,7 @@ const Chatbot = () => {
         </div>
 
         {/* Main Chat Area */}
-        <div className="flex-1 backdrop-blur-sm rounded-2xl shadow-lg border border-emerald-200 flex flex-col">
+        <div className="flex-1 backdrop-blur-sm rounded-2xl bg-yellow-50  shadow-lg border border-emerald-500 flex flex-col">
           {/* Chat Messages */}
           <div className="flex-1 overflow-y-auto p-6">
             {messages.length === 0 ? (
@@ -311,7 +311,7 @@ const Chatbot = () => {
           </div>
 
           {/* Input Area */}
-          <div className="border-t border-emerald-100 bg-white/50 p-6 rounded-b-2xl">
+          <div className="border-t border-emerald-100 bg-emerald-50 p-6 rounded-b-2xl">
             <div className="max-w-4xl mx-auto space-y-4">
               <div className="flex items-center gap-3">
                 <input
@@ -319,7 +319,7 @@ const Chatbot = () => {
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
                   placeholder={t('typeMessage')}
-                  className="flex-1 px-4 py-3 border border-emerald-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90"
+                  className="flex-1 px-4 py-3 border border-emerald-500 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90"
                   onKeyPress={(e) => e.key === 'Enter' && handleChatSubmit()}
                 />
                 <button
@@ -340,7 +340,7 @@ const Chatbot = () => {
                 <input
                   type="file"
                   onChange={(e) => setFile(e.target.files[0])}
-                  className="flex-1 text-sm text-emerald-900 p-3 border border-emerald-200 rounded-xl bg-white/90"
+                  className="flex-1 text-sm text-emerald-900 p-3 border border-emerald-500 rounded-xl bg-white/90"
                   accept="image/*"
                 />
                 {file && (
