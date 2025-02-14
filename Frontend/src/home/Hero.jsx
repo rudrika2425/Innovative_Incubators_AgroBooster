@@ -244,7 +244,7 @@ const Hero = ({ id }) => {
       </section>
       <section className="container mx-auto px-6 py-16 bg-gradient-to-b from-yellow-100 to-yellow-200 relative">
         
-        <h2 className="md:text-6xl sm:text-4xl text-2xl font-bold text-center text-emerald-900 mb-20">
+        <h2 className="md:text-6xl sm:text-4xl text-3xl font-bold text-center text-emerald-900 mb-20">
           <TranslatedText text="Technology" />{' '}
           <span className="text-yellow-700">
             <TranslatedText text="Transforming Agriculture" />
