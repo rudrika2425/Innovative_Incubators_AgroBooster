@@ -40,7 +40,7 @@ def send_sms_alert(phone_number, message):
         message = twilio_client.messages.create(
             body=message,
             from_=TWILIO_PHONE_NUMBER,
-            to=phone_number
+            to="+91"+phone_number
         )
         logger.info(f"SMS sent successfully: {message.sid}")
         return True

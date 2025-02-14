@@ -32,19 +32,6 @@ def send_sms():
         # Fast2SMS API endpoint
         url = f"https://www.fast2sms.com/dev/bulkV2?authorization={api_key}&route=q&message={message}&flash=0&numbers={phone_number}&schedule_time="
         
-        # # Required headers
-        # headers = {
-        #     "authorization": api_key,
-        #     "Content-Type": "application/json"
-        # }
-        
-        # # Required parameters
-        # params = {
-        #     "route": "q",  # Quick route
-        #     "message": message,
-        #     "flash": "0",
-        #     "numbers": phone_number,
-        # }
         
         # Make the API request
         response = requests.get(url)
