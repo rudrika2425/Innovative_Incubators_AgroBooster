@@ -161,8 +161,8 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
-      <div className="bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-6">
+      <div className="sticky top-0 z-20 w-full bg-gradient-to-b from-yellow-50 to-yellow-100 backdrop-blur-sm shadow-md px-4">
+        <div className="container mx-auto px-4 py-5">
           <h1 className="text-3xl font-bold text-yellow-900">
             <TranslatedText text="Manage your agricultural tools and equipment" />
           </h1>

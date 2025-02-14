@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  ChevronRight, Map, Calendar, Mic, Beaker, Tractor, Bot,
+  ChevronRight, Map, Calendar, Beaker, Tractor, Bot,
   ArrowRight, CheckCircle, Leaf, Sun, Cloud, Droplets,
   ThermometerSun, Sprout, Wheat
 } from 'lucide-react';
@@ -10,12 +10,6 @@ import { TranslatedText } from '../languageTranslation/TranslatedText';
 const OnboardingGuide = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  const [currentUtterance, setCurrentUtterance] = useState(null);
-  const [voices, setVoices] = useState([]);
-  const [selectedVoice, setSelectedVoice] = useState(null);
-  const [speechRate, setSpeechRate] = useState(1);
-  const [speechPitch, setSpeechPitch] = useState(1);
 
   const steps = [
     {
@@ -115,52 +109,6 @@ const OnboardingGuide = () => {
     );
   };
 
-  useEffect(() => {
-    const loadVoices = () => {
-      const availableVoices = window.speechSynthesis.getVoices();
-      setVoices(availableVoices);
-      const defaultVoice = availableVoices.find(voice => voice.lang.startsWith('en')) || availableVoices[0];
-      setSelectedVoice(defaultVoice);
-    };
-
-    loadVoices();
-    window.speechSynthesis.onvoiceschanged = loadVoices;
-
-    return () => {
-      window.speechSynthesis.cancel();
-    };
-  }, []);
-
-  const stopSpeaking = () => {
-    window.speechSynthesis.cancel();
-    setIsSpeaking(false);
-    setCurrentUtterance(null);
-  };
-
-  const speakText = (text) => {
-    stopSpeaking();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.voice = selectedVoice;
-    utterance.rate = speechRate;
-    utterance.pitch = speechPitch;
-
-    utterance.onend = () => {
-      setIsSpeaking(false);
-      setCurrentUtterance(null);
-    };
-
-    utterance.onerror = (event) => {
-      console.error('Speech synthesis error:', event);
-      setIsSpeaking(false);
-      setCurrentUtterance(null);
-    };
-
-    setCurrentUtterance(utterance);
-    setIsSpeaking(true);
-    window.speechSynthesis.speak(utterance);
-  };
-
   return (
     <div className="min-h-screen bg-[#f4f1de] p-6 relative overflow-hidden">
       <style>{`
@@ -244,10 +192,6 @@ const OnboardingGuide = () => {
                 <h3 className="text-2xl font-bold text-stone-800">
                   {step.title}
                 </h3>
-                <Mic
-                  className="w-6 h-6 text-stone-600 cursor-pointer hover:text-stone-800"
-                  onClick={() => speakText(`${step.title}. ${step.description} Key features include: ${step.details.join(', ')}`)}
-                />
               </div>
               <div className="pt-4 pb-6 px-6">
                 <p className="text-lg text-stone-700 mb-6 leading-relaxed">{step.description}</p>
