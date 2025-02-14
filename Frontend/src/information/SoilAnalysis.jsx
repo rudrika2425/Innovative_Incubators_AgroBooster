@@ -2,7 +2,31 @@ import React, { useState, useEffect } from "react";
 import { useUser } from "../Context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { TranslatedText } from "../languageTranslation/TranslatedText";
-
+import toast from "react-hot-toast";
+const toastConfig = {
+  success: {
+    duration: 3000,
+    position: 'top-center',
+    style: {
+      background: '#F0FDF4',
+      color: '#166534',
+      padding: '16px',
+      borderRadius: '8px',
+      fontSize: '16px',
+    },
+  },
+  error: {
+    duration: 3000,
+    position: 'top-center',
+    style: {
+      background: '#FEF2F2',
+      color: '#991B1B',
+      padding: '16px',
+      borderRadius: '8px',
+      fontSize: '16px',
+    },
+  },
+};
 const SoilTestReportUploader = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileName, setFileName] = useState("");
@@ -22,6 +46,7 @@ const SoilTestReportUploader = () => {
         setFarmerInput(parsedFarmerData);
         localStorage.removeItem("farmerInput");
       } catch (error) {
+        toast.error(<TranslatedText text="Error loading farmer data" />, toastConfig.error);
         console.error("Error parsing farmer data:", error);
       }
     }
@@ -34,6 +59,7 @@ const SoilTestReportUploader = () => {
       const locationData = await response.json();
       return locationData;
     } catch (error) {
+      toast.error(<TranslatedText text="Failed to fetch location" />, toastConfig.error);
       console.error("Error fetching location:", error);
       throw error;
     }
@@ -48,6 +74,7 @@ const SoilTestReportUploader = () => {
       const weatherData = await response.json();
       return weatherData;
     } catch (error) {
+      toast.error(<TranslatedText text="Failed to fetch weather data" />, toastConfig.error);
       console.error("Error fetching weather:", error);
       throw error;
     }
@@ -57,11 +84,15 @@ const SoilTestReportUploader = () => {
     const file = event.target.files[0];
     setSelectedFile(file);
     setFileName(file ? file.name : "");
-  };
+  
+  if (file) {
+    toast.success(<TranslatedText text="File selected successfully" />, toastConfig.success);
+  }
+};
 
   const handleUpload = async () => {
     if (!selectedFile) {
-      alert(<TranslatedText text="Please select a file first." />);
+      toast.error(<TranslatedText text="Please select a file first." />, toastConfig.error);
       return;
     }
 
@@ -88,12 +119,16 @@ const SoilTestReportUploader = () => {
       
       if (data?.analysis) {
         setResult(data.analysis);
+        
       } else {
         setErrorMessage(<TranslatedText text="No analysis result received." />);
+        toast.error(<TranslatedText text="No analysis result received." />, toastConfig.error);
       }
     } catch (error) {
       console.error("Error uploading file:", error);
       setErrorMessage(<TranslatedText text="Failed to analyze the report. Please try again." />);
+      toast.error(<TranslatedText text="Failed to analyze the report" />, toastConfig.error);
+    
     } finally {
       setIsAnalyzing(false);
     }
@@ -101,7 +136,7 @@ const SoilTestReportUploader = () => {
 
   const handleSubmit = async () => {
     if (!result) {
-      alert(<TranslatedText text="Please upload the soil report first." />);
+      toast.error(<TranslatedText text="Please upload the soil report first." />, toastConfig.error);
       return;
     }
   
@@ -125,7 +160,7 @@ const SoilTestReportUploader = () => {
 
       console.log(farmerData);
   
-      alert("AgroBooster is accessing your location");
+      toast.success(<TranslatedText text="AgroBooster is accessing your location" />, toastConfig.success);
   
       const response = await fetch("http://127.0.0.1:4000/farmer_data/save-farmer-data", {
         method: "POST",
@@ -142,11 +177,14 @@ const SoilTestReportUploader = () => {
       const responseData = await response.json();
       console.log("Data stored successfully:", responseData);
       localStorage.setItem("farmId", responseData.id);
+      toast.success(<TranslatedText text="Data saved successfully" />, toastConfig.success);
       nevigate(`/crop?farmId=${responseData.id}`);
 
     } catch (error) {
       setErrorMessage(<TranslatedText text="Failed to collect all required data. Please try again." />);
       console.error("Error in submit:", error);
+      toast.error(<TranslatedText text="Failed to save data" />, toastConfig.error);
+      
     } finally {
       setIsSubmitting(false);
     }

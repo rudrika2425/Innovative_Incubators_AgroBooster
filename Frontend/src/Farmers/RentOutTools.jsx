@@ -3,7 +3,31 @@ import axios from "axios";
 import { useUser } from "../Context/UserContext";
 import { Tractor, Mic, MicOff } from "lucide-react";
 import { TranslatedText } from '../languageTranslation/TranslatedText';
-
+import toast from "react-hot-toast";
+const toastConfig = {
+  success: {
+    duration: 3000,
+    position: 'top-center',
+    style: {
+      background: '#F0FDF4',
+      color: '#166534',
+      padding: '16px',
+      borderRadius: '8px',
+      fontSize: '16px',
+    },
+  },
+  error: {
+    duration: 3000,
+    position: 'top-center',
+    style: {
+      background: '#FEF2F2',
+      color: '#991B1B',
+      padding: '16px',
+      borderRadius: '8px',
+      fontSize: '16px',
+    },
+  },
+};
 function RentOutTools() {
   const { user } = useUser();
   const initialState = {
@@ -33,7 +57,7 @@ function RentOutTools() {
 
   const startVoiceInput = (fieldName) => {
     if (!('webkitSpeechRecognition' in window)) {
-      alert('Speech recognition is not supported in this browser.');
+      toast.error(<TranslatedText text="Speech recognition is not supported in this browser." />, toastConfig.error);
       return;
     }
 
@@ -97,7 +121,8 @@ function RentOutTools() {
     const updatedImages = [...formData.images, ...selectedFiles].slice(0, 5);
 
     if (selectedFiles.length + formData.images.length > 5) {
-      alert("You can upload up to 5 images only.");
+     
+      toast.error(<TranslatedText text="You can upload up to 5 images only." />, toastConfig.error);
     }
 
     setFormData(prev => ({
@@ -132,12 +157,13 @@ function RentOutTools() {
       );
 
       if (response.status === 201) {
-        alert("Details submitted successfully!");
+        
+        toast.success(<TranslatedText text="Details submitted successfully!"/>, toastConfig.success);
         setFormData(initialState);
       }
     } catch (error) {
       console.error("Error submitting form data:", error);
-      alert("An error occurred while submitting your data.");
+      toast.success(<TranslatedText text="An error occurred while submitting your data."/>, toastConfig.success);
     }
   };
 

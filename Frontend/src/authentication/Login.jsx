@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { TranslatedText } from '../languageTranslation/TranslatedText';
 import toast, { Toaster } from 'react-hot-toast';
 
+
+
 const Login = () => {
   const { setUser } = useUser();
   const [formData, setFormData] = useState({ phoneNumber: "", password: "" });
