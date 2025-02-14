@@ -17,41 +17,40 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 
 ## 🔑 Key Features
 
-🌾 Soil Testing & Analysis
 ### 🌾 Soil Testing & Analysis
 - Integration with nearby soil testing agencies via Google Maps API.
 - AI-driven analysis of uploaded soil reports to suggest suitable crops.
 
-### **AI-Powered Crop Prediction**
+### 🌱 AI-Powered Crop Prediction
 - AI-generated crop recommendations based on soil analysis, weather conditions, and farm location.
 - Personalized yield-maximizing pathways for optimal crop selection.
 
-### **AI-Generated Farming Calendar**
+### 📅 AI-Generated Farming Calendar
 - A dynamic calendar that guides farmers through every stage of crop growth.
 - Optimized scheduling for irrigation, fertilization, and pest control.
 
-### ** Farm Dashboard**
+### 📊 Farm Dashboard
 - A centralized dashboard displaying farm details and AI-generated calendars.
 - Weather updates, farming recommendations, and alerts.
 - Support for multiple farm registrations
 
-### **AI Chatbot for Disease Detection & Treatment**
+### 🤖 AI Chatbot for Disease Detection & Treatment
 - Image-based plant disease detection using AI/ML models.
 - Voice and text-integrated chatbot providing treatment suggestions.
 
-### **Farmer Tool Rental Marketplace**
+### 🚜 Farmer Tool Rental Marketplace
 - Farmers can list their farming tools for rent with necessary details and images.
 - Borrowers can browse and rent tools directly through the platform.
 
-### **Weather Insights**
+### 🌤️ Weather Insights
 - 7-day weather forecasts powered by OpenWeather API.
 - Integration with Agromonitoring API for real-time farm condition tracking.
 
-### **News & Government Schemes**
+### 📢 News & Government Schemes
 - AI-curated latest farming news updates.
 - Updates on government schemes beneficial for farmers.
   
-### **Multilingual & Accessibility Support**
+### 🗣️ Multilingual & Accessibility Support
 - Bilingual platform (Hindi & English) powered by Google Translate API.
 - Expandable to multiple languages using Google Translate API.
 - Text-to-speech and voice input features for an accessible user experience.
@@ -122,6 +121,46 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 - Integrate blockchain for smart contract-based tool rental agreements.
 
 ---
+
+### 🌿 Crop Prediction Parameters
+
+State Name
+
+District Name
+
+Season (Rabi, Kharif, Zaid)
+
+Crop Name
+
+Temperature
+
+Humidity
+
+Soil Moisture
+
+Soil Type
+
+Crop Type
+
+Nitrogen (N)
+
+Phosphorus (P)
+
+Potassium (K)
+
+Farm Area
+
+Irrigation Method
+
+Tools Used
+
+Soil Testing Report
+
+Weather Conditions
+
+Terrain Type
+
+--
 
 ## 🏗 How to Set Up Locally
 
