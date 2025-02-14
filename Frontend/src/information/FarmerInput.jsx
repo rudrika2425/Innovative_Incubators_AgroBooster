@@ -3,7 +3,33 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMicrophone, faXmark } from "@fortawesome/free-solid-svg-icons";
 import {Wheat} from "lucide-react";
 import { TranslatedText } from "../languageTranslation/TranslatedText";
+import toast from "react-hot-toast";
 
+
+const toastConfig = {
+  success: {
+    duration: 3000,
+    position: 'top-center',
+    style: {
+      background: '#F0FDF4',
+      color: '#166534',
+      padding: '16px',
+      borderRadius: '8px',
+      fontSize: '16px',
+    },
+  },
+  error: {
+    duration: 3000,
+    position: 'top-center',
+    style: {
+      background: '#FEF2F2',
+      color: '#991B1B',
+      padding: '16px',
+      borderRadius: '8px',
+      fontSize: '16px',
+    },
+  },
+};
 const FarmerInput = () => {
   const [formData, setFormData] = useState({
     farmName: "",
@@ -76,7 +102,7 @@ const FarmerInput = () => {
 
   const startListening = (field) => {
     if (!recognition) {
-      alert("Speech Recognition is not supported in this browser.");
+      toast.error(<TranslatedText text="Speech Recognition is not supported in this browser."/>, toastConfig.error);
       return;
     }
 
@@ -98,7 +124,7 @@ const FarmerInput = () => {
         if (!isNaN(numericValue) && value !== "") {
           value = numericValue;
         } else {
-          alert("Please speak a valid number for the land area.");
+          toast.error(<TranslatedText text="Please speak a valid number for the land area."/>, toastConfig.error);
           setIsListening(false);
           return;
         }
@@ -106,10 +132,12 @@ const FarmerInput = () => {
 
       setFormData((prev) => ({ ...prev, [field]: value }));
       setIsListening(false);
+      
     };
 
     recognition.onerror = () => {
       setIsListening(false);
+      toast.error(<TranslatedText text="Error capturing voice input. Please try again."/>, toastConfig.error);
     };
   };
 
@@ -124,6 +152,10 @@ const FarmerInput = () => {
         ...prev,
         farmingTools: [...prev.farmingTools, tool],
       }));
+      
+    }
+    else{
+      toast.error(<TranslatedText text={`${tool} is already selected`}/>, toastConfig.error);
     }
   };
 
@@ -132,6 +164,7 @@ const FarmerInput = () => {
       ...prev,
       farmingTools: prev.farmingTools.filter((t) => t !== tool),
     }));
+    
   };
 
   const handleNext = (e) => {
@@ -145,12 +178,19 @@ const FarmerInput = () => {
       !formData.soilType ||
       !formData.cropSeason
     ) {
-      alert("Please fill in all fields before proceeding.");
+      toast.error(<TranslatedText text={
+        `Please fill in all required fields: ${missingFields.join(", ")}`}/>,
+        toastConfig.error
+      );
       return;
     }
 
     localStorage.setItem("farmerInput", JSON.stringify(formData));
-    window.location.href = "/farmer-information/soilTesting";
+    toast.success(<TranslatedText text="Information saved successfully!"/>, toastConfig.success);
+    
+    setTimeout(() => {
+      window.location.href = "/farmer-information/soilTesting";
+    }, 1000);
   };
   
 

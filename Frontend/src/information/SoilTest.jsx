@@ -403,7 +403,7 @@ const SoilTest = () => {
               <input
                 type="text"
                 id="stateInput"
-                placeholder={<TranslatedText text="Enter state" />}
+                placeholder={"Enter state"}
                 value={selectedState}
                 onChange={(e) => setSelectedState(e.target.value)}
                 className="flex-1 border rounded-lg p-2"
@@ -429,7 +429,7 @@ const SoilTest = () => {
               <input
                 type="text"
                 id="districtInput"
-                placeholder={<TranslatedText text="Enter district" />}
+                placeholder={"Enter district"}
                 value={selectedDistrict}
                 onChange={(e) => setSelectedDistrict(e.target.value)}
                 className="flex-1 border rounded-lg p-2"
