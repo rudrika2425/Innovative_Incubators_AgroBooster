@@ -87,7 +87,7 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 
 ## 📌 Roadmap & Workflow
 
-### **User Authentication & Onboarding**
+### **Phase 1: User Authentication & Onboarding**
 - User registers with phone number and name.
 - OTP verification via Fast2SMS API.
 - User logs in and gets onboarding guidance.
@@ -122,45 +122,27 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 
 ---
 
-### 🌿 Crop Prediction Parameters
+### 🌿 Crop Prediction and Pathway Parameters
 
-State Name
+- State Name
+- District Name
+- Season (Rabi, Kharif, Zaid)
+- Temperature
+- Humidity
+- Soil Type
+- Nitrogen (N)
+- Phosphorus (P)
+- Potassium (K)
+- Farm Area
+- Irrigation Method
+- Tools Used
+- Soil Ph
+- Weather Conditions
+- Terrain Type
+- - Crop Name
+- Crop Type
 
-District Name
-
-Season (Rabi, Kharif, Zaid)
-
-Crop Name
-
-Temperature
-
-Humidity
-
-Soil Moisture
-
-Soil Type
-
-Crop Type
-
-Nitrogen (N)
-
-Phosphorus (P)
-
-Potassium (K)
-
-Farm Area
-
-Irrigation Method
-
-Tools Used
-
-Soil Testing Report
-
-Weather Conditions
-
-Terrain Type
-
---
+---
 
 ## 🏗 How to Set Up Locally
 
@@ -170,13 +152,13 @@ Terrain Type
 - MongoDB installed and running
 
   
-### **Clone the Repository**
+###📥 Clone the Repository
 ```bash
 git clone https://github.com/rudrika2425/Innovative_Incubators_AgroBooster.git
-cd agrobooster
+cd Innovative_Incubators_Hackofiesta_6.0
 ```
 
-### **Backend Setup**
+###🔧 Backend Setup
 ```bash
 cd Backend
 python -m venv venv
@@ -185,7 +167,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-### **ChatBoat Setup**
+### 🤖 Chatbot Setup
 ```bash
 cd ChatBoat
 python -m venv venv
@@ -194,19 +176,21 @@ pip install -r requirements.txt
 python app.py
 ```
 
-### **Frontend Setup**
+### 🎨 Frontend Setup
 ```bash
 cd Frontend
 npm install
 npm run dev
 ```
 
-### **Environment Variables (Frontend)**
+##🔑 Environment Variables
+
+### Frontend
 ```
  GOOGLE_MAPS_API_KEY = AIzaSyAF5JeH_iVKoIf_eLWiSeVkANZsDO4Ertk
 ```
 
-### **Environment Variables (Backend)**
+### Backend
 ```
 GENAI_API_KEY=AIzaSyCcMvVmWTfgvSeIKn0qQG6Oe38HdYbZCOs
 WEATHER_API_KEY=50785daf09c798199492cd7d6341c350
@@ -222,158 +206,14 @@ FAST2SMS_API_KEY=j5Gh3RH26tFdPr4BDplQwz8qCIVLiMkayZogx9eX7mYAJNnS0Eu1mcvhC89NldE
 NEWS_API_KEY = 55b454ac61604a2d9173f2a1576f0260
 ```
 
-### **Environment Variables (ChatBoat)**
+### Chatbot
 ```
 GOOGLE_API_KEY=AIzaSyCcMvVmWTfgvSeIKn0qQG6Oe38HdYbZCOs
 ```
 
 ---
 
-## 📌 Future Scope
-- AI-powered crop disease prevention using satellite data.
-- Blockchain-based farmer transactions for transparency.
-- Expansion to more regional languages for inclusivity.
-- App development to extend the website to an Android app.
-
----
-
-
-
-
-* OpenWeather API
-* Google Maps API
-* Google Places API
-* Google Translate API
-* Gemini API
-* IPinfo API
-* Agromonitoring API
-* Fast2SMS API
-* News API
-* Cloudinary API
-
----
-
-## 📌 Roadmap & Workflow
-
-### **Phase 1: User Authentication & Onboarding**
-* User registers with phone number and name.
-* OTP verification via Fast2SMS API.
-* User logs in and gets onboarding guidance.
-
-### **Phase 2: Farm Setup, Soil Analysis & AI-Driven Crop Prediction**
-* User fills in farm details (Name, Area, Irrigation Method, Tools Used).
-* Nearby soil testing agencies suggested via Google Maps API.
-* User uploads soil test report, analyzed using Gemini API.
-* AI suggests best crop based on Soil Type, Weather, and Farm Location.
-* Personalized AI-generated farming calendar provided.
-
-### **Phase 3: Farm Dashboard & Personalized Calendar**
-* Farmers access the farm dashboard for real-time updates.
-* AI-generated calendar provides step-by-step farming guidance.
-* 7-day weather forecast via OpenWeather API.
-* AI chatbot assists with plant disease detection.
-
-### **Phase 4: AI Chatbot for Disease Detection & Treatment**
-* Image and voice-integrated AI chatbot for plant disease diagnosis.
-* Text-to-speech support for accessibility.
-
-### **Phase 5: Tool Rental & Community Features**
-* Farmers can list tools for rent with images and pricing.
-* Users can browse and rent tools.
-* News API provides agricultural news and government scheme updates.
-
-### **Phase 6: Scaling & Multilingual Expansion**
-* Additional language support via Google Translate API.
-* AI recommendations for financial planning.
-* Blockchain-based tool rental agreements.
-
----
-
-## 🌿 Crop Prediction Parameters
-
-* **State Name**
-* **District Name**
-* **Season** (Rabi, Kharif, Zaid)
-* **Crop Name**
-* **Temperature**
-* **Humidity**
-* **Soil Moisture**
-* **Soil Type**
-* **Crop Type**
-* **Nitrogen (N)**
-* **Phosphorus (P)**
-* **Potassium (K)**
-* **Farm Area**
-* **Irrigation Method**
-* **Tools Used**
-* **Soil Testing Report**
-* **Weather Conditions**
-* **Terrain Type**
-
----
-
-## 🏗 How to Set Up Locally
-
-### **📥 Clone the Repository**
-```bash
- git clone https://github.com/rudrika2425/Innovative_Incubators_AgroBooster.git
- cd agrobooster
-```
-
-### **🔧 Backend Setup**
-```bash
- cd Backend
- python -m venv venv
- source venv/bin/activate  # On Windows use: venv\Scripts\activate
- pip install -r requirements.txt
- python app.py
-```
-
-### **🤖 Chatbot Setup**
-```bash
- cd ChatBoat
- python -m venv venv
- source venv/bin/activate  # On Windows use: venv\Scripts\activate
- pip install -r requirements.txt
- python app.py
-```
-
-### **🎨 Frontend Setup**
-```bash
- cd Frontend
- npm install
- npm run dev
-```
-
----
-
-## 🔑 Environment Variables
-
-### **Frontend**
-```
- GOOGLE_MAPS_API_KEY=your_api_key
-```
-
-### **Backend**
-```
-GENAI_API_KEY=your_api_key
-WEATHER_API_KEY=your_api_key
-SECRET_KEY=agrobooster
-SQLALCHEMY_DATABASE_URI=sqlite:///users.db
-MONGO_URI=mongodb://localhost:27017/agrobooster
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-```
-
-### **Chatbot**
-```
-GOOGLE_API_KEY=your_api_key
-```
-
----
-
-## 📌 `.gitignore` Configuration
+### 📌 .gitignore Configuration
 ```
 # Ignore virtual environments
 venv/
@@ -386,14 +226,23 @@ __pycache__/
 .env
 ```
 
----
-
-## 🚀 Future Scope🌾 Soil Testing & Analysis
-
-* AI-powered crop disease prevention using satellite data.
-* Blockchain-based farmer transactions for transparency.
-* Expansion to more regional languages.
-* Mobile app for seamless farming assistance.
+## 🚀 Future Scope
+- AI-powered crop disease prevention using satellite data.
+- Blockchain-based farmer transactions for transparency.
+- Expansion to more regional languages for inclusivity.
+- App development to extend the website to an Android app.
 
 ---
+
+
+
+
+
+
+
+
+
+
+
+
 
