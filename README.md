@@ -83,7 +83,7 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 
 ---
 
-## 📌 Roadmap & Workflow
+## 📌 Roadmap 
 
 ### **Phase 1: User Authentication & Onboarding**
 - User registers with phone number and name.
@@ -118,11 +118,14 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 - Expand AI recommendations to include financial planning for farmers.
 - Integrate blockchain for smart contract-based tool rental agreements.
 
+## 🌱Workflow
+![image](https://github.com/user-attachments/assets/a901180d-5d5d-460a-ab2c-22bee78958b6)
+
 ---
 
 ### 🌿 Crop Prediction and Pathway Parameters
 
-#### In order to maintain accuracy we have included following 27 Parameters for Crop Recommendation and Pathway Prediction.
+#### In order to maintain Accuracy we have included following 27 Parameters for Crop Recommendation and Pathway Prediction.
 
 - Farm Area
 - Farming Tools
@@ -204,10 +207,9 @@ npm run dev
 ```
 GENAI_API_KEY=ENTER_YOUR_API_KEY
 WEATHER_API_KEY=ENTER_YOUR_API_KEY
-SECRET_KEY=agrobooster
-SQLALCHEMY_DATABASE_URI=sqlite:///users.db
-MONGO_URI=mongodb://localhost:27017/agrobooster
-CLOUDINARY_CLOUD_NAME=dmxznaplt
+SECRET_KEY=ENTER_YOUR_SECRET_KEY
+MONGO_URI=ENTER_YOUR_MONGO_URI
+CLOUDINARY_CLOUD_NAME=ENTER_YOUR_CLOUD_NAME
 CLOUDINARY_API_KEY=ENTER_YOUR_API_KEY
 CLOUDINARY_API_SECRET=ENTER_YOUR_API_KEY
 WEATHER_API_KEY_OPENWEATHER=ENTER_YOUR_API_KEY
@@ -244,6 +246,14 @@ __pycache__/
 ![image](https://github.com/user-attachments/assets/5d007b88-2ce8-4ceb-9d69-70f66cd731c5)
 ![image](https://github.com/user-attachments/assets/1d25202e-1229-443e-9359-a9e69e3cd87b)
 ![image](https://github.com/user-attachments/assets/07b33969-d7c1-4033-969c-b123efb2d1a4)
+
+---
+
+🔗 **Live Demo:** [🌍 Visit AgroBooster](YOUR_DEPLOYED_WEBSITE_LINK)  
+
+🎥 **Watch Full Video:** [▶️ Watch on YouTube](YOUR_YOUTUBE_VIDEO_LINK)  
+
+📢 Join us in transforming agriculture with cutting-edge solutions! 🌱  
 
 ---
 ## 🌾 Agriculture Resources & Official Websites  
