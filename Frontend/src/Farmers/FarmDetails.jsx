@@ -21,7 +21,6 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
       }
     };
 
-
     fetchFarmDetails();
   }, [farmId]);
 
@@ -35,7 +34,6 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
       }
     }
   };
-
 
   const handleCalendar = () => {
     navigate(`/farmerdashboard/farm-details/${farmId}/calendar`);
