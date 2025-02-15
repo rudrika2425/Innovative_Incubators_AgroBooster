@@ -136,23 +136,23 @@ const CropCalendar = () => {
         <div className="flex items-center gap-6">
           <button
             onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)))}
-            className="p-2 hover:bg-gray-100 rounded-full text-gray-600"
+            className="p-2 hover:bg-gray-100 rounded-full text-emerald-600"
           >
             ←
           </button>
-          <span className="text-2xl font-semibold text-gray-800">
+          <span className="text-2xl font-semibold text-emerald-800">
             <TranslatedText text={monthYear} />
           </span>
           <button
             onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)))}
-            className="p-2 hover:bg-gray-100 rounded-full text-gray-600"
+            className="p-2 hover:bg-gray-100 rounded-full text-emerald-600"
           >
             →
           </button>
         </div>
         <button
           onClick={() => setCurrentDate(new Date())}
-          className="px-4 py-2 bg-blue-50 text-blue-600 border rounded-md"
+          className="px-4 py-2 bg-blue-50 text-emerald-600 border rounded-md"
         >
           <TranslatedText text="Today" />
         </button>
@@ -167,14 +167,14 @@ const CropCalendar = () => {
 
     weekDays.forEach((day) => {
       days.push(
-        <div key={day} className="p-3 text-center font-medium bg-gray-50">
+        <div key={day} className="p-3 text-center text-yellow-800 font-medium bg-yellow-50">
           <TranslatedText text={day} />
         </div>
       );
     });
 
     for (let i = 0; i < firstDay; i++) {
-      days.push(<div key={`empty-${i}`} className="p-2 bg-gray-50" />);
+      days.push(<div key={`empty-${i}`} className="p-2 bg-yellow-50" />);
     }
 
     for (let day = 1; day <= daysInMonth; day++) {
@@ -184,7 +184,7 @@ const CropCalendar = () => {
 
       days.push(
         <div key={day} className={`p-3 border min-h-32 ${isToday ? "bg-blue-50" : "bg-white"}`}>
-          <span className={`w-8 h-8 inline-flex items-center justify-center rounded-full ${isToday ? "bg-blue-500 text-white" : "text-gray-700"}`}>
+          <span className={`w-8 h-8 inline-flex items-center justify-center rounded-full ${isToday ? "bg-yellow-200 text-emerald-600" : "text-gray-700"}`}>
             <TranslatedText text={day.toString()} />
           </span>
           <div className="mt-2 space-y-1">
@@ -212,8 +212,8 @@ const CropCalendar = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto  bg-white rounded-2xl shadow-lg p-8">
-      <h2 className="text-3xl font-bold mb-8">
+    <div className="max-w-6xl mx-auto  bg-emerald-50 rounded-2xl shadow-lg p-8">
+      <h2 className="text-3xl text-yellow-900 font-bold mb-8">
         <TranslatedText text="Crop Growing Calendar" />
       </h2>
       {renderCalendarHeader()}
@@ -226,7 +226,7 @@ const CropCalendar = () => {
       )}
       {modalShow && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-lg w-full p-6 shadow-xl">
+          <div className="bg-yellow-50 rounded-lg max-w-lg w-full p-6 shadow-xl">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold text-amber-900">
                 <TranslatedText text={currentTask?.title} />
