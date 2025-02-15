@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sprout, Leaf, Save } from 'lucide-react';
+import { Sprout, Leaf, Save, Mic, MicOff } from 'lucide-react';
 import { TranslatedText } from '../languageTranslation/TranslatedText';
 
 const CropPrediction = () => {
@@ -8,6 +8,95 @@ const CropPrediction = () => {
   const [error, setError] = React.useState(null);
   const [crop, setCrop] = React.useState("");
   const [variety, setVariety] = React.useState("");
+  const [isListeningCrop, setIsListeningCrop] = React.useState(false);
+  const [isListeningVariety, setIsListeningVariety] = React.useState(false);
+  
+  // Voice recognition setup
+  const recognitionCrop = React.useRef(null);
+  const recognitionVariety = React.useRef(null);
+  
+  React.useEffect(() => {
+    // Initialize speech recognition for crop if available in the browser
+    if ('webkitSpeechRecognition' in window) {
+      recognitionCrop.current = new window.webkitSpeechRecognition();
+      recognitionCrop.current.continuous = false;
+      recognitionCrop.current.interimResults = false;
+      
+      recognitionCrop.current.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setCrop(transcript);
+        setIsListeningCrop(false);
+      };
+      
+      recognitionCrop.current.onerror = (event) => {
+        console.error('Speech recognition error', event.error);
+        setIsListeningCrop(false);
+      };
+      
+      recognitionCrop.current.onend = () => {
+        setIsListeningCrop(false);
+      };
+
+      // Initialize speech recognition for variety
+      recognitionVariety.current = new window.webkitSpeechRecognition();
+      recognitionVariety.current.continuous = false;
+      recognitionVariety.current.interimResults = false;
+      
+      recognitionVariety.current.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setVariety(transcript);
+        setIsListeningVariety(false);
+      };
+      
+      recognitionVariety.current.onerror = (event) => {
+        console.error('Speech recognition error', event.error);
+        setIsListeningVariety(false);
+      };
+      
+      recognitionVariety.current.onend = () => {
+        setIsListeningVariety(false);
+      };
+    }
+    
+    return () => {
+      if (recognitionCrop.current) {
+        recognitionCrop.current.abort();
+      }
+      if (recognitionVariety.current) {
+        recognitionVariety.current.abort();
+      }
+    };
+  }, []);
+  
+  const toggleListeningCrop = () => {
+    if (isListeningCrop) {
+      recognitionCrop.current.stop();
+      setIsListeningCrop(false);
+    } else {
+      recognitionCrop.current.start();
+      setIsListeningCrop(true);
+      // Stop the other recognition if it's running
+      if (isListeningVariety) {
+        recognitionVariety.current.stop();
+        setIsListeningVariety(false);
+      }
+    }
+  };
+
+  const toggleListeningVariety = () => {
+    if (isListeningVariety) {
+      recognitionVariety.current.stop();
+      setIsListeningVariety(false);
+    } else {
+      recognitionVariety.current.start();
+      setIsListeningVariety(true);
+      // Stop the other recognition if it's running
+      if (isListeningCrop) {
+        recognitionCrop.current.stop();
+        setIsListeningCrop(false);
+      }
+    }
+  };
 
   const cardColors = [
     'bg-emerald-200/90',
@@ -188,8 +277,6 @@ const CropPrediction = () => {
           </h2>
         </div>
 
-        {/* Input Section */}
-
         {/* Description Section */}
         <div className="max-w-3xl mx-auto mb-12 bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-emerald-100">
           <div className="flex items-center gap-4">
@@ -222,8 +309,6 @@ const CropPrediction = () => {
                 <TranslatedText text={prediction.commonName} className="text-2xl font-bold text-gray-900 mb-6"/>
                 </h3>
                 
-                
-                
                 <div className="mb-4 p-4 bg-white/60 rounded-xl">
                   <h4 className="font-medium text-base text-gray-800 mb-2">
                     <TranslatedText text="Recommended Varieties" />
@@ -254,20 +339,72 @@ const CropPrediction = () => {
               <p className="text-lg text-emerald-600 mb-10">
                 <TranslatedText text="Select your preferred crop and variety for your farm." />
               </p>
-              <input
-                type="text"
-                placeholder="Crop Name"
-                className="flex-1 px-6 py-3 border-2 border-emerald-200 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90 text-lg"
-                onChange={(e) => setCrop(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Variety"
-                className="flex-1 px-6 ml-5 py-3 border-2 border-emerald-200 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90 text-lg"
-                onChange={(e) => setVariety(e.target.value)}
-              />
+              
+              {/* Crop input with voice input button */}
+              <div className="flex items-center mb-4">
+                <input
+                  type="text"
+                  placeholder="Crop Name"
+                  value={crop}
+                  className="flex-1 px-6 py-3 border-2 border-emerald-200 rounded-l-full focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90 text-lg"
+                  onChange={(e) => setCrop(e.target.value)}
+                />
+                <button
+                  onClick={toggleListeningCrop}
+                  disabled={'webkitSpeechRecognition' in window ? false : true}
+                  className={`flex items-center justify-center h-full px-4 py-3 ${
+                    isListeningCrop ? 'bg-red-500' : 'bg-emerald-500'
+                  } text-white rounded-r-full transition-colors duration-300 ${
+                    !('webkitSpeechRecognition' in window) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-emerald-600'
+                  }`}
+                >
+                  {isListeningCrop ? (
+                    <MicOff className="w-6 h-6" />
+                  ) : (
+                    <Mic className="w-6 h-6" />
+                  )}
+                </button>
+              </div>
+              
+              {/* Variety input with voice input button */}
+              <div className="flex items-center mb-4">
+                <input
+                  type="text"
+                  placeholder="Variety"
+                  value={variety}
+                  className="flex-1 px-6 py-3 border-2 border-emerald-200 rounded-l-full focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90 text-lg"
+                  onChange={(e) => setVariety(e.target.value)}
+                />
+                <button
+                  onClick={toggleListeningVariety}
+                  disabled={'webkitSpeechRecognition' in window ? false : true}
+                  className={`flex items-center justify-center h-full px-4 py-3 ${
+                    isListeningVariety ? 'bg-red-500' : 'bg-emerald-500'
+                  } text-white rounded-r-full transition-colors duration-300 ${
+                    !('webkitSpeechRecognition' in window) ? 'opacity-50 cursor-not-allowed' : 'hover:bg-emerald-600'
+                  }`}
+                >
+                  {isListeningVariety ? (
+                    <MicOff className="w-6 h-6" />
+                  ) : (
+                    <Mic className="w-6 h-6" />
+                  )}
+                </button>
+              </div>
             </div>
-            <div className="flex gap-4 mb-8">
+            
+            {/* Voice input status indicators */}
+            {(isListeningCrop || isListeningVariety) && (
+              <div className="mb-4 p-4 bg-red-50 rounded-lg border border-red-200 flex items-center gap-2">
+                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
+                <p className="text-red-700">
+                  <TranslatedText text={isListeningCrop ? "Listening for crop name..." : "Listening for variety..."} />
+                </p>
+              </div>
+            )}
+            
+            {/* Save button aligned to the right */}
+            <div className="flex justify-end mb-8">
               <button
                 onClick={handleSave}
                 className="flex items-center justify-center gap-2 p-4 text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-md transition-all duration-300"
