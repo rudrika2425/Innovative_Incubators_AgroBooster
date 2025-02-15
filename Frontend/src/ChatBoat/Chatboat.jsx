@@ -233,9 +233,9 @@ const Chatbot = () => {
         }
       `}</style>
       
-      <div className="flex h-screen p-4">
+      <div className="flex max-sm:flex-col max-sm:gap-4  h-screen p-4">
         {/* Sidebar */}
-        <div className="w-72 bg-yellow-50 backdrop-blur-sm rounded-2xl shadow-lg border border-emerald-500 p-6 mr-4">
+        <div className="sm:w-72 max-sm:mx-auto w-11/12 bg-yellow-50 backdrop-blur-sm rounded-2xl shadow-lg border border-emerald-500 p-6 sm:mr-4">
           <div className="flex items-center gap-3 mb-8">
             <div className="p-3 bg-emerald-100 rounded-full shadow-md">
               <Leaf className="w-8 h-8 text-emerald-600" />
