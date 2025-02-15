@@ -28,6 +28,7 @@ const WeatherForecast = () => {
                 }
                 const data = await response.json();
                 console.log(data)
+                
                 setWeatherData(data);
             } catch (error) {
                 console.error("Error fetching weather data:", error);
@@ -40,6 +41,7 @@ const WeatherForecast = () => {
         fetchWeather();
     }, [VITE_API_URL, latitude, longitude]);
 
+    
     console.log(weatherData)
 
     const kelvinToCelsius = (kelvin) => Math.round(kelvin - 273.15);
