@@ -7,6 +7,7 @@ const Chatbot = () => {
   const [file, setFile] = useState(null);
   const [currentLanguage, setCurrentLanguage] = useState('en');
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const messagesEndRef = useRef(null);
   const dropdownRef = useRef(null);
 
@@ -43,8 +44,25 @@ const Chatbot = () => {
       }
     };
 
+    // Handle responsive behavior
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsSidebarOpen(false);
+      } else {
+        setIsSidebarOpen(true);
+      }
+    };
+
+    // Initial check
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, [messages]);
 
   const handleLanguageChange = (langCode) => {
@@ -233,15 +251,38 @@ const Chatbot = () => {
         }
       `}</style>
       
-      <div className="flex h-screen p-4">
+      <div className="flex flex-col md:flex-row h-screen p-2 md:p-4">
+        {/* Toggle Button for Sidebar (mobile only) */}
+        <button 
+          className="md:hidden fixed top-4 left-4 z-20 p-2 bg-emerald-500 text-white rounded-full shadow-lg"
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        >
+          <Leaf className="w-6 h-6" />
+        </button>
+
         {/* Sidebar */}
-        <div className="w-72 bg-yellow-50 backdrop-blur-sm rounded-2xl shadow-lg border border-emerald-500 p-6 mr-4">
+        <div className={`
+          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
+          md:translate-x-0
+          fixed md:relative z-10 md:z-0
+          w-72 h-full bg-yellow-50 backdrop-blur-sm rounded-2xl shadow-lg 
+          border border-emerald-500 p-6 md:mr-4
+          transition-transform duration-300 ease-in-out
+        `}>
           <div className="flex items-center gap-3 mb-8">
             <div className="p-3 bg-emerald-100 rounded-full shadow-md">
               <Leaf className="w-8 h-8 text-emerald-600" />
             </div>
             <h1 className="text-2xl font-bold text-yellow-900">Plant Assistant</h1>
           </div>
+
+          {/* Close button (mobile only) */}
+          <button
+            className="md:hidden absolute top-4 right-4 text-emerald-700"
+            onClick={() => setIsSidebarOpen(false)}
+          >
+            <ChevronDown className="w-6 h-6 rotate-90" />
+          </button>
 
           {/* Language Dropdown */}
           <div className="relative" ref={dropdownRef}>
@@ -276,16 +317,16 @@ const Chatbot = () => {
         </div>
 
         {/* Main Chat Area */}
-        <div className="flex-1 backdrop-blur-sm rounded-2xl bg-yellow-50  shadow-lg border border-emerald-500 flex flex-col">
+        <div className="flex-1 backdrop-blur-sm rounded-2xl bg-yellow-50 shadow-lg border border-emerald-500 flex flex-col mt-14 md:mt-0">
           {/* Chat Messages */}
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto p-4 md:p-6">
             {messages.length === 0 ? (
-              <div className="h-full flex flex-col items-center justify-center text-center space-y-4">
+              <div className="h-full flex flex-col items-center justify-center text-center space-y-4 px-4">
                 <div className="p-4 bg-emerald-100 rounded-full shadow-lg animate-bounce-slow">
-                  <Sprout className="w-12 h-12 text-emerald-600" />
+                  <Sprout className="w-10 h-10 md:w-12 md:h-12 text-emerald-600" />
                 </div>
-                <h2 className="text-3xl font-bold text-yellow-900">{t('welcome')}</h2>
-                <p className="text-xl text-emerald-800">{t('askAnything')}</p>
+                <h2 className="text-2xl md:text-3xl font-bold text-yellow-900">{t('welcome')}</h2>
+                <p className="text-lg md:text-xl text-emerald-800">{t('askAnything')}</p>
               </div>
             ) : (
               messages.map((msg, index) => (
@@ -294,7 +335,7 @@ const Chatbot = () => {
                   className={`flex mb-4 ${msg.type === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`max-w-3xl p-4 rounded-xl shadow-md ${
+                    className={`max-w-[85%] md:max-w-3xl p-3 md:p-4 rounded-xl shadow-md ${
                       msg.type === "user"
                         ? "bg-gradient-to-r from-emerald-500 to-emerald-600 text-white"
                         : msg.type === "system"
@@ -302,7 +343,7 @@ const Chatbot = () => {
                         : "bg-white border border-emerald-200 text-emerald-900"
                     }`}
                   >
-                    <p>{msg.text}</p>
+                    <p className="text-sm md:text-base">{msg.text}</p>
                   </div>
                 </div>
               ))
@@ -311,42 +352,42 @@ const Chatbot = () => {
           </div>
 
           {/* Input Area */}
-          <div className="border-t border-emerald-100 bg-emerald-50 p-6 rounded-b-2xl">
-            <div className="max-w-4xl mx-auto space-y-4">
-              <div className="flex items-center gap-3">
+          <div className="border-t border-emerald-100 bg-emerald-50 p-3 md:p-6 rounded-b-2xl">
+            <div className="max-w-4xl mx-auto space-y-3 md:space-y-4">
+              <div className="flex items-center gap-2 md:gap-3">
                 <input
                   type="text"
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
                   placeholder={t('typeMessage')}
-                  className="flex-1 px-4 py-3 border border-emerald-500 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90"
+                  className="flex-1 px-3 md:px-4 py-2 md:py-3 border border-emerald-500 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white/90 text-sm md:text-base"
                   onKeyPress={(e) => e.key === 'Enter' && handleChatSubmit()}
                 />
                 <button
                   onClick={() => handleChatSubmit()}
-                  className="p-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-all duration-300 shadow-md hover:shadow-lg"
+                  className="p-2 md:p-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-all duration-300 shadow-md hover:shadow-lg"
                 >
-                  <Send className="w-6 h-6" />
+                  <Send className="w-5 h-5 md:w-6 md:h-6" />
                 </button>
                 <button
                   onClick={startListening}
-                  className="p-3 bg-amber-600 text-white rounded-xl hover:bg-amber-500 transition-all duration-300 shadow-md hover:shadow-lg"
+                  className="p-2 md:p-3 bg-amber-600 text-white rounded-xl hover:bg-amber-500 transition-all duration-300 shadow-md hover:shadow-lg"
                 >
-                  <Mic className="w-6 h-6" />
+                  <Mic className="w-5 h-5 md:w-6 md:h-6" />
                 </button>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-3">
                 <input
                   type="file"
                   onChange={(e) => setFile(e.target.files[0])}
-                  className="flex-1 text-sm text-emerald-900 p-3 border border-emerald-500 rounded-xl bg-white/90"
+                  className="flex-1 text-xs md:text-sm text-emerald-900 p-2 md:p-3 border border-emerald-500 rounded-xl bg-white/90"
                   accept="image/*"
                 />
                 {file && (
                   <button
                     onClick={handleFileUpload}
-                    className="px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-all duration-300 shadow-md hover:shadow-lg font-medium"
+                    className="px-4 md:px-6 py-2 md:py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-all duration-300 shadow-md hover:shadow-lg font-medium text-sm md:text-base"
                   >
                     {t('upload')}
                   </button>
