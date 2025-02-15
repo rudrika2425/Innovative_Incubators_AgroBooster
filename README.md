@@ -31,6 +31,7 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 
 ### 📊 Farm Dashboard
 - A centralized dashboard displaying farm details and AI-generated calendars.
+- Notification sent to farmer on the day when a new task is assigned.
 - Weather updates, farming recommendations, and alerts.
 - Support for multiple farm registrations
 
@@ -43,7 +44,8 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 - Borrowers can browse and rent tools directly through the platform.
 
 ### 🌤️ Weather Insights
-- 7-day weather forecasts powered by OpenWeather API.
+- 8-day weather forecasts powered by OpenWeather API.
+- Weather Alert about any calamity-related warnings or severe weather conditions.
 - Integration with Agromonitoring API for real-time farm condition tracking.
 
 ### 📢 News & Government Schemes
@@ -79,10 +81,11 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 - Google Translate API (multilingual support)
 - Gemini API (crop prediction and soil analysis)
 - IPinfo API (user location detection for farm recommendations)
-- Agromonitoring API (real-time farm condition tracking)
+- Agromonitoring API (real-time climate zone data)
 - Fast2SMS API (OTP authentication for user verification)
 - News API (latest farming news updates)
 - Cloudinary API (image handling for soil and disease detection reports)
+- Twillio API (for weather alerts and task notification alerts)
 
 ---
 
@@ -119,7 +122,6 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 ### **Phase 6: Scaling & Multilingual Expansion**
 - Additional language support via Google Translate API.
 - Expand AI recommendations to include financial planning for farmers.
-- Integrate blockchain for smart contract-based tool rental agreements.
 
 ## 🌱Workflow
 ![image](https://github.com/user-attachments/assets/a901180d-5d5d-460a-ab2c-22bee78958b6)
@@ -219,6 +221,10 @@ WEATHER_API_KEY_OPENWEATHER=ENTER_YOUR_API_KEY
 GOOGLE_PLACES_API_KEY=ENTER_YOUR_API_KEY
 FAST2SMS_API_KEY=ENTER_YOUR_API_KEY
 NEWS_API_KEY = ENTER_YOUR_API_KEY
+TWILIO_SID=ENTER_TWILLIO_SID
+TWILIO_AUTH_TOKEN=ENTER_TWILIO_AUTH_TOKEN
+TWILIO_PHONE_NUMBER=ENTER_TWILIO_PHONE_NUMBER
+
 ```
 
 ### Chatbot
@@ -253,6 +259,7 @@ __pycache__/
 ![image](https://github.com/user-attachments/assets/b1280410-0659-4795-98dd-0ac156637090)
 ![image](https://github.com/user-attachments/assets/e1e1bd6f-0c6c-4c14-ad6c-1f886a9564ef)
 ![image](https://github.com/user-attachments/assets/1d25202e-1229-443e-9359-a9e69e3cd87b)
+![image](https://github.com/user-attachments/assets/4a6121ae-a6c8-4ba0-8ebb-70a98559d0d4)
 ![image](https://github.com/user-attachments/assets/1a8c24bf-07cc-40ca-9dea-79f04986c636)
 ![image](https://github.com/user-attachments/assets/eac6253f-8873-410d-92bb-0e8728791af0)
 ![image](https://github.com/user-attachments/assets/07b33969-d7c1-4033-969c-b123efb2d1a4)
@@ -260,8 +267,6 @@ __pycache__/
 ---
 
 🎥 **Watch Full Video:** [▶️ Watch on YouTube](YOUR_YOUTUBE_VIDEO_LINK)  
-
-📢 Join us in transforming agriculture with cutting-edge solutions! 🌱  
 
 ---
 ## 🌾 Agriculture Resources & Official Websites  
@@ -284,7 +289,7 @@ Explore these official websites for reliable agricultural information, policies,
 - AI-powered crop disease prevention using satellite data.
 - Blockchain-based farmer transactions for transparency.
 - Expansion to more regional languages for inclusivity.
-- App development to extend the website to an Android app.
+- App development to extend the website to an Android app. 
 
 ---
 
