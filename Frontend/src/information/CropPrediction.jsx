@@ -58,7 +58,7 @@ const CropPrediction = () => {
       return;
     } 
     try {
-      const response = await fetch("http://127.0.0.1:4000/calendar/update-farm", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}calendar/update-farm`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const CropPrediction = () => {
           throw new Error('No farm ID found in URL parameters');
         }
 
-        const response = await fetch('http://127.0.0.1:4000/predict/', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}predict/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

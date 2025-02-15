@@ -53,7 +53,7 @@ const SoilTest = () => {
 
   const searchNearbyLabs = async (latitude, longitude) => {
     try {
-      const response = await fetch(`http://127.0.0.1:4000/api/search-labs?lat=${latitude}&lng=${longitude}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}api/search-labs?lat=${latitude}&lng=${longitude}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -115,7 +115,7 @@ const SoilTest = () => {
         
         // Search for labs using the geocoded coordinates
         const response = await fetch(
-          `http://127.0.0.1:4000/api/search-labs-location?state=${selectedState}&district=${selectedDistrict}`
+          `${import.meta.env.VITE_API_URL}api/search-labs-location?state=${selectedState}&district=${selectedDistrict}`
         );
         
         if (!response.ok) {

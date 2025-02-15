@@ -146,7 +146,7 @@ const Chatbot = () => {
     setMessages(prev => [...prev, { type: "user", text: messageText }]);
   
     try {
-      const response = await fetch("http://127.0.0.1:5000/chat", {
+      const response = await fetch(`${import.meta.env.VITE_CHAT_URL}chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -185,7 +185,7 @@ const Chatbot = () => {
     formData.append("language", currentLanguage);
   
     try {
-      const response = await fetch("http://127.0.0.1:5000/upload", {
+      const response = await fetch(`${import.meta.env.VITE_CHAT_URL}upload`, {
         method: 'POST',
         body: formData
       });

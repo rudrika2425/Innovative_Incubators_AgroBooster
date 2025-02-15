@@ -15,7 +15,7 @@ const Home = () => {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://127.0.0.1:4000/tools/tools/farmer/${farmerId}`
+        `${import.meta.env.VITE_API_URL}tools/tools/farmer/${farmerId}`
       );
       if (!response.ok) throw new Error("Failed to fetch my tools");
       const data = await response.json();
@@ -41,7 +41,7 @@ const Home = () => {
 
   const handleDeleteTool = async (toolId) => {
     try {
-      const response = await fetch(`http://127.0.0.1:4000/tools/tools/${toolId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}tools/tools/${toolId}`, {
         method: "DELETE",
       });
 
@@ -68,7 +68,7 @@ const Home = () => {
     });
 
     try {
-      const response = await fetch(`http://127.0.0.1:4000/tools/tools/${toolId}/images`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}tools/tools/${toolId}/images`, {
         method: "PUT",
         body: formData,
       });

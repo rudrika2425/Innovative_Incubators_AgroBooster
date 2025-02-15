@@ -16,7 +16,7 @@ const YourFarms = () => {
   useEffect(() => {
     const fetchFarms = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:4000/farmer_data/get-all-farmer-data/${user.id}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}farmer_data/get-all-farmer-data/${user.id}`);
         setFarms(response.data);
         setIsLoading(false);
       } catch (error) {

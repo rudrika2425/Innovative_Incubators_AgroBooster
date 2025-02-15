@@ -11,7 +11,7 @@ const WeatherForecast = () => {
 
     const latitude = searchParams.get('lat');
     const longitude = searchParams.get('lon');
-    const API_URL = `http://127.0.0.1:4000/weather_forecast/forecast?lat=${latitude}&lon=${longitude}`;
+    const VITE_API_URL = `${import.meta.env.VITE_API_URL}weather_forecast/forecast?lat=${latitude}&lon=${longitude}`;
 
     useEffect(() => {
         const fetchWeather = async () => {
@@ -22,7 +22,7 @@ const WeatherForecast = () => {
             }
 
             try {
-                const response = await fetch(API_URL);
+                const response = await fetch(VITE_API_URL);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -37,7 +37,7 @@ const WeatherForecast = () => {
         };
 
         fetchWeather();
-    }, [API_URL, latitude, longitude]);
+    }, [VITE_API_URL, latitude, longitude]);
 
     const kelvinToCelsius = (kelvin) => Math.round(kelvin - 273.15);
 
