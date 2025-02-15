@@ -254,7 +254,7 @@ __pycache__/
 
 ---
 
-🔗 **Live Demo:** [🌍 Visit AgroBooster]((https://agrobooster.pages.dev/))  
+## Live Demo: 🌍 [Visit AgroBooster](https://agrobooster.pages.dev/)
 
 🎥 **Watch Full Video:** [▶️ Watch on YouTube](YOUR_YOUTUBE_VIDEO_LINK)  
 
