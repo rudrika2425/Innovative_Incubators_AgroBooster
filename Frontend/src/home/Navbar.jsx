@@ -23,43 +23,45 @@ function Navbar() {
             <TranslatedText text="AgroBooster" />
           </Link>
 
-          {/* Desktop Menu */}
-          <ul className="hidden lg:flex space-x-8 text-white">
-            <li>
-              <NavLink
-                to="/"
-                className="cursor-pointer font-semibold text-xl hover:text-amber-600 no-underline"
-              >
-                <TranslatedText text="Home" />
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/about"
-                className="cursor-pointer font-semibold text-xl hover:text-amber-600 no-underline"
-              >
-                <TranslatedText text="About Us" />
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/services"
-                className="cursor-pointer font-semibold text-xl hover:text-amber-600 no-underline"
-              >
-                <TranslatedText text="Services" />
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/contact"
-                className="cursor-pointer font-semibold text-xl hover:text-amber-600 no-underline"
-              >
-                <TranslatedText text="Contact Us" />
-              </NavLink>
-            </li>
-          </ul>
+          {/* Desktop Menu - Centered */}
+          <div className="hidden lg:flex justify-center flex-1">
+            <ul className="flex space-x-8 text-white">
+              <li>
+                <NavLink
+                  to="/"
+                  className="cursor-pointer font-semibold text-xl hover:text-amber-600 no-underline"
+                >
+                  <TranslatedText text="Home" />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/about"
+                  className="cursor-pointer font-semibold text-xl hover:text-amber-600 no-underline"
+                >
+                  <TranslatedText text="About Us" />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/services"
+                  className="cursor-pointer font-semibold text-xl hover:text-amber-600 no-underline"
+                >
+                  <TranslatedText text="Services" />
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/contact"
+                  className="cursor-pointer font-semibold text-xl hover:text-amber-600 no-underline"
+                >
+                  <TranslatedText text="Contact Us" />
+                </NavLink>
+              </li>
+            </ul>
+          </div>
 
-          {/* Language Dropdown - Desktop */}
+          {/* Language Dropdown */}
           <div className="hidden lg:block">
             <LanguageDropdown />
           </div>

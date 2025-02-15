@@ -23,16 +23,16 @@ const InfoDashboard = () => {
           <div className="flex justify-between items-center h-16">
             {/* Left side - Logo */}
             <Link to="/" className="flex items-center no-underline">
-              <h1 className="text-4xl font-bold text-emerald-600 hover:text-yellow-500 transition-colors">
+              <h1 className="text-2xl md:text-4xl font-bold text-emerald-600 hover:text-yellow-500 transition-colors">
                 <TranslatedText text="AgroBooster" />
               </h1>
             </Link>
 
             {/* Right side - User Info */}
-            <div className="flex items-center space-x-4">
-              <span className="text-emerald-600 text-2xl">
+            <div className="flex items-center space-x-4 text-lg md:text-2xl">
+              <span className="text-emerald-600">
                 <TranslatedText text="Welcome" />,{" "}
-                <span className="font-medium text-2xl text-amber-600">
+                <span className="font-medium  text-amber-600">
                   {user.fullname}
                 </span>
               </span>
@@ -49,7 +49,7 @@ const InfoDashboard = () => {
 
       {/* Main Content */}
       <div className="relative flex-1 min-h-screen">
-        <div className="absolute inset-0 bg-white"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-emerald-50 to-emerald-100"></div>
         <div className="relative z-10 flex justify-center items-center min-h-screen">
           <main className="w-full max-w-6xl">
             <Outlet />

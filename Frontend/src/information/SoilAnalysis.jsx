@@ -192,7 +192,7 @@ const SoilTestReportUploader = () => {
 
   return (
     <div>
-      <h2 className="text-4xl font-bold text-emerald-600 mb-6 mt-10">
+      <h2 className="text-2xl md:text-4xl font-bold text-emerald-600 mb-6 mt-10">
         <TranslatedText text="Upload Soil Test Report" />
       </h2>
 

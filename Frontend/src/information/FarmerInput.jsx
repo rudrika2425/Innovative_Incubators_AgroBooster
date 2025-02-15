@@ -211,7 +211,7 @@ const FarmerInput = () => {
             <div className="flex items-center justify-between col-span-2">
               <div className="flex items-center gap-2">
                 <Wheat className="w-8 h-8 text-emerald-600" />
-                <span className="text-xl font-semibold text-emerald-800">
+                <span className="text-lg md:text-xl font-semibold text-emerald-800">
                   <TranslatedText text="Farm Details" />
                 </span>
               </div>
@@ -222,7 +222,7 @@ const FarmerInput = () => {
                 <select
                   value={language}
                   onChange={(e) => !isLanguageLocked && setLanguage(e.target.value)}
-                  className="w-48 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-35 md:w-48 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   disabled={isLanguageLocked}
                 >
                   <option value="en-US"><TranslatedText text="English" /></option>
