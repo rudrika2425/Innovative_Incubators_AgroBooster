@@ -162,13 +162,13 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 - MongoDB installed and running
 
   
-###📥 Clone the Repository
+### 📥 Clone the Repository
 ```bash
 git clone https://github.com/rudrika2425/Innovative_Incubators_AgroBooster.git
 cd Innovative_Incubators_Hackofiesta_6.0
 ```
 
-###🔧 Backend Setup
+### 🔧 Backend Setup
 ```bash
 cd Backend
 python -m venv venv
@@ -193,7 +193,7 @@ npm install
 npm run dev
 ```
 
-##🔑 Environment Variables
+## 🔑 Environment Variables
 
 ### Frontend
 ```
@@ -236,6 +236,7 @@ __pycache__/
 ## Glimpse of Our Website 🌐✨
 
 ![image](https://github.com/user-attachments/assets/445fd913-17d7-40e7-a75a-f59ebcadb710)
+![image](https://github.com/user-attachments/assets/5eb680bc-c7cf-4866-8729-36d8009c2361)
 ![image](https://github.com/user-attachments/assets/3aaba365-25a5-40a1-acf7-324b101b0b01)
 ![image](https://github.com/user-attachments/assets/73d44304-d944-4355-ad52-67bd4d69d109)
 ![image](https://github.com/user-attachments/assets/088310ed-5100-4a32-bdfa-b155876ebc2a)
@@ -243,6 +244,19 @@ __pycache__/
 ![image](https://github.com/user-attachments/assets/5d007b88-2ce8-4ceb-9d69-70f66cd731c5)
 ![image](https://github.com/user-attachments/assets/1d25202e-1229-443e-9359-a9e69e3cd87b)
 ![image](https://github.com/user-attachments/assets/07b33969-d7c1-4033-969c-b123efb2d1a4)
+
+---
+##🌾 Agriculture Resources & Official Websites
+
+Explore these official websites for reliable agricultural information, policies, and resources:
+ 🌐 Visit Website
+📌 Responsible for policy formulation and implementation related to agriculture in India. Provides updates on schemes, programs, and services supporting farmers.
+Departments of Agriculture of States and Union Territories, India
+
+### 🏛️ Government Agriculture Websites
+Ministry of Agriculture & Farmers Welfare, India
+ 🌐 Visit Website
+📌 Offers region-specific agricultural information and policies.
 
 
 ## 🚀 Future Scope
