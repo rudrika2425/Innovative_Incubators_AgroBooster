@@ -266,7 +266,7 @@ __pycache__/
 
 ---
 
-🎥 **Watch Full Video:** [▶️ Watch on YouTube](YOUR_YOUTUBE_VIDEO_LINK)  
+🎥 **Watch Full Video:** [▶️ Watch on YouTube](https://youtu.be/mNeHAb4hZVI?si=uVXfBK-fa_nF2eOd)  
 
 ---
 ## 🌾 Agriculture Resources & Official Websites  
