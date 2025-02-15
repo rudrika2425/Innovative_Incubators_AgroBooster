@@ -107,7 +107,7 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
                 onClick={handleCalendar}
                 className="flex items-center w-full px-4 py-2 text-yellow-900 hover:bg-yellow-200 rounded-md transition-colors"
               >
-                <Calendar className="w-4 h-4 mr-2" />
+                <Calendar className="w-4 h-4  mr-2" />
                 <TranslatedText text="calendar" />
               </button>
             </div>
