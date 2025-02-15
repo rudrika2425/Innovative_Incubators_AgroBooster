@@ -239,17 +239,23 @@ __pycache__/
 
 ![image](https://github.com/user-attachments/assets/445fd913-17d7-40e7-a75a-f59ebcadb710)
 ![image](https://github.com/user-attachments/assets/5eb680bc-c7cf-4866-8729-36d8009c2361)
+![image](https://github.com/user-attachments/assets/b890b24d-6bae-429a-bf0e-73c14f4a7ab9)
+![image](https://github.com/user-attachments/assets/df5c08e8-a407-457f-900b-5f93ac9f1188)
 ![image](https://github.com/user-attachments/assets/3aaba365-25a5-40a1-acf7-324b101b0b01)
 ![image](https://github.com/user-attachments/assets/73d44304-d944-4355-ad52-67bd4d69d109)
 ![image](https://github.com/user-attachments/assets/088310ed-5100-4a32-bdfa-b155876ebc2a)
 ![image](https://github.com/user-attachments/assets/66ce19a6-c59a-490e-8e35-f7bdc7915281)
+![image](https://github.com/user-attachments/assets/a26d8869-d9d3-415c-b55b-12c274a286c4)
+![image](https://github.com/user-attachments/assets/dd200321-14ef-4063-8e23-967608308820)
+![image](https://github.com/user-attachments/assets/b1280410-0659-4795-98dd-0ac156637090)
+![image](https://github.com/user-attachments/assets/e1e1bd6f-0c6c-4c14-ad6c-1f886a9564ef)
 ![image](https://github.com/user-attachments/assets/5d007b88-2ce8-4ceb-9d69-70f66cd731c5)
 ![image](https://github.com/user-attachments/assets/1d25202e-1229-443e-9359-a9e69e3cd87b)
 ![image](https://github.com/user-attachments/assets/07b33969-d7c1-4033-969c-b123efb2d1a4)
 
 ---
 
-🔗 **Live Demo:** [🌍 Visit AgroBooster](YOUR_DEPLOYED_WEBSITE_LINK)  
+🔗 **Live Demo:** [🌍 Visit AgroBooster]((https://agrobooster.pages.dev/))  
 
 🎥 **Watch Full Video:** [▶️ Watch on YouTube](YOUR_YOUTUBE_VIDEO_LINK)  
 
