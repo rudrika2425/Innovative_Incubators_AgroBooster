@@ -233,9 +233,16 @@ __pycache__/
 # Ignore environment files
 .env
 ```
-![Project Screenshot](C:\Users\asus1\OneDrive\Pictures\Screenshots\Screenshot 2025-02-15 122534.png)
-![image](https://github.com/user-attachments/assets/445fd913-17d7-40e7-a75a-f59ebcadb710)
+## Glimpse of Our Website 🌐✨
 
+![image](https://github.com/user-attachments/assets/445fd913-17d7-40e7-a75a-f59ebcadb710)
+![image](https://github.com/user-attachments/assets/3aaba365-25a5-40a1-acf7-324b101b0b01)
+![image](https://github.com/user-attachments/assets/73d44304-d944-4355-ad52-67bd4d69d109)
+![image](https://github.com/user-attachments/assets/088310ed-5100-4a32-bdfa-b155876ebc2a)
+![image](https://github.com/user-attachments/assets/66ce19a6-c59a-490e-8e35-f7bdc7915281)
+![image](https://github.com/user-attachments/assets/5d007b88-2ce8-4ceb-9d69-70f66cd731c5)
+![image](https://github.com/user-attachments/assets/1d25202e-1229-443e-9359-a9e69e3cd87b)
+![image](https://github.com/user-attachments/assets/07b33969-d7c1-4033-969c-b123efb2d1a4)
 
 
 ## 🚀 Future Scope
