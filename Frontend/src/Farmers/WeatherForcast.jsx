@@ -12,7 +12,7 @@ const WeatherForecast = () => {
     const latitude = searchParams.get('lat');
     const longitude = searchParams.get('lon');
     const VITE_API_URL = `${import.meta.env.VITE_API_URL}weather_forecast/forecast?lat=${latitude}&lon=${longitude}`;
-   console.log(VITE_API_URL);
+    console.log(VITE_API_URL);
     console.log(latitude, longitude)
     useEffect(() => {
         const fetchWeather = async () => {
