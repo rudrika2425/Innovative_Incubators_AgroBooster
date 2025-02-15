@@ -44,7 +44,7 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 - Borrowers can browse and rent tools directly through the platform.
 
 ### 🌤️ Weather Insights
-- 7-day weather forecasts powered by OpenWeather API.
+- 8-day weather forecasts powered by OpenWeather API.
 - Weather Alert about any calamity-related warnings or severe weather conditions.
 - Integration with Agromonitoring API for real-time farm condition tracking.
 
@@ -85,6 +85,7 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 - Fast2SMS API (OTP authentication for user verification)
 - News API (latest farming news updates)
 - Cloudinary API (image handling for soil and disease detection reports)
+- Twillio API (for weather alerts and task notification alerts)
 
 ---
 
@@ -121,7 +122,6 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 ### **Phase 6: Scaling & Multilingual Expansion**
 - Additional language support via Google Translate API.
 - Expand AI recommendations to include financial planning for farmers.
-- Integrate blockchain for smart contract-based tool rental agreements.
 
 ## 🌱Workflow
 ![image](https://github.com/user-attachments/assets/a901180d-5d5d-460a-ab2c-22bee78958b6)
@@ -221,6 +221,10 @@ WEATHER_API_KEY_OPENWEATHER=ENTER_YOUR_API_KEY
 GOOGLE_PLACES_API_KEY=ENTER_YOUR_API_KEY
 FAST2SMS_API_KEY=ENTER_YOUR_API_KEY
 NEWS_API_KEY = ENTER_YOUR_API_KEY
+TWILIO_SID=ENTER_TWILLIO_SID
+TWILIO_AUTH_TOKEN=ENTER_TWILIO_AUTH_TOKEN
+TWILIO_PHONE_NUMBER=ENTER_TWILIO_PHONE_NUMBER
+
 ```
 
 ### Chatbot
