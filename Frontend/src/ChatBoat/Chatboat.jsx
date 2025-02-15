@@ -98,7 +98,6 @@ const Chatbot = () => {
       }
       if (currentLanguage === 'hi') {
         return v.lang.startsWith('hi-IN') || 
-               v.lang.includes('Hindi') || 
                v.name.includes('Hindi');
       }
       return false;
@@ -233,9 +232,9 @@ const Chatbot = () => {
         }
       `}</style>
       
-      <div className="flex h-screen p-4">
+      <div className="flex flex-col md:flex-row h-screen p-4">
         {/* Sidebar */}
-        <div className="w-72 bg-yellow-50 backdrop-blur-sm rounded-2xl shadow-lg border border-emerald-500 p-6 mr-4">
+        <div className="w-full md:w-72 bg-yellow-50 backdrop-blur-sm rounded-2xl shadow-lg border border-emerald-500 p-6 mb-4 md:mb-0 md:mr-4">
           <div className="flex items-center gap-3 mb-8">
             <div className="p-3 bg-emerald-100 rounded-full shadow-md">
               <Leaf className="w-8 h-8 text-emerald-600" />
@@ -265,7 +264,7 @@ const Chatbot = () => {
                       handleLanguageChange(lang.code);
                       setIsLanguageDropdownOpen(false);
                     }}
-                    className="w-full px-4 py-3 text-emerald-900 hover:bg-emerald-50 text-left font-medium transition-colors"
+                    className="w-full px-4 py-3 text-emerald-900 hover:bg-emerald-50 text-left font-medium"
                   >
                     {lang.name}
                   </button>
@@ -276,7 +275,7 @@ const Chatbot = () => {
         </div>
 
         {/* Main Chat Area */}
-        <div className="flex-1 backdrop-blur-sm rounded-2xl bg-yellow-50  shadow-lg border border-emerald-500 flex flex-col">
+        <div className="flex-1 backdrop-blur-sm rounded-2xl bg-yellow-50 shadow-lg border border-emerald-500 flex flex-col">
           {/* Chat Messages */}
           <div className="flex-1 overflow-y-auto p-6">
             {messages.length === 0 ? (
@@ -313,7 +312,7 @@ const Chatbot = () => {
           {/* Input Area */}
           <div className="border-t border-emerald-100 bg-emerald-50 p-6 rounded-b-2xl">
             <div className="max-w-4xl mx-auto space-y-4">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col md:flex-row items-center gap-3">
                 <input
                   type="text"
                   value={chatInput}
@@ -336,7 +335,7 @@ const Chatbot = () => {
                 </button>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col md:flex-row items-center gap-3">
                 <input
                   type="file"
                   onChange={(e) => setFile(e.target.files[0])}

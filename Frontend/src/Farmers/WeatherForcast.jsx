@@ -12,25 +12,21 @@ const WeatherForecast = () => {
     const latitude = searchParams.get('lat');
     const longitude = searchParams.get('lon');
     const VITE_API_URL = `${import.meta.env.VITE_API_URL}weather_forecast/forecast?lat=${latitude}&lon=${longitude}`;
-    console.log(VITE_API_URL);
-    console.log(latitude, longitude)
-    
+
     useEffect(() => {
-        if (!latitude || !longitude) {
-            setError("Latitude and longitude are required");
-            setLoading(false);
-            return;
-        }
-    
         const fetchWeather = async () => {
+            if (!latitude || !longitude) {
+                setError("Latitude and longitude are required");
+                setLoading(false);
+                return;
+            }
+
             try {
-                const apiUrl = `${import.meta.env.VITE_API_URL}weather_forecast/forecast?lat=${latitude}&lon=${longitude}`;
-                const response = await fetch(apiUrl);
+                const response = await fetch(VITE_API_URL);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                console.log(data);
                 setWeatherData(data);
             } catch (error) {
                 console.error("Error fetching weather data:", error);
@@ -39,13 +35,9 @@ const WeatherForecast = () => {
                 setLoading(false);
             }
         };
-    
-        fetchWeather();
-    }, [latitude, longitude]);
-    
 
-    
-    console.log(weatherData)
+        fetchWeather();
+    }, [VITE_API_URL, latitude, longitude]);
 
     const kelvinToCelsius = (kelvin) => Math.round(kelvin - 273.15);
 
