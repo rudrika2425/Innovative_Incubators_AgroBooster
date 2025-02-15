@@ -5,9 +5,9 @@ from bson import ObjectId
 from datetime import datetime
 
 class CalendarModel:
-    def craete_crop_schedule(farm_id,tasks,phonenum):
-        crop_schedule={
-            "farmId":farm_id,
+    def craete_crop_schedule(farm_id, tasks, phonenum):
+        crop_schedule = {
+            "farmId": farm_id,
             "tasks": [
                 {
                     "title": task["title"],
@@ -19,11 +19,8 @@ class CalendarModel:
                 }
                 for task in tasks
             ],
-            "phonenum":phonenum
+            "phonenum": phonenum,  # Added missing comma here
             "created_at": datetime.utcnow()
-    }
-    result = mongo["crop_schedules"].insert_one(crop_schedule)
-    return str(result.inserted_id)
-
-
-    
+        }
+        result = mongo["crop_schedules"].insert_one(crop_schedule)
+        return str(result.inserted_id)
