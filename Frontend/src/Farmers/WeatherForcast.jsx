@@ -40,6 +40,8 @@ const WeatherForecast = () => {
         fetchWeather();
     }, [VITE_API_URL, latitude, longitude]);
 
+    console.log(weatherData)
+
     const kelvinToCelsius = (kelvin) => Math.round(kelvin - 273.15);
 
     const getWeatherIcon = (condition) => {
