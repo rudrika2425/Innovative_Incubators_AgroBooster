@@ -14,22 +14,23 @@ const WeatherForecast = () => {
     const VITE_API_URL = `${import.meta.env.VITE_API_URL}weather_forecast/forecast?lat=${latitude}&lon=${longitude}`;
     console.log(VITE_API_URL);
     console.log(latitude, longitude)
+    
     useEffect(() => {
+        if (!latitude || !longitude) {
+            setError("Latitude and longitude are required");
+            setLoading(false);
+            return;
+        }
+    
         const fetchWeather = async () => {
-            if (!latitude || !longitude) {
-                setError("Latitude and longitude are required");
-                setLoading(false);
-                return;
-            }
-
             try {
-                const response = await fetch(VITE_API_URL);
+                const apiUrl = `${import.meta.env.VITE_API_URL}weather_forecast/forecast?lat=${latitude}&lon=${longitude}`;
+                const response = await fetch(apiUrl);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                console.log(data)
-                
+                console.log(data);
                 setWeatherData(data);
             } catch (error) {
                 console.error("Error fetching weather data:", error);
@@ -38,9 +39,10 @@ const WeatherForecast = () => {
                 setLoading(false);
             }
         };
-
+    
         fetchWeather();
-    }, [VITE_API_URL, latitude, longitude]);
+    }, [latitude, longitude]);
+    
 
     
     console.log(weatherData)
