@@ -217,7 +217,6 @@ function RentOutTools() {
                 <option value="">Select a category</option>
                 <option value="tractor">Tractor</option>
                 <option value="harvester">Harvester</option>
-                <option value="irrigation">Irrigation System</option>
                 <option value="plow">Plow</option>
                 <option value="other">Other</option>
               </select>
