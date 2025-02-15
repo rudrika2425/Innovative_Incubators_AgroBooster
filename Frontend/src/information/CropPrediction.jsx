@@ -162,7 +162,7 @@ const CropPrediction = () => {
         window.location.href = "/farmerdashboard";
       }
     } catch (error) {
-      console.error("Error saving crop data:", error);
+      console.error("Error  saving crop data:", error);
     }
   };
 
