@@ -3,12 +3,9 @@
 #Team Name: Innovative Incubators
 
 ## Department: Department of Agriculture
-## Sector: Agriculture
 
 ### Problem Statement
 Traditional farming methods often rely on intuition, manual observation, and unpredictable weather patterns, leading to inefficiencies and suboptimal yields. AgroBooster is an AI-powered solution that integrates data analytics, machine learning, and precision farming tools to help farmers optimize their agricultural practices, improve productivity, and enhance crop health.
-
-# AgroBooster: AI-Driven Farming Optimization Platform
 
 ## 🚀 Project Overview
 AgroBooster is an AI-powered precision farming platform designed to maximize crop yield through data-driven insights. It offers AI-personalized crop predictions, an intelligent calendar for farm management, and an AI chatbot for disease detection and treatment suggestions. With seamless soil testing integration, weather forecasting, and a farmer-to-farmer tool rental marketplace, AgroBooster empowers farmers to make informed decisions and optimize their agricultural productivity.
@@ -57,7 +54,7 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 
 ---
 
-## 🛠 Tech Stack
+## 🛠 Technology Stack
 
 ### **Frontend:**
 - React.js (for a seamless user experience)
@@ -65,10 +62,12 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 
 ### **Backend:**
 - Flask (for server-side logic and API handling)
-- Cloudinary (for image storage and processing)
 
 ### **Database:**
 - MongoDB (for storing farming data and user interactions)
+
+### **Media Storage and Management:**
+- Cloudinary (for image storage and processing)
 
 ### **APIs:**
 - OpenWeather API (real-time weather forecasting)
@@ -81,7 +80,6 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 - Fast2SMS API (OTP authentication for user verification)
 - News API (latest farming news updates)
 - Cloudinary API (image handling for soil and disease detection reports)
-
 
 ---
 
@@ -124,22 +122,34 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 
 ### 🌿 Crop Prediction and Pathway Parameters
 
-- State Name
-- District Name
-- Season (Rabi, Kharif, Zaid)
-- Temperature
-- Humidity
+#### In order to maintain accuracy we have included following 27 Parameters for Crop Recommendation and Pathway Prediction.
+
+- Farm Area
+- Farming Tools
+- Irrigation System
 - Soil Type
+- Crop Season(Rabi, Kharif, Zaid)
+- Location
+- Altitude
+- Latitude
+- Longitude
+- Tropical Zone
+- Cloud Coverage
+- Humidity
+- Temperature
+- Weather Description
+- Wind Speed
+- Date Time
+- Feels Like
+- Pressure
 - Nitrogen (N)
 - Phosphorus (P)
 - Potassium (K)
-- Farm Area
-- Irrigation Method
-- Tools Used
 - Soil Ph
-- Weather Conditions
-- Terrain Type
-- - Crop Name
+- Zinc
+- Sulphur
+- Organic Carbon
+- Crop Name
 - Crop Type
 
 ---
@@ -187,31 +197,29 @@ npm run dev
 
 ### Frontend
 ```
- GOOGLE_MAPS_API_KEY = AIzaSyAF5JeH_iVKoIf_eLWiSeVkANZsDO4Ertk
+ GOOGLE_MAPS_API_KEY = ENTER_YOUR_API_KEY
 ```
 
 ### Backend
 ```
-GENAI_API_KEY=AIzaSyCcMvVmWTfgvSeIKn0qQG6Oe38HdYbZCOs
-WEATHER_API_KEY=50785daf09c798199492cd7d6341c350
+GENAI_API_KEY=ENTER_YOUR_API_KEY
+WEATHER_API_KEY=ENTER_YOUR_API_KEY
 SECRET_KEY=agrobooster
 SQLALCHEMY_DATABASE_URI=sqlite:///users.db
 MONGO_URI=mongodb://localhost:27017/agrobooster
 CLOUDINARY_CLOUD_NAME=dmxznaplt
-CLOUDINARY_API_KEY=412185197132825
-CLOUDINARY_API_SECRET=AejGnYu1MUhDGslzIv6IGitefDQ
-WEATHER_API_KEY_OPENWEATHER=f89ea92f053cdf9844406b64faa2b803
-GOOGLE_PLACES_API_KEY=AIzaSyAF5JeH_iVKoIf_eLWiSeVkANZsDO4Ertk
-FAST2SMS_API_KEY=j5Gh3RH26tFdPr4BDplQwz8qCIVLiMkayZogx9eX7mYAJNnS0Eu1mcvhC89NldESG5gIy0FDfq7Z4zoM
-NEWS_API_KEY = 55b454ac61604a2d9173f2a1576f0260
+CLOUDINARY_API_KEY=ENTER_YOUR_API_KEY
+CLOUDINARY_API_SECRET=ENTER_YOUR_API_KEY
+WEATHER_API_KEY_OPENWEATHER=ENTER_YOUR_API_KEY
+GOOGLE_PLACES_API_KEY=ENTER_YOUR_API_KEY
+FAST2SMS_API_KEY=ENTER_YOUR_API_KEY
+NEWS_API_KEY = ENTER_YOUR_API_KEY
 ```
 
 ### Chatbot
 ```
-GOOGLE_API_KEY=AIzaSyCcMvVmWTfgvSeIKn0qQG6Oe38HdYbZCOs
+GOOGLE_API_KEY=ENTER_YOUR_API_KEY
 ```
-
----
 
 ### 📌 .gitignore Configuration
 ```
@@ -225,6 +233,7 @@ __pycache__/
 # Ignore environment files
 .env
 ```
+![Project Screenshot](C:\Users\asus1\OneDrive\Pictures\Screenshots\Screenshot 2025-02-15 122534.png)
 
 ## 🚀 Future Scope
 - AI-powered crop disease prevention using satellite data.
