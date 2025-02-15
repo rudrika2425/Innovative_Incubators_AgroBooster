@@ -11,9 +11,8 @@ const WeatherForecast = () => {
 
     const latitude = searchParams.get('lat');
     const longitude = searchParams.get('lon');
-    const VITE_API_URL = `${import.meta.env.VITE_API_URL}weather_forecast/forecast?lat=${latitude}&lon=${longitude}`;
-
     useEffect(() => {
+        const API_URL=`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely&appid=f89ea92f053cdf9844406b64faa2b803`;
         const fetchWeather = async () => {
             if (!latitude || !longitude) {
                 setError("Latitude and longitude are required");
@@ -22,7 +21,7 @@ const WeatherForecast = () => {
             }
 
             try {
-                const response = await fetch(VITE_API_URL);
+                const response = await fetch(API_URL);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -37,7 +36,7 @@ const WeatherForecast = () => {
         };
 
         fetchWeather();
-    }, [VITE_API_URL, latitude, longitude]);
+    }, [latitude, longitude]);
 
     const kelvinToCelsius = (kelvin) => Math.round(kelvin - 273.15);
 
