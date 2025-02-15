@@ -76,7 +76,9 @@ def generate_prompt(user_query, language):
         return base_prompt
 
 
-
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({"analysis": "Hello Team"}), 200
 
 @app.route('/upload', methods=['POST'])
 def upload_file():

@@ -11,8 +11,6 @@ const YourFarms = () => {
   const { user } = useUser();
   const navigate = useNavigate();
 
- 
-
   useEffect(() => {
     const fetchFarms = async () => {
       try {
@@ -35,6 +33,7 @@ const YourFarms = () => {
       </div>
     );
   }
+
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100">
       <style>{`
@@ -73,22 +72,28 @@ const YourFarms = () => {
             >
               <div className="p-6">
                 <h2 className="text-2xl font-bold text-emerald-800 mb-3">
-                <TranslatedText text={farm.farmerInput.farmName}/>
+                  <TranslatedText text={farm.farmerInput?.farmName || 'Unnamed Farm'} />
                 </h2>
 
                 <div className="flex items-center text-gray-700 mb-3">
                   <MapPin className="mr-2 text-emerald-500" size={20} />
-                  <span><TranslatedText text={farm.location.city}/>, <TranslatedText text={farm.location.region}/></span>
+                  <span>
+                    <TranslatedText text={farm.location?.city || 'Unknown City'}/>, 
+                    <TranslatedText text={farm.location?.region || 'Unknown Region'}/>
+                  </span>
                 </div>
 
                 <div className="mt-3 text-gray-600 space-y-2">
                   <p className="flex items-center gap-2">
                     <Sprout className="w-5 h-5 text-emerald-500" />
-                    <TranslatedText text="Land Area:" /> <TranslatedText text={farm.farmerInput.landArea}/> <TranslatedText text="acres" />
+                    <TranslatedText text="Land Area:" /> 
+                    <TranslatedText text={farm.farmerInput?.landArea || '0'}/> 
+                    <TranslatedText text="acres" />
                   </p>
                   <p className="flex items-center gap-2">
                     <Leaf className="w-5 h-5 text-emerald-500" />
-                    <TranslatedText text="Irrigation:" /> <TranslatedText text={farm.farmerInput.irrigationSystem}/>
+                    <TranslatedText text="Irrigation:" /> 
+                    <TranslatedText text={farm.farmerInput?.irrigationSystem || 'Not specified'}/>
                   </p>
                 </div>
 
