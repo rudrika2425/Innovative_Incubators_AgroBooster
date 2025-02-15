@@ -1,6 +1,6 @@
 # 🌱 AgroBooster: AI-Driven Farming Optimization Platform
 
-#Team Name: Innovative Incubators
+## Team Name: Innovative Incubators
 
 ## Department: Department of Agriculture
 
@@ -246,17 +246,20 @@ __pycache__/
 ![image](https://github.com/user-attachments/assets/07b33969-d7c1-4033-969c-b123efb2d1a4)
 
 ---
-##🌾 Agriculture Resources & Official Websites
+## 🌾 Agriculture Resources & Official Websites  
 
-Explore these official websites for reliable agricultural information, policies, and resources:
- 🌐 Visit Website
-📌 Responsible for policy formulation and implementation related to agriculture in India. Provides updates on schemes, programs, and services supporting farmers.
-Departments of Agriculture of States and Union Territories, India
+Explore these official websites for reliable agricultural information, policies, and resources:  
 
-### 🏛️ Government Agriculture Websites
-Ministry of Agriculture & Farmers Welfare, India
- 🌐 Visit Website
-📌 Offers region-specific agricultural information and policies.
+### 🏛️ Government Agriculture Websites  
+
+1. **[Ministry of Agriculture & Farmers Welfare, India](https://www.india.gov.in/website-ministry-agriculture-farmers-welfare)**  
+   📌 Responsible for policy formulation and implementation related to agriculture in India. Provides updates on schemes, programs, and services supporting farmers.  
+
+2. **[Departments of Agriculture of States and Union Territories, India](https://www.india.gov.in/departments-agriculture-states-and-union-territories)**  
+   📌 Offers region-specific agricultural information and policies.  
+
+3. **[Department of Agriculture & Farmers Welfare, India](https://agricoop.gov.in/)**  
+   📌 Official portal with resources on agricultural development, farmer welfare schemes, and market policies.  
 
 
 ## 🚀 Future Scope
