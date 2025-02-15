@@ -234,6 +234,9 @@ __pycache__/
 .env
 ```
 ![Project Screenshot](C:\Users\asus1\OneDrive\Pictures\Screenshots\Screenshot 2025-02-15 122534.png)
+![image](https://github.com/user-attachments/assets/445fd913-17d7-40e7-a75a-f59ebcadb710)
+
+
 
 ## 🚀 Future Scope
 - AI-powered crop disease prevention using satellite data.
