@@ -249,7 +249,6 @@ __pycache__/
 ![image](https://github.com/user-attachments/assets/dd200321-14ef-4063-8e23-967608308820)
 ![image](https://github.com/user-attachments/assets/b1280410-0659-4795-98dd-0ac156637090)
 ![image](https://github.com/user-attachments/assets/e1e1bd6f-0c6c-4c14-ad6c-1f886a9564ef)
-![image](https://github.com/user-attachments/assets/5d007b88-2ce8-4ceb-9d69-70f66cd731c5)
 ![image](https://github.com/user-attachments/assets/1d25202e-1229-443e-9359-a9e69e3cd87b)
 ![image](https://github.com/user-attachments/assets/07b33969-d7c1-4033-969c-b123efb2d1a4)
 
