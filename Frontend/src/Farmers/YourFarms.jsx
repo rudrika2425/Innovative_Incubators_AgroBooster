@@ -51,17 +51,26 @@ const YourFarms = () => {
               <div className="p-3 bg-yellow-100 rounded-full shadow-lg">
                 <Home className="w-8 h-8 text-yellow-600" />
               </div>
-              <h1 className="text-3xl font-bold text-yellow-900">
+              <h1 className="text-xl md:text-4xl font-bold text-yellow-900">
                 <TranslatedText text="Your Farms" />
               </h1>
             </div>
             <a
               href="/farmer-Information/basicinformation"
-              className="inline-flex items-center gap-2 bg-yellow-600 text-white px-6 py-3 rounded-full hover:bg-yellow-700 transition-all duration-300 shadow-lg hover:shadow-xl no-underline"
+              className="inline-flex items-center gap-1 sm:gap-2 
+                 bg-yellow-600 hover:bg-yellow-700 
+                 text-white 
+                 px-3 sm:px-4 md:px-6 
+                 py-2 sm:py-2.5 md:py-3 
+                 text-sm sm:text-base
+                 rounded-full 
+                 transition-all duration-300 
+                 shadow-lg hover:shadow-xl 
+                 no-underline"
             >
-              <Plus className="w-5 h-5" />
-              <span><TranslatedText text="Add New Farm" /></span>
-            </a>
+      <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
+      <span>Add New Farm</span>
+    </a>
           </div>
         </div>
 

@@ -12,7 +12,7 @@ const AgricultureInnovationPage = ({ id }) => {
       {/* About Agriculture Section */}
       <section className="container px-6 pt-24 pb-5">
         <div className="max-w">
-          <h1 className="text-5xl font-extrabold text-center mb-10">
+          <h1 className="text-3xl md:text-5xl font-extrabold text-center mb-10">
             <TranslatedText text="Agriculture: The" /> <span className="text-yellow-700"><TranslatedText text="Backbone of Human Civilization" /></span>
           </h1>
           <p className="text-xl text-center mb-1 m-12">
@@ -82,7 +82,7 @@ const AgricultureInnovationPage = ({ id }) => {
 
       {/* Unprecedented Agricultural Challenges */}
       <section className="container mx-auto px-6 py-16">
-        <h2 className="text-6xl font-bold text-center mb-12">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
           <TranslatedText text="Unprecedented" /> <span className="text-yellow-700"><TranslatedText text="Agricultural Challenges" /></span>
         </h2>
         
@@ -138,7 +138,7 @@ const AgricultureInnovationPage = ({ id }) => {
       {/* Vision of AgroBooster Section */}
       <section className="container mx-auto px-6 py-3">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-6xl font-bold text-center mb-8">
+          <h2 className="text-4xl md:text-6xl font-bold text-center mb-8">
             <TranslatedText text="Vision of" /> <span className="text-yellow-700"><TranslatedText text="AgroBooster" /></span>
           </h2>
           <p className="text-xl text-center mb-1">
@@ -149,14 +149,14 @@ const AgricultureInnovationPage = ({ id }) => {
 
       {/* Revolutionizing Global Agriculture */}
       <section className="container mx-auto px-6 pt-18 pb-16">
-        <h1 className="text-6xl font-extrabold text-center mb-8">
+        <h1 className="text-4xl md:text-6xl font-extrabold text-center mb-8">
           <TranslatedText text="Revolutionizing" /> <span className="text-yellow-700"><TranslatedText text="Global Agriculture" /></span>
         </h1>
         <p className="text-xl text-center max-w-7xl mx-auto mb-16">
           <TranslatedText text="Transforming agricultural landscapes through cutting-edge technology, AI-driven solutions, and data-driven insights to address global food production challenges. By integrating precision farming, smart resource management, and real-time decision-making tools, we empower farmers to enhance productivity. Our vision is to build a resilient, efficient, and sustainable agricultural ecosystem that ensures long-term food security. Through innovation, we optimize resource use, reduce environmental impact, and promote sustainable farming practices. By bridging the gap between technology and traditional farming, we create opportunities for small and large-scale farmers alike." />
         </p>
         
-        <div className="grid md:grid-cols-3 gap-8 m-8">
+        <div className="grid md:grid-cols-3 items-center justify-center gap-8 md:m-8">
           <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-lg">
             <Tractor className="w-16 h-16 text-emerald-600 mx-auto mb-6" />
             <h3 className="text-3xl font-bold text-center mb-4">
@@ -191,7 +191,7 @@ const AgricultureInnovationPage = ({ id }) => {
 
       {/* Technological Intervention Strategies */}
       <section className="container mx-auto px-6 py-8">
-        <h2 className="text-5xl font-bold text-center mb-12">
+        <h2 className="text-4xl md:text-6xl font-bold text-center mb-12">
           <TranslatedText text="Technological" /> <span className="text-yellow-700"><TranslatedText text="Intervention Strategies" /></span>
         </h2>
         

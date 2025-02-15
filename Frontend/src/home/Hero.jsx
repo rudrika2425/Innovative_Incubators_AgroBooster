@@ -251,7 +251,7 @@ const Hero = ({ id }) => {
           </span>
         </h2>
         
-        <div className="grid md:grid-cols-2 gap-12 items-center m-14">
+        <div className="grid md:grid-cols-2 gap-12 items-center m-14 justify-center">
           <div>
             <h3 className="text-3xl font-semibold text-emerald-900 mb-6">
               <TranslatedText text="Revolutionizing Farming Practices" />

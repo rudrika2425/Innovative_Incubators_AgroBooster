@@ -75,7 +75,7 @@ const Contact = ({ id }) => {
   );
 
   return (
-    <div id={id} className="relative min-h-screen bg-gradient-to-b from-yellow-100 to-yellow-200 py-20">
+    <div id={id} className="relative justify-center min-h-screen bg-gradient-to-b from-yellow-100 to-yellow-200 py-20">
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -83,7 +83,7 @@ const Contact = ({ id }) => {
         }
       `}</style>
       
-      <div className="relative z-10 container mx-auto px-4 flex flex-col justify-center">
+      <div className="relative z-10 container mx-auto px-4 flex flex-col items-center justify-center">
         <header className="text-center mb-16">
           <h1 className="text-5xl font-bold text-emerald-800 mb-4">
             <TranslatedText text="Get in Touch" />
@@ -93,8 +93,8 @@ const Contact = ({ id }) => {
           </p>
         </header>
 
-        <section className="bg-white/90 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden max-w-4xl mx-auto border border-emerald-800/10">
-          <div className="flex flex-col md:flex-row">
+        <section className="bg-white/90 justify-center backdrop-blur-sm rounded-xl shadow-xl overflow-hidden max-w-4xl mx-auto border border-emerald-800/10">
+          <div className="flex flex-col md:flex-row justify-center">
             <div className="md:w-2/5 bg-gradient-to-br from-emerald-800 to-emerald-900 text-white p-8">
               <div className="mb-8">
                 <h2 className="text-2xl font-bold mb-4 flex items-center">

@@ -174,7 +174,7 @@ function RentOutTools() {
           <div className="p-3 bg-yellow-100 rounded-full shadow-lg">
             <Tractor className="w-8 h-8 text-yellow-600" />
           </div>
-          <h1 className="text-3xl font-bold text-yellow-900">
+          <h1 className="text-xl md:text-4xl font-bold text-yellow-900">
             <TranslatedText text="Rent out your tools here.." />
           </h1>
         </div>
