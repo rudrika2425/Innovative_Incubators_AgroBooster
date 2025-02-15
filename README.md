@@ -14,7 +14,7 @@ AgroBooster is an AI-powered precision farming platform designed to maximize cro
 
 ## Live Demo: 🌍 [Visit AgroBooster Website](https://agrobooster.pages.dev/)
 
---
+---
 ## 🔑 Key Features
 
 ### 🌾 Soil Testing & Analysis
