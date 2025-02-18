@@ -17,6 +17,7 @@ const YourFarms = () => {
     const fetchFarms = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}farmer_data/get-all-farmer-data/${user.id}`);
+        console.log(response.data)
         setFarms(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -87,7 +88,7 @@ const YourFarms = () => {
 
                 <div className="flex items-center text-gray-700 mb-3">
                   <MapPin className="mr-2 text-emerald-500" size={20} />
-                  <span><TranslatedText text={farm.location.city}/>, <TranslatedText text={farm.location.region}/></span>
+                  {/* <span><TranslatedText text={farm.location.city}/>, <TranslatedText text={farm.location.region}/></span> */}
                 </div>
 
                 <div className="mt-3 text-gray-600 space-y-2">

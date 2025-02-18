@@ -57,6 +57,7 @@ const SoilTestReportUploader = () => {
       const response = await fetch(`${import.meta.env.VITE_API_URL}location/ip-location`);
       if (!response.ok) throw new Error("Failed to fetch location");
       const locationData = await response.json();
+      console.log(locationData);
       return locationData;
     } catch (error) {
       toast.error(<TranslatedText text="Failed to fetch location" />, toastConfig.error);

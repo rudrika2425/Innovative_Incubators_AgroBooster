@@ -181,7 +181,7 @@ const FarmDetails = ({ onWeatherClick, onCalendarClick }) => {
             </h2>
             <div className="space-y-2">
               <p className="text-emerald-700 text-sm sm:text-base">
-                <TranslatedText text={farm.location.city} />, <TranslatedText text={farm.location.region}/>
+                {/* <TranslatedText text={farm.location.city} />, <TranslatedText text={farm.location.region}/> */}
               </p>
               <p className="text-emerald-700 text-sm sm:text-base"><TranslatedText text={farm.location.country}/></p>
               <div className="pt-1 sm:pt-2 grid grid-cols-2 gap-2 text-xs sm:text-sm">
