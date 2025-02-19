@@ -87,7 +87,7 @@ const YourFarms = () => {
                 </h2>
 
                 <div className="flex items-center text-gray-700 mb-3">
-                  <MapPin className="mr-2 text-emerald-500" size={20} />
+                  {/* <MapPin className="mr-2 text-emerald-500" size={20} /> */}
                   {/* <span><TranslatedText text={farm.location.city}/>, <TranslatedText text={farm.location.region}/></span> */}
                 </div>
 
