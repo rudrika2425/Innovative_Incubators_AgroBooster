@@ -34,7 +34,7 @@ const CropCalendar = () => {
     for (let i = 0; i < retries; i++) {
       try {
         await fetchAndCacheData();
-        return; // Exit on success
+        return;  
       } catch (error) {
         console.warn(`Retrying... (${i + 1})`);
         await new Promise((res) => setTimeout(res, delay));
@@ -49,7 +49,7 @@ const CropCalendar = () => {
       const response = await fetch(`http://127.0.0.1:4000/calendar/generate_schedule/${farmId}`);
       const data = await response.json();
       if (data.length > 0) {
-        await saveScheduleToDB(data); // Save data to the database
+        await saveScheduleToDB(data);  
         setCropSchedule(data);
         console.log("crop schedules:",cropSchedule)
       }
