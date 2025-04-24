@@ -18,7 +18,7 @@ def get_weather_forecast():
     
     try:
         # Construct API URL for OpenWeather API
-        api_url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=minutely&appid={API_KEY}"
+        api_url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=minutely&appid={API_KEY}&lang=hi"
         
         
         # Make request to OpenWeather API
