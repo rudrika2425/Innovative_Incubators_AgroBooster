@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { TranslatedText } from "../languageTranslation/TranslatedText";
 import { useUser } from "../Context/UserContext";
+
 const CropCalendar = () => {
   const [cropSchedule, setCropSchedule] = useState([]);
   const [modalShow, setModalShow] = useState(false);
@@ -9,14 +10,13 @@ const CropCalendar = () => {
   const [loading, setLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date());
   const { farmId } = useParams();
-   const { user } = useUser();
+  const { user } = useUser();
 
   const fetchSchedule = async () => {
     setLoading(true);
     try {
       const response = await fetch(`http://127.0.0.1:4000/calendar/get_schedule/${farmId}`);
       const data = await response.json();
-      console.log(data);
       if (response.ok) {
         setCropSchedule(data.tasks);
       } else {
@@ -34,7 +34,7 @@ const CropCalendar = () => {
     for (let i = 0; i < retries; i++) {
       try {
         await fetchAndCacheData();
-        return;  
+        return;
       } catch (error) {
         console.warn(`Retrying... (${i + 1})`);
         await new Promise((res) => setTimeout(res, delay));
@@ -43,15 +43,13 @@ const CropCalendar = () => {
     console.error("Failed after multiple retries.");
   };
 
-
   const fetchAndCacheData = async () => {
     try {
       const response = await fetch(`http://127.0.0.1:4000/calendar/generate_schedule/${farmId}`);
       const data = await response.json();
       if (data.length > 0) {
-        await saveScheduleToDB(data);  
+        await saveScheduleToDB(data);
         setCropSchedule(data);
-        console.log("crop schedules:",cropSchedule)
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -60,13 +58,13 @@ const CropCalendar = () => {
 
   const saveScheduleToDB = async (tasks) => {
     try {
-      const phone=user.phone_number
+      const phone = user.phone_number;
       const response = await fetch(`http://127.0.0.1:4000/calendar/save_schedule/${farmId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ tasks,phonenum:phone }),
+        body: JSON.stringify({ tasks, phonenum: phone }),
       });
       const result = await response.json();
       console.log("Schedule saved:", result);
@@ -78,12 +76,6 @@ const CropCalendar = () => {
   useEffect(() => {
     fetchSchedule();
   }, []);
-
-  useEffect(() => {
-    console.log("Crop Schedule:", cropSchedule);
-    console.log(user.phone_number);
-  }, [cropSchedule]);
-
 
   const getDaysInMonth = (date) => {
     const year = date.getFullYear();
@@ -212,7 +204,7 @@ const CropCalendar = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto  bg-emerald-50 rounded-2xl shadow-lg p-8">
+    <div className="max-w-6xl mx-auto bg-emerald-50 rounded-2xl shadow-lg p-8">
       <h2 className="text-3xl text-yellow-900 font-bold mb-8">
         <TranslatedText text="Crop Growing Calendar" />
       </h2>
@@ -224,61 +216,66 @@ const CropCalendar = () => {
       ) : (
         renderCalendarBody()
       )}
-      {modalShow && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-yellow-50 rounded-lg max-w-lg w-full p-6 shadow-xl">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-semibold text-amber-900">
-                <TranslatedText text={currentTask?.title} />
-              </h3>
-              <button
-                onClick={() => setModalShow(false)}
-                className="text-amber-500 hover:text-amber-700 text-2xl font-light"
-              >
-                ×
-              </button>
-            </div>
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-medium text-amber-800">
-                  <TranslatedText text="Description" />
-                </h4>
-                <p className="text-amber-700 mt-1">
-                  <TranslatedText text={currentTask?.description} />
-                </p>
-              </div>
-              <div>
-                <h4 className="font-medium text-amber-800">
-                  <TranslatedText text="Task Details" />
-                </h4>
-                <p className="text-amber-700 mt-1">
-                  <TranslatedText text={currentTask?.task_description} />
-                </p>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <h4 className="font-medium text-amber-800">
-                    <TranslatedText text="Start Date" />
-                  </h4>
-                  <p className="text-amber-700 mt-1">
-                    {currentTask?.start_date &&
-                      <TranslatedText text={new Date(currentTask.start_date).toLocaleDateString()} />}
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-medium text-amber-800">
-                    <TranslatedText text="End Date" />
-                  </h4>
-                  <p className="text-amber-700 mt-1">
-                    {currentTask?.end_date &&
-                      <TranslatedText text={new Date(currentTask.end_date).toLocaleDateString()} />}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+    {modalShow && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div className="bg-yellow-50 rounded-lg max-w-lg w-full p-6 shadow-xl">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-xl font-semibold text-amber-900">
+          <TranslatedText text={currentTask?.title} />
+        </h3>
+        <button
+          onClick={() => setModalShow(false)}
+          className="text-amber-500 hover:text-amber-700 text-2xl font-light"
+        >
+          ×
+        </button>
+      </div>
+      <div className="space-y-4">
+        <div>
+          <h4 className="font-medium text-amber-800">
+            <TranslatedText text="Description" />
+          </h4>
+          <p className="text-amber-700 mt-1">
+            <TranslatedText text={currentTask?.description} />
+          </p>
         </div>
-      )}
+
+        {currentTask?.sustainable_resource && (
+          <div>
+            <h4 className="font-medium text-amber-800">
+              <TranslatedText text="Sustainable Resource" />
+            </h4>
+            <p className="text-amber-700 mt-1">
+              <TranslatedText text={currentTask?.sustainable_resource} />
+            </p>
+          </div>
+        )}
+
+        <div>
+          <h4 className="font-medium text-amber-800">
+            <TranslatedText text="Start Date" />
+          </h4>
+          <p className="text-amber-700 mt-1">
+            <TranslatedText
+              text={new Date(currentTask?.start_date).toLocaleDateString()}
+            />
+          </p>
+        </div>
+        <div>
+          <h4 className="font-medium text-amber-800">
+            <TranslatedText text="End Date" />
+          </h4>
+          <p className="text-amber-700 mt-1">
+            <TranslatedText
+              text={new Date(currentTask?.end_date).toLocaleDateString()}
+            />
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
