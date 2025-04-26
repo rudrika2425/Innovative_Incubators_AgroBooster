@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Mic, Send, Languages, ChevronDown, Leaf, Sprout } from "lucide-react";
+import { Mic, Send, Languages, ChevronDown, Leaf, Sprout, VolumeX } from "lucide-react";
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
@@ -8,6 +8,7 @@ const Chatbot = () => {
   const [currentLanguage, setCurrentLanguage] = useState('en');
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const messagesEndRef = useRef(null);
   const dropdownRef = useRef(null);
 
@@ -23,13 +24,15 @@ const Chatbot = () => {
       welcome: 'Welcome to Plant Assistant',
       askAnything: 'Ask me anything about plants and gardening!',
       typeMessage: 'Type your message...',
-      upload: 'Upload'
+      upload: 'Upload',
+      stopVoice: 'Stop Voice'
     },
     hi: {
       welcome: 'पौधा सहायक में आपका स्वागत है',
       askAnything: 'पौधों और बागवानी के बारे में कुछ भी पूछें!',
       typeMessage: 'अपना संदेश लिखें...',
-      upload: 'अपलोड'
+      upload: 'अपलोड',
+      stopVoice: 'आवाज़ रोकें'
     }
   };
 
@@ -58,6 +61,13 @@ const Chatbot = () => {
 
     window.addEventListener('resize', handleResize);
     document.addEventListener('mousedown', handleClickOutside);
+    
+    // Add event listener for speech synthesis ended
+    window.speechSynthesis.onvoiceschanged = () => {
+      window.speechSynthesis.addEventListener('end', () => {
+        setIsSpeaking(false);
+      });
+    };
     
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -104,8 +114,13 @@ const Chatbot = () => {
     recognition.start();
   };
 
-  const speak = (text) => {
+  const stopSpeaking = () => {
     window.speechSynthesis.cancel();
+    setIsSpeaking(false);
+  };
+
+  const speak = (text) => {
+    stopSpeaking(); // Cancel any ongoing speech first
   
     const voices = window.speechSynthesis.getVoices();
     const selectedLang = languages.find(lang => lang.code === currentLanguage);
@@ -135,8 +150,16 @@ const Chatbot = () => {
       speech.rate = currentLanguage === 'hi' ? 0.8 : 0.9;
       speech.pitch = currentLanguage === 'hi' ? 0.9 : 1.0;
   
+      speech.onstart = () => {
+        setIsSpeaking(true);
+      };
+      
       speech.onend = () => {
-        speakChunks(chunks.slice(1));
+        if (chunks.length <= 1) {
+          setIsSpeaking(false);
+        } else {
+          speakChunks(chunks.slice(1));
+        }
       };
   
       window.speechSynthesis.speak(speech);
@@ -355,6 +378,17 @@ const Chatbot = () => {
           <div className="border-t border-emerald-100 bg-emerald-50 p-3 md:p-6 rounded-b-2xl">
             <div className="max-w-4xl mx-auto space-y-3 md:space-y-4">
               <div className="flex items-center gap-2 md:gap-3">
+                {/* Stop Voice Button - Only shown when speaking */}
+                {isSpeaking && (
+                  <button
+                    onClick={stopSpeaking}
+                    className="p-2 md:p-3 bg-red-600 text-white rounded-xl hover:bg-red-500 transition-all duration-300 shadow-md hover:shadow-lg"
+                    title={t('stopVoice')}
+                  >
+                    <VolumeX className="w-5 h-5 md:w-6 md:h-6" />
+                  </button>
+                )}
+                
                 <input
                   type="text"
                   value={chatInput}
