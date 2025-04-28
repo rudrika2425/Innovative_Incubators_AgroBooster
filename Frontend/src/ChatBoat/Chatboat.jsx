@@ -9,6 +9,7 @@ const Chatbot = () => {
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const messagesEndRef = useRef(null);
   const dropdownRef = useRef(null);
+  const API_URL="https://4000-01jsyjgcdrp9g03ck7bzjaqzfq.cloudspaces.litng.ai/"
 
   // Available languages
   const languages = [
@@ -146,7 +147,7 @@ const Chatbot = () => {
     setMessages(prev => [...prev, { type: "user", text: messageText }]);
   
     try {
-      const response = await fetch(`${import.meta.env.VITE_CHAT_URL}chat`, {
+      const response = await fetch(`${API_URL}chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -185,7 +186,7 @@ const Chatbot = () => {
     formData.append("language", currentLanguage);
   
     try {
-      const response = await fetch(`${import.meta.env.VITE_CHAT_URL}upload`, {
+      const response = await fetch(`${API_URL}upload`, {
         method: 'POST',
         body: formData
       });
